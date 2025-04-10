@@ -1,32 +1,58 @@
-// src/screens/HomeScreen.tsx
 import React, { useState, useCallback, useMemo } from "react";
 import {
   StyleSheet,
-  View, // Убрали лишние импорты Text, TextInput, etc.
-  SafeAreaView,
+  View,
   FlatList,
-  Platform, // Platform нужен для безопасной зоны
+  Platform,
+  useWindowDimensions,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 
-// --- Импорт стилей и типов ---
-import { COLORS, SPACING } from "../styles"; // Импортируем только нужные здесь
-import { ActiveTab, Category, Supplier } from "../types"; // Предполагаем, что типы вынесены
+import { COLORS, SPACING } from "../styles";
+import { ActiveTab, Category, Supplier } from "../types";
 
-// --- Импорт НОВЫХ компонентов ---
 import HomeHeader from "../components/HomeHeader";
 import HomeTabs from "../components/HomeTabs";
 import FilterChip from "../components/FilterChip";
 import CategoryCard from "../components/CategoryCard";
 import SupplierCard from "../components/SupplierCard";
 import { CATEGORIES_DATA, SUPPLIERS_DATA } from "../data/mockData";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { HomeStackParamList } from "../navigation/HomeStackNavigator";
+import { useNavigation } from "@react-navigation/native";
 
 const CARD_MARGIN = SPACING.s;
-const NUM_COLUMNS = 3;
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  HomeStackParamList,
+  "HomeList"
+>;
 
 const HomeScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<ActiveTab>("Categories");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { width: screenWidth } = useWindowDimensions();
+
+  const categoryNumColumns = useMemo(() => {
+    const contentWidth = screenWidth - SPACING.containerPadding * 2;
+    if (contentWidth < 120 * 3) return 2;
+    return 3;
+  }, [screenWidth]);
+
+  const handleSupplierPress = useCallback(
+    (supplierId: string) => {
+      navigation.navigate("SupplierDetail", { supplierId: supplierId });
+    },
+    [navigation]
+  );
+
+  const handleFavoriteToggle = useCallback((supplierId: string) => {
+    console.log("Toggle favorite for supplier:", supplierId);
+  }, []);
 
   const handleCategoryPress = useCallback((categoryTitle: string) => {
     setSelectedCategory(categoryTitle);
@@ -35,16 +61,10 @@ const HomeScreen: React.FC = () => {
 
   const handleTabPress = useCallback((tab: ActiveTab) => {
     setActiveTab(tab);
-    // Опционально: Сбрасывать фильтр при переключении на Categories?
-    if (tab === "Categories") {
-      // setSelectedCategory(null); // Раскомментировать, если нужно
-    }
   }, []);
 
   const filteredSuppliers = useMemo(() => {
-    // Логика фильтрации остается здесь
     if (!selectedCategory) {
-      // Добавить фильтрацию по searchQuery, если нужно
       return SUPPLIERS_DATA.filter((s) =>
         s.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -53,15 +73,14 @@ const HomeScreen: React.FC = () => {
       (supplier) =>
         supplier.tags.some(
           (tag) => tag.toLowerCase() === selectedCategory.toLowerCase()
-        ) && supplier.name.toLowerCase().includes(searchQuery.toLowerCase()) // Добавим фильтр по имени
+        ) && supplier.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [selectedCategory, searchQuery]); // Добавили searchQuery в зависимости
+  }, [selectedCategory, searchQuery]);
 
   const handleClearCategoryFilter = () => {
     setSelectedCategory(null);
   };
 
-  // --- Коллбэки для рендера элементов ---
   const renderCategory = useCallback(
     ({ item }: { item: Category }) => (
       <CategoryCard
@@ -77,28 +96,31 @@ const HomeScreen: React.FC = () => {
       <SupplierCard
         item={item}
         selectedCategory={selectedCategory}
-        // onPress={() => navigateToSupplierDetails(item.id)} // Для будущей навигации
-        // onFavoriteToggle={handleToggleFavorite} // Для будущего избранного
+        onPress={() => handleSupplierPress(item.id)}
+        onFavoriteToggle={handleFavoriteToggle}
       />
     ),
-    [selectedCategory]
-  ); // Добавили selectedCategory в зависимости
+    [selectedCategory, handleSupplierPress, handleFavoriteToggle]
+  );
+
+  const categoryRowStyle = useMemo(
+    () => ({
+      justifyContent: "space-between",
+      marginBottom: CARD_MARGIN,
+    }),
+    [categoryNumColumns]
+  );
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Используем новый компонент хедера */}
       <HomeHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        locationText="38 Kote and Soso Tsereteli St..." // Пример
-        // onLocationPress={() => {}} // Обработчики пока не нужны
-        // onNotificationPress={() => {}}
+        locationText={t("home.locationDefault")}
       />
       <View style={styles.container}>
-        {/* Используем новый компонент табов */}
         <HomeTabs activeTab={activeTab} onTabPress={handleTabPress} />
 
-        {/* Используем новый компонент чипа */}
         {activeTab === "Suppliers" && selectedCategory && (
           <FilterChip
             categoryName={selectedCategory}
@@ -106,25 +128,24 @@ const HomeScreen: React.FC = () => {
           />
         )}
 
-        {/* Content Area */}
         {activeTab === "Categories" && (
           <FlatList
             data={CATEGORIES_DATA}
-            renderItem={renderCategory} // Используем новый рендер
-            keyExtractor={(item) => `cat-${item.id}`} // Добавил префикс
-            numColumns={NUM_COLUMNS}
-            key={"categories"}
+            renderItem={renderCategory}
+            keyExtractor={(item) => `cat-${item.id}`}
+            numColumns={categoryNumColumns}
+            key={`categories-${categoryNumColumns}`}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
-            columnWrapperStyle={styles.categoryRow} // Стиль для отступов в ряду
+            columnWrapperStyle={categoryRowStyle}
           />
         )}
 
         {activeTab === "Suppliers" && (
           <FlatList
             data={filteredSuppliers}
-            renderItem={renderSupplier} // Используем новый рендер
-            keyExtractor={(item) => `sup-${item.id}`} // Добавил префикс
+            renderItem={renderSupplier}
+            keyExtractor={(item) => `sup-${item.id}`}
             key={"suppliers"}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
@@ -135,28 +156,18 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-// Оставляем только стили, специфичные для HomeScreen (контейнер, отступы)
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: COLORS.primary,
   },
-  // Контейнер теперь не нужен? Хедер вне его
-  // container: {
-  //     flex: 1,
-  //     paddingHorizontal: SPACING.containerPadding,
-  // },
-  // --- НОВЫЙ КОНТЕЙНЕР ДЛЯ КОНТЕНТА ПОД ХЕДЕРОМ ---
   container: {
-    flex: 1, // Занимает место под хедером
+    flex: 1,
     paddingHorizontal: SPACING.containerPadding,
   },
   listContent: {
-    paddingBottom: SPACING.m, // Отступ снизу для списков
-  },
-  categoryRow: {
-    justifyContent: "space-between",
-    marginBottom: CARD_MARGIN,
+    paddingBottom: SPACING.m,
   },
 });
+
 export default HomeScreen;

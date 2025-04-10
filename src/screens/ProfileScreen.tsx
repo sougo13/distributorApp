@@ -1,111 +1,118 @@
-// src/screens/ProfileScreen.tsx
-import React, { useCallback } from "react";
+
+import React, { useCallback, useMemo } from "react";
 import {
   View,
-  Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   TouchableOpacity,
   Image,
-  Alert, // Keep Alert for confirmation
-  Platform, // Keep Platform
+  Alert,
+  Text,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 
-// Import Auth Context hook
 import { useAuth } from "../context/AuthContext";
 
 import * as styles from "../styles";
 import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "ProfileMain"
 >;
 
-interface ProfileListItemData {
+interface ProfileItemData {
   key: keyof ProfileStackParamList | "LogOut";
   icon: keyof typeof Ionicons.glyphMap;
-  text: string;
 }
 
-// Keep PROFILE_ITEMS array as is
-const PROFILE_ITEMS: ProfileListItemData[] = [
-  {
-    key: "PersonalInformation",
-    icon: "person-outline",
-    text: "Personal Information",
-  },
-  {
-    key: "ChangePassword",
-    icon: "lock-closed-outline",
-    text: "Change Password",
-  },
-  { key: "SavedAddresses", icon: "location-outline", text: "Addresses" },
-  { key: "ChangePaymentMethod", icon: "card-outline", text: "Payment Methods" },
-  { key: "ChangeLanguage", icon: "language-outline", text: "Change Language" },
-  { key: "FAQ", icon: "help-circle-outline", text: "FAQs" },
-  { key: "AccountDeletion", icon: "trash-outline", text: "Account Deletion" },
-  { key: "LogOut", icon: "log-out-outline", text: "Log Out" },
+const PROFILE_ITEM_DATA: ProfileItemData[] = [
+  { key: "PersonalInformation", icon: "person-outline" },
+  { key: "ChangePassword", icon: "lock-closed-outline" },
+  { key: "SavedAddresses", icon: "location-outline" },
+  { key: "ChangePaymentMethod", icon: "card-outline" },
+  { key: "ChangeLanguage", icon: "language-outline" },
+  { key: "FAQ", icon: "help-circle-outline" },
+  { key: "AccountDeletion", icon: "trash-outline" },
+  { key: "LogOut", icon: "log-out-outline" },
 ];
 
 const ProfileScreen = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation<ProfileScreenNavigationProp>();
-  // Get logout function from context
-  const { logout, isLoading } = useAuth(); // Get isLoading state if needed
+  const { logout, isLoading } = useAuth();
 
-  // Mock Data (Keep as is for now)
-  const businessName = "Awesome Business LLC";
-  const joinedDate = "Joined Since January, 2025";
+  const businessName = "Awesome Business LLC"; 
+  const joinedDateDisplay = "Joined Since January, 2025";
+
   const avatarUrl = null;
 
-  // --- Handlers ---
+  const profileItems = useMemo(() => {
+    const itemTexts: { [key in ProfileItemData["key"]]: string } = {
+      PersonalInformation: t("profile.options.personalInfo"),
+      ChangePassword: t("profile.options.changePassword"),
+      SavedAddresses: t("profile.options.savedAddresses"),
+      ChangePaymentMethod: t("profile.options.paymentMethods"),
+      ChangeLanguage: t("profile.options.changeLanguage"),
+      FAQ: t("profile.options.faq"),
+      AccountDeletion: t("profile.options.deleteAccount"),
+      LogOut: t("profile.logout"),
+    };
+    return PROFILE_ITEM_DATA.map((item) => ({
+      ...item,
+      text: itemTexts[item.key] || item.key,
+    }));
+  }, [t]);
+
   const handleItemPress = useCallback(
-    (key: keyof ProfileStackParamList | "LogOut") => {
+    (key: ProfileItemData["key"]) => {
       if (key === "LogOut") {
-        // Show confirmation Alert first
-        Alert.alert("Log Out", "Are you sure you want to log out?", [
-          { text: "Cancel", style: "cancel" },
-          {
-            text: "Log Out",
-            style: "destructive",
-            onPress: async () => {
-              // Make onPress async
-              console.log("User logging out via context...");
-              try {
-                await logout(); // Call logout from context
-                // Navigation will happen automatically in App.tsx based on isLoggedIn state change
-              } catch (error) {
-                console.error("Logout failed:", error);
-                Alert.alert("Error", "Could not log out. Please try again.");
-              }
+        Alert.alert(
+          t("profile.logoutConfirmTitle"),
+          t("profile.logoutConfirmMessage"),
+          [
+            { text: t("common.cancel"), style: "cancel" },
+            {
+              text: t("profile.logout"),
+              style: "destructive",
+              onPress: async () => {
+                console.log("User logging out via context...");
+                try {
+                  await logout();
+                } catch (error) {
+                  console.error("Logout failed:", error);
+                  Alert.alert(t("common.error"), t("profile.logoutError"));
+                }
+              },
             },
-          },
-        ]);
+          ]
+        );
       } else {
         navigation.navigate(key as keyof ProfileStackParamList);
       }
     },
-    [navigation, logout] // Add logout to dependencies
+    [navigation, logout, t]
   );
 
-  // handleGetHelp remains the same
   const handleGetHelp = () => {
     console.log("Get Help pressed");
+
   };
 
-  // --- Render Item (Keep renderProfileItem as is) ---
-  const renderProfileItem = (item: ProfileListItemData) => (
+  const renderProfileItem = (
+    item: ProfileItemData & { text: string }
+  ) => (
     <TouchableOpacity
       key={item.key}
       style={s.listItem}
       onPress={() => handleItemPress(item.key)}
       activeOpacity={0.7}
-      disabled={isLoading && item.key === "LogOut"} // Disable logout button while context is loading
+      disabled={isLoading && item.key === "LogOut"}
     >
       <Ionicons
         name={item.icon}
@@ -131,7 +138,6 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={s.safeArea}>
       <ScrollView style={s.container} contentContainerStyle={s.scrollContent}>
-        {/* --- Header (Keep as is) --- */}
         <LinearGradient
           colors={[
             styles.COLORS.profileHeaderGradientStart,
@@ -155,28 +161,26 @@ const ProfileScreen = () => {
             </View>
             <View style={s.headerTextContainer}>
               <Text style={s.businessName}>{businessName}</Text>
-              <Text style={s.joinedDate}>{joinedDate}</Text>
+              <Text style={s.joinedDate}>{joinedDateDisplay}</Text>
             </View>
             <TouchableOpacity
               style={s.helpButton}
               onPress={handleGetHelp}
               activeOpacity={0.8}
             >
-              <Text style={s.helpButtonText}>Get Help</Text>
+              <Text style={s.helpButtonText}>{t("profile.getHelp")}</Text>
             </TouchableOpacity>
           </View>
         </LinearGradient>
 
-        {/* --- Profile Items List --- */}
         <View style={s.listContainer}>
-          {PROFILE_ITEMS.map(renderProfileItem)}
+          {profileItems.map(renderProfileItem)}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-// --- Styles (Keep existing styles s) ---
 const s = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -186,14 +190,16 @@ const s = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: styles.SPACING.xl, // Ensure space at the bottom
+    paddingBottom: styles.SPACING.xl,
   },
-  // Header Styles
   header: {
-    // Height can be adjusted based on content and design preference
-    paddingTop: styles.SPACING.xl, // Adjust as needed, consider status bar height if not using SafeAreaView properly
+    paddingTop: styles.SPACING.xl,
     paddingBottom: styles.SPACING.l,
     paddingHorizontal: styles.SPACING.containerPadding,
+    borderBottomLeftRadius: styles.COMPONENT_STYLES.headerBorderRadius,
+    borderBottomRightRadius: styles.COMPONENT_STYLES.headerBorderRadius,
+    backgroundColor: styles.COLORS.secondary,
+    overflow: "hidden",
   },
   headerContent: {
     flexDirection: "row",
@@ -206,20 +212,20 @@ const s = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: styles.COLORS.grey, // Placeholder bg
+    backgroundColor: styles.COLORS.grey,
   },
   avatarPlaceholder: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: styles.COLORS.cardBackground, // Darker placeholder bg
+    backgroundColor: styles.COLORS.cardBackground,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
     borderColor: styles.COLORS.grey,
   },
   headerTextContainer: {
-    flex: 1, // Take remaining space
+    flex: 1,
     justifyContent: "center",
   },
   businessName: {
@@ -231,45 +237,40 @@ const s = StyleSheet.create({
   joinedDate: {
     fontFamily: styles.FONT_FAMILY.regular,
     fontSize: styles.FONT_SIZES.bodyS,
-    color: styles.COLORS.grey,
+    color: styles.COLORS.white,
   },
   helpButton: {
     backgroundColor: styles.COLORS.secondary,
     paddingHorizontal: styles.SPACING.m,
     paddingVertical: styles.SPACING.s,
-    borderRadius: styles.COMPONENT_STYLES.borderRadius * 2, // More rounded?
-    marginLeft: styles.SPACING.m, // Space from text
+    borderRadius: styles.COMPONENT_STYLES.borderRadius * 2,
+    marginLeft: styles.SPACING.m,
   },
   helpButtonText: {
     fontFamily: styles.FONT_FAMILY.medium,
     fontSize: styles.FONT_SIZES.bodyS,
-    color: styles.COLORS.primary, // Dark text on green button
+    color: styles.COLORS.primary,
   },
-  // List Styles
   listContainer: {
-    marginTop: styles.SPACING.l, // Space between header and list
-    marginHorizontal: styles.SPACING.containerPadding, // Align with header padding
-    backgroundColor: styles.COLORS.primary, // Ensure background color if items have margins
-    // borderRadius: styles.COMPONENT_STYLES.cardBorderRadius, // Optional: round corners for the whole list block
-    // overflow: 'hidden', // Needed if using borderRadius on the container
+    marginTop: styles.SPACING.l,
+    marginHorizontal: styles.SPACING.containerPadding,
+    backgroundColor: styles.COLORS.primary,
   },
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: styles.SPACING.m + styles.SPACING.xs, // A bit more padding vertically
+    paddingVertical: styles.SPACING.m + styles.SPACING.xs,
     paddingHorizontal: styles.SPACING.m,
-    // backgroundColor: styles.COLORS.listItemBackground, // Slightly different bg? Or same as primary?
-    // Border between items
     borderBottomWidth: 1,
-    borderBottomColor: styles.COLORS.inputBackground, // Use a subtle border color
+    borderBottomColor: styles.COLORS.inputBackground,
   },
   listIcon: {
     marginRight: styles.SPACING.m,
-    width: 24, // Ensure icons align vertically if texts wrap
+    width: 24,
     textAlign: "center",
   },
   listText: {
-    flex: 1, // Take remaining space
+    flex: 1,
     fontFamily: styles.FONT_FAMILY.regular,
     fontSize: styles.FONT_SIZES.bodyM,
     color: styles.COLORS.accent,

@@ -1,14 +1,13 @@
-// src/screens/profile/AddEditAddressScreen.tsx
 import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
   Alert,
   Text,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -17,63 +16,78 @@ import * as styles from "../../styles";
 import PrimaryButton from "../../components/PrimaryButton";
 import FormInput from "../../components/FormInput";
 import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
-// Define route prop type
-type AddEditAddressRouteProp = RouteProp<ProfileStackParamList, 'AddEditAddress'>;
-// Define navigation prop type
-type AddEditAddressNavigationProp = StackNavigationProp<ProfileStackParamList, 'AddEditAddress'>;
+type AddEditAddressRouteProp = RouteProp<
+  ProfileStackParamList,
+  "AddEditAddress"
+>;
+
+type AddEditAddressNavigationProp = StackNavigationProp<
+  ProfileStackParamList,
+  "AddEditAddress"
+>;
 
 const AddEditAddressScreen = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation<AddEditAddressNavigationProp>();
   const route = useRoute<AddEditAddressRouteProp>();
-  const addressId = route.params?.addressId; // Get ID if editing
+  const addressId = route.params?.addressId;
   const isEditing = !!addressId;
 
-  // --- State ---
   const [fullAddress, setFullAddress] = useState("");
-  // Add state for other fields if you decide to split the address
-  // const [city, setCity] = useState("");
-  // const [postalCode, setPostalCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // --- Effects ---
   useEffect(() => {
     if (isEditing) {
-      // TODO: Fetch the address data based on addressId
       console.log("Editing address with ID:", addressId);
-      // Simulate fetching data for editing
-      setIsLoading(true);
+      setIsFetching(true);
       setTimeout(() => {
-        // Replace with actual fetched data
         setFullAddress(`Fetched Address for ID ${addressId}`);
-        setIsLoading(false);
+        setIsFetching(false);
       }, 500);
     } else {
-        console.log("Adding new address");
-        // Optionally clear fields if navigating back and forth
-        setFullAddress("");
+      console.log("Adding new address");
+      setFullAddress("");
     }
-  }, [addressId, isEditing]); // Re-run if addressId changes
+  }, [addressId, isEditing]);
 
-  // --- Handlers ---
   const handleSaveAddress = () => {
     setError(null);
     if (!fullAddress) {
-      setError("Please enter the full address.");
+      setError(t("addEditAddress.errorMessages.required"));
       return;
     }
-    // TODO: Add more validation if needed
 
-    console.log("Saving address:", { id: addressId, fullAddress }); // Log ID if editing
+    console.log("Saving address:", { id: addressId, fullAddress });
     setIsLoading(true);
 
-    // Simulate API call (either create or update)
     setTimeout(() => {
       setIsLoading(false);
-      Alert.alert("Success", `Address ${isEditing ? 'updated' : 'saved'} successfully.`);
-      navigation.goBack(); // Go back to the list screen after saving
+
+      Alert.alert(
+        t("addEditAddress.successAlertTitle"),
+        isEditing
+          ? t("addEditAddress.updateSuccessMessage")
+          : t("addEditAddress.saveSuccessMessage")
+      );
+      navigation.goBack();
     }, 1500);
+  };
+
+  const getButtonTitle = () => {
+    if (isLoading) {
+      return isEditing
+        ? t("addEditAddress.updatingButton")
+        : t("addEditAddress.savingButton");
+    }
+
+    return isEditing
+      ? t("addEditAddress.updateButton")
+      : t("addEditAddress.saveButton");
   };
 
   return (
@@ -88,49 +102,36 @@ const AddEditAddressScreen = () => {
           contentContainerStyle={s.scrollContentContainer}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Single input for full address as per design */}
           <FormInput
-            label="Full Address"
-            // iconName="location-outline" // Optional icon
+            label={t("addEditAddress.label")}
             value={fullAddress}
             onChangeText={setFullAddress}
-            placeholder="Enter street, city, region..."
-            // Potentially use multiline if addresses can be long?
-            // multiline={true}
-            // numberOfLines={3}
-            // style={{ height: 100, textAlignVertical: 'top' }} // Adjust input style for multiline
+            placeholder={t("addEditAddress.placeholder")}
+            editable={!isFetching}
           />
-
-          {/* Add other FormInput components here if you split the address */}
-          {/*
-          <FormInput label="City" ... />
-          <FormInput label="Postal Code" ... />
-          */}
-
-          {/* Map Placeholder - Implement later */}
-          {/*
-          <View style={s.mapPlaceholder}>
-              <Text style={s.mapPlaceholderText}>Map View Placeholder</Text>
-          </View>
-          */}
 
           {error && <Text style={s.errorText}>{error}</Text>}
 
+          {isFetching && (
+            <ActivityIndicator
+              style={{ marginTop: styles.SPACING.m }}
+              color={styles.COLORS.secondary}
+            />
+          )}
         </ScrollView>
 
         <View style={s.buttonContainer}>
           <PrimaryButton
-            title={isEditing ? "Update Address" : "Save Address"}
+            title={getButtonTitle()}
             onPress={handleSaveAddress}
             loading={isLoading}
-            disabled={isLoading} // Disable button while loading existing address too
+            disabled={isLoading || isFetching}
           />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
 const s = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -152,27 +153,14 @@ const s = StyleSheet.create({
     paddingTop: styles.SPACING.s,
     backgroundColor: styles.COLORS.primary,
   },
-   errorText: {
-      color: 'red',
-      fontSize: styles.FONT_SIZES.bodyS,
-      fontFamily: styles.FONT_FAMILY.regular,
-      textAlign: 'center',
-      marginTop: styles.SPACING.s,
-      marginBottom: styles.SPACING.xs,
+  errorText: {
+    color: "red",
+    fontSize: styles.FONT_SIZES.bodyS,
+    fontFamily: styles.FONT_FAMILY.regular,
+    textAlign: "center",
+    marginTop: styles.SPACING.s,
+    marginBottom: styles.SPACING.xs,
   },
-  // Styles for map placeholder (optional for now)
-  // mapPlaceholder: {
-  //   height: 200,
-  //   backgroundColor: styles.COLORS.inputBackground,
-  //   borderRadius: styles.COMPONENT_STYLES.borderRadius,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   marginTop: styles.SPACING.m,
-  // },
-  // mapPlaceholderText: {
-  //   color: styles.COLORS.grey,
-  //   fontSize: styles.FONT_SIZES.bodyM,
-  // },
 });
 
 export default AddEditAddressScreen;

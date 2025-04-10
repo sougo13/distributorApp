@@ -1,4 +1,4 @@
-// src/components/AccordionItem.tsx
+
 import React, { useState, useCallback } from "react";
 import {
   View,
@@ -12,7 +12,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as styles from "../styles";
 
-// Enable LayoutAnimation on Android
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -22,7 +21,7 @@ if (Platform.OS === "android") {
 interface AccordionItemProps {
   title: string;
   content: string;
-  initiallyOpen?: boolean; // Optional prop to set initial state
+  initiallyOpen?: boolean;
 }
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
@@ -33,14 +32,12 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   const [isOpen, setIsOpen] = useState(initiallyOpen);
 
   const toggleOpen = useCallback(() => {
-    // Configure the animation timing and type
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsOpen(!isOpen);
   }, [isOpen]);
 
   return (
     <View style={s.container}>
-      {/* Header (Question) */}
       <TouchableOpacity
         style={s.header}
         onPress={toggleOpen}
@@ -53,8 +50,6 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
           color={styles.COLORS.iconGrey}
         />
       </TouchableOpacity>
-
-      {/* Content (Answer) - Rendered conditionally */}
       {isOpen && (
         <View style={s.content}>
           <Text style={s.contentText}>{content}</Text>
@@ -66,20 +61,20 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 
 const s = StyleSheet.create({
   container: {
-    backgroundColor: styles.COLORS.cardBackground, // Use card background color
-    borderRadius: styles.COMPONENT_STYLES.cardBorderRadius, // Use card radius
+    backgroundColor: styles.COLORS.cardBackground,
+    borderRadius: styles.COMPONENT_STYLES.cardBorderRadius,
     marginBottom: styles.SPACING.m,
-    overflow: "hidden", // Ensure content clipped by border radius
+    overflow: "hidden",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: styles.SPACING.m + styles.SPACING.xs, // A bit more padding
+    paddingVertical: styles.SPACING.m + styles.SPACING.xs,
     paddingHorizontal: styles.SPACING.m,
   },
   titleText: {
-    flex: 1, // Take available space
+    flex: 1,
     color: styles.COLORS.accent,
     fontSize: styles.FONT_SIZES.bodyM,
     fontFamily: styles.FONT_FAMILY.medium,
@@ -87,15 +82,13 @@ const s = StyleSheet.create({
   },
   content: {
     paddingHorizontal: styles.SPACING.m,
-    paddingBottom: styles.SPACING.m + styles.SPACING.xs, // Padding below text
-    // Add top padding if needed, or rely on header padding
-    // paddingTop: styles.SPACING.xs,
+    paddingBottom: styles.SPACING.m + styles.SPACING.xs,
   },
   contentText: {
-    color: styles.COLORS.grey, // Slightly muted color for answer
+    color: styles.COLORS.grey,
     fontSize: styles.FONT_SIZES.bodyS,
     fontFamily: styles.FONT_FAMILY.regular,
-    lineHeight: styles.FONT_SIZES.bodyS * 1.5, // Improve readability
+    lineHeight: styles.FONT_SIZES.bodyS * 1.5,
   },
 });
 

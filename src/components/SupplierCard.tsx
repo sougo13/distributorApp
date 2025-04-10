@@ -1,7 +1,8 @@
+
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
-import { Supplier } from "../types"; // Предполагаем, что есть тип Supplier
+import { Supplier } from "../types";
 import {
   COLORS,
   FONT_FAMILY,
@@ -11,10 +12,10 @@ import {
 } from "../styles";
 
 interface SupplierCardProps {
-  item: Supplier; // Используем тип Supplier
+  item: Supplier;
   selectedCategory: string | null;
-  onPress?: () => void; // Опциональный onPress для перехода к деталям
-  onFavoriteToggle?: (id: string) => void; // Опционально для избранного
+  onPress?: () => void;
+  onFavoriteToggle?: (id: string) => void;
 }
 
 const SupplierCard: React.FC<SupplierCardProps> = ({
@@ -26,7 +27,7 @@ const SupplierCard: React.FC<SupplierCardProps> = ({
   return (
     <TouchableOpacity
       style={styles.supplierCard}
-      activeOpacity={onPress ? 0.9 : 1} // Отключаем opacity если нет onPress
+      activeOpacity={onPress ? 0.9 : 1}
       onPress={onPress}
     >
       <Image source={item.image} style={styles.supplierImage} />
@@ -59,10 +60,10 @@ const SupplierCard: React.FC<SupplierCardProps> = ({
           })}
         </View>
       </View>
-      {onFavoriteToggle && ( // Показываем кнопку только если передан обработчик
+      {onFavoriteToggle && (
         <TouchableOpacity
           style={styles.favoriteButton}
-          onPress={() => onFavoriteToggle(item.id)} // Вызываем обработчик
+          onPress={() => onFavoriteToggle(item.id)}
         >
           <Ionicons
             name={item.isFavorite ? "heart" : "heart-outline"}
@@ -75,7 +76,6 @@ const SupplierCard: React.FC<SupplierCardProps> = ({
   );
 };
 
-// Стили копируем из HomeScreen.tsx и используем импортированные константы
 const styles = StyleSheet.create({
   supplierCard: {
     backgroundColor: COLORS.cardBackground,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   supplierName: {
     color: COLORS.accent,
     fontSize: FONT_SIZES.bodyM,
-    fontFamily: FONT_FAMILY.medium, // medium
+    fontFamily: FONT_FAMILY.medium,
     marginBottom: SPACING.xs,
   },
   ratingContainer: {
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
   },
   tagTextHighlight: {
     color: COLORS.primary,
-    // fontFamily: FONT_FAMILY.medium, // Можно добавить
   },
   favoriteButton: {
     padding: SPACING.xs,

@@ -1,65 +1,75 @@
-// src/screens/profile/ChangeLanguageScreen.tsx
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, SafeAreaView, Platform, Alert } from "react-native";
-// Remove Picker import: import { Picker } from '@react-native-picker/picker';
-import { Ionicons } from "@expo/vector-icons"; // Keep if used for label icon
+import React, { useState, useMemo } from "react";
+import { View, StyleSheet, Platform, Alert } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Ionicons } from "@expo/vector-icons";
 
 import * as styles from "../../styles";
 import PrimaryButton from "../../components/PrimaryButton";
-import CustomLanguagePicker from "../../components/CustomDropdown"; // Import the new component
-
-// Define available languages (only English and Georgian as requested)
-const AVAILABLE_LANGUAGES = [
-  { label: "English", value: "en" },
-  { label: "ქართული", value: "ka" }, // Georgian
-];
+import CustomDropdown from "../../components/CustomDropdown";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChangeLanguageScreen = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
+  const { t, i18n } = useTranslation();
+
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(
+    i18n.language
+  );
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // TODO: Fetch saved language preference
-    console.log("Screen loaded. Current language:", selectedLanguage);
-  }, []);
+  const languageOptions = useMemo(() => {
+    return Object.keys(i18n.options.resources || {}).map((langCode) => ({
+      label: t(`languages.${langCode}`),
+      value: langCode,
+    }));
+  }, [t, i18n.options.resources]);
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
+    if (selectedLanguage === i18n.language) {
+      return;
+    }
     console.log("Saving language:", selectedLanguage);
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      // TODO: Update global state/context
+    try {
+      await i18n.changeLanguage(selectedLanguage);
+
       Alert.alert(
-        "Success",
-        `Language preference saved to ${
-          AVAILABLE_LANGUAGES.find((lang) => lang.value === selectedLanguage)
-            ?.label || selectedLanguage
-        }.`
+        t("changeLanguage.successTitle"),
+        t("changeLanguage.successMessage", {
+          language: t(`languages.${selectedLanguage}`),
+        })
       );
-    }, 1000);
+    } catch (error) {
+      console.error("Failed to change language:", error);
+
+      Alert.alert(t("common.error"), "Failed to save language preference.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <SafeAreaView style={s.safeArea}>
       <View style={s.container}>
-        {/* Use the Custom Language Picker */}
-        <CustomLanguagePicker
-          label="Select Language" // Pass the label
-          iconName="language-outline" // Pass the icon name
-          options={AVAILABLE_LANGUAGES}
+        <CustomDropdown
+          label={t("changeLanguage.selectLanguage")}
+          iconName="language-outline"
+          options={languageOptions}
           selectedValue={selectedLanguage}
           onValueChange={setSelectedLanguage}
         />
 
-        {/* Spacer to push button down */}
         <View style={s.spacer} />
 
-        {/* Button Container */}
         <View style={s.buttonContainer}>
           <PrimaryButton
-            title="Save Changes"
+            title={
+              isLoading
+                ? t("changeLanguage.saving")
+                : t("changeLanguage.button")
+            }
             onPress={handleSaveChanges}
             loading={isLoading}
+            disabled={isLoading || selectedLanguage === i18n.language}
           />
         </View>
       </View>
@@ -76,9 +86,8 @@ const s = StyleSheet.create({
     flex: 1,
     padding: styles.SPACING.containerPadding,
   },
-  // Remove picker related styles (pickerWrapper, picker, pickerItemIOS, etc.)
   spacer: {
-    flex: 1, // Pushes button to the bottom
+    flex: 1,
   },
   buttonContainer: {
     paddingBottom: Platform.OS === "ios" ? styles.SPACING.l : styles.SPACING.m,

@@ -1,0 +1,333 @@
+{
+  "common": {
+    "save": "შენახვა",
+    "saving": "ინახება...",
+    "cancel": "გაუქმება",
+    "confirm": "დადასტურება",
+    "back": "უკან",
+    "error": "შეცდომა",
+    "loading": "იტვირთება...",
+    "submit": "გაგზავნა",
+    "continue": "გაგრძელება",
+    "done": "დასრულება",
+    "discount": "Discount",
+    "specialDiscount": "Special Discount",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "goBack": "Go Back",
+    "noItemsFound": "No items found"
+  },
+  "login": {
+    "welcomeTitle": "კეთილი იყოს თქვენი დაბრუნება",
+    "welcomeSubtitle": "შეგიძლიათ შეხვიდეთ სისტემაში ან გააგრძელოთ ავტორიზაციის გარეშე. ანგარიშის შექმნის შესაძლებლობა მოგვიანებით გექნებათ.",
+    "emailLabel": "ელ. ფოსტა",
+    "emailPlaceholder": "შეიყვანეთ ელ. ფოსტა",
+    "passwordLabel": "პაროლი",
+    "passwordPlaceholder": "შეიყვანეთ პაროლი",
+    "rememberMe": "დამიმახსოვრე",
+    "forgotPassword": "დაგავიწყდათ პაროლი?",
+    "continueWithoutSignIn": "ავტორიზაციის გარეშე გაგრძელება",
+    "noAccount": "არ გაქვთ ანგარიში?",
+    "signUpLink": "რეგისტრაცია",
+    "loggingIn": "შესვლა...",
+    "invalidCredentials": "არასწორი ელ. ფოსტა ან პაროლი"
+  },
+  "signUp": {
+    "title": "რეგისტრაცია",
+    "subtitle": "რამდენიმე დეტალი და თქვენ სისტემაში ხართ!",
+    "phoneLabel": "ტელეფონის ნომერი",
+    "phonePlaceholder": "შეიყვანეთ ტელეფონის ნომერი",
+    "emailLabel": "ელ. ფოსტა",
+    "emailPlaceholder": "შეიყვანეთ ელ. ფოსტა",
+    "passwordLabel": "პაროლი",
+    "passwordPlaceholder": "შექმენით პაროლი",
+    "repeatPasswordLabel": "გაიმეორეთ პაროლი",
+    "repeatPasswordPlaceholder": "გაიმეორეთ თქვენი პაროლი",
+    "submitting": "იგზავნება..."
+  },
+  "roleSelection": {
+    "title": "ვინ ბრძანდებით?",
+    "subtitle": "აირჩიეთ როლი, რომელიც საუკეთესოდ შეგეფერებათ. თითოეული მათგანი ხსნის თქვენს საჭიროებებზე მორგებულ განსხვავებულ ფუნქციებს.",
+    "supplier": "მომწოდებელი",
+    "buyer": "მყიდველი",
+    "loginLink": "შესვლა",
+    "haveAccount": "გაქვთ ანგარიში?"
+  },
+  "emailVerification": {
+    "title": "ელ. ფოსტის დადასტურება",
+    "message": "თქვენს ელ. ფოსტაზე გამოგზავნილია დამადასტურებელი ბმული. რეგისტრაციის დასასრულებლად უბრალოდ დააჭირეთ მას!",
+    "doneButton": "დასრულება"
+  },
+  "home": {
+    "locationDefault": "აირჩიეთ მისამართი...",
+    "searchPlaceholder": "მოძებნეთ პროდუქტი ან მომწოდებელი",
+    "tabs": {
+      "categories": "კატეგორიები",
+      "suppliers": "მომწოდებლები"
+    },
+    "clearFilter": "გასუფთავება"
+  },
+  "profile": {
+    "title": "პროფილი",
+    "getHelp": "დახმარება",
+    "registered": "რეგისტრაცია: {{date}}",
+    "options": {
+      "personalInfo": "პირადი ინფორმაცია",
+      "changePassword": "პაროლის შეცვლა",
+      "savedAddresses": "შენახული მისამართები",
+      "paymentMethods": "გადახდის მეთოდები",
+      "changeLanguage": "ენის შეცვლა",
+      "faq": "ხშირად დასმული კითხვები",
+      "deleteAccount": "ანგარიშის წაშლა"
+    },
+    "logout": "გასვლა",
+    "logoutConfirmTitle": "გასვლის დადასტურება",
+    "logoutConfirmMessage": "დარწმუნებული ხართ, რომ გსურთ გასვლა?",
+    "logoutError": "გასვლა ვერ მოხერხდა. გთხოვთ სცადოთ ხელახლა."
+  },
+  "languages": {
+    "en": "ინგლისური",
+    "ka": "ქართული"
+  },
+  "changeLanguage": {
+    "title": "ენის შეცვლა",
+    "selectLanguage": "აირჩიეთ ენა",
+    "button": "ცვლილებების შენახვა",
+    "saving": "ინახება...",
+    "successTitle": "წარმატება",
+    "successMessage": "ენა შენახულია როგორც {{language}}."
+  },
+  "profileStack": {
+    "personalInfo": "პირადი ინფორმაცია",
+    "changePassword": "პაროლის შეცვლა",
+    "savedAddresses": "შენახული მისამართები",
+    "editAddress": "მისამართის რედაქტირება",
+    "addAddress": "ახალი მისამართის დამატება",
+    "paymentMethods": "გადახდის მეთოდები",
+    "addCard": "ახალი ბარათის დამატება",
+    "changeLanguage": "ენის შეცვლა",
+    "faq": "ხ.დ.კ.",
+    "deleteAccount": "ანგარიშის წაშლა"
+  },
+  "personalInfo": {
+    "nameLabel": "სახელი",
+    "namePlaceholder": "კომპანიის სახელი",
+    "emailLabel": "ელ. ფოსტა",
+    "emailPlaceholder": "business@name.com",
+    "phoneLabel": "ტელეფონის ნომერი",
+    "phonePlaceholder": "+XXX XXX XXX XXX",
+    "successAlertTitle": "წარმატება",
+    "successAlertMessage": "პირადი ინფორმაცია განახლდა."
+  },
+  "changePassword": {
+    "currentPasswordLabel": "მიმდინარე პაროლი",
+    "currentPasswordPlaceholder": "შეიყვანეთ მიმდინარე პაროლი",
+    "newPasswordLabel": "ახალი პაროლი",
+    "newPasswordPlaceholder": "შეიყვანეთ ახალი პაროლი",
+    "repeatPasswordLabel": "გაიმეორეთ ახალი პაროლი",
+    "repeatPasswordPlaceholder": "გაიმეორეთ ახალი პაროლი",
+    "errorMessages": {
+      "fillFields": "გთხოვთ შეავსოთ ყველა ველი.",
+      "mismatch": "ახალი პაროლები არ ემთხვევა.",
+      "tooShort": "ახალი პაროლი უნდა შეიცავდეს მინიმუმ {{count}} სიმბოლოს.",
+      "apiError": "პაროლის შეცვლა ვერ მოხერხდა. გთხოვთ შეამოწმოთ მიმდინარე პაროლი ან სცადოთ მოგვიანებით."
+    },
+    "successAlertTitle": "წარმატება",
+    "successAlertMessage": "პაროლი წარმატებით შეიცვალა."
+  },
+  "deleteAccount": {
+    "mainText": "ვწუხვართ, რომ გვტოვებთ. ანგარიშის წაშლა სამუდამოდ წაშლის თქვენს პროფილს, შეკვეთების ისტორიას და შენახულ პარამეტრებს. ამ ქმედების გაუქმება შეუძლებელია.",
+    "subHeader": "სანამ გააგრძელებთ:",
+    "consequences": [
+      "ნებისმიერი მიმდინარე შეკვეთა გაუქმდება.",
+      "თანხის დაბრუნებას შეიძლება რამდენიმე დღე დასჭირდეს.",
+      "თუ ჩვენი სერვისით სარგებლობა კვლავ მოგესურვებათ, ახალი ანგარიშის შექმნა დაგჭირდებათ."
+    ],
+    "backButton": "უკან",
+    "deleteButton": "ჩემი ანგარიშის წაშლა",
+    "confirmTitle": "წაშლის დადასტურება",
+    "confirmMessage": "ეს ქმედება სამუდამოა და მისი გაუქმება შეუძლებელია. აბსოლუტურად დარწმუნებული ხართ, რომ გსურთ თქვენი ანგარიშის წაშლა?",
+    "confirmDeleteButton": "ანგარიშის წაშლა",
+    "successAlertTitle": "ანგარიში წაიშალა",
+    "successAlertMessage": "თქვენი ანგარიში სამუდამოდ წაიშალა."
+  },
+  "addEditAddress": {
+    "label": "სრული მისამართი",
+    "placeholder": "შეიყვანეთ ქუჩა, ქალაქი, რეგიონი...",
+    "saveButton": "მისამართის შენახვა",
+    "updateButton": "მისამართის განახლება",
+    "savingButton": "ინახება...",
+    "updatingButton": "ახლდება...",
+    "errorMessages": {
+      "required": "გთხოვთ შეიყვანოთ სრული მისამართი."
+    },
+    "successAlertTitle": "წარმატება",
+    "saveSuccessMessage": "მისამართი წარმატებით შეინახა.",
+    "updateSuccessMessage": "მისამართი წარმატებით განახლდა."
+  },
+  "addCard": {
+    "numberLabel": "ნომერი",
+    "numberPlaceholder": "XXXX XXXX XXXX XXXX",
+    "expiryLabel": "ვადა",
+    "expiryPlaceholder": "თთ/წწ",
+    "ccvLabel": "CCV კოდი",
+    "ccvPlaceholder": "CCV",
+    "holderLabel": "ბარათის მფლობელი",
+    "holderPlaceholder": "სახელი და გვარი",
+    "saveButton": "ბარათის შენახვა",
+    "errorMessages": {
+      "fillFields": "გთხოვთ შეავსოთ ბარათის ყველა ველი.",
+      "invalidNumber": "ბარათის ნომრის არასწორი სიგრძე.",
+      "invalidExpiry": "ვადის არასწორი ფორმატი (თთ/წწ).",
+      "invalidCcv": "CCV კოდის არასწორი სიგრძე."
+    },
+    "successAlertTitle": "წარმატება",
+    "successAlertMessage": "ბარათი წარმატებით დაემატა."
+  },
+  "paymentMethods": {
+    "addButton": "ახალი ბარათის დამატება",
+    "emptyList": "გადახდის მეთოდები ჯერ არ არის შენახული.",
+    "loading": "გადახდის მეთოდები იტვირთება...",
+    "cardEndingIn": "ბარათი ბოლოვდება {{last4}}-ით"
+  },
+  "faq": {
+    "title": "ხ.დ.კ.",
+    "items": {
+      "q1": {
+        "question": "როგორ მუშაობს აპლიკაცია?",
+        "answer": "აირჩიეთ სასურველი პროდუქტები, განათავსეთ შეკვეთა და დაელოდეთ მომწოდებლისგან დადასტურებას. გადაიხადეთ უსაფრთხოდ და მიიღეთ შეკვეთა რაც შეიძლება მალე ან დაგეგმეთ თქვენთვის მოსახერხებელ დროს."
+      },
+      "q2": {
+        "question": "როგორ განვათავსო შეკვეთა?",
+        "answer": "გადადით მთავარ ეკრანზე, აირჩიეთ კატეგორია ან მომწოდებელი, დაათვალიერეთ პროდუქტები, დაამატეთ ისინი კალათაში და გადადით გადახდაზე. მიჰყევით ეკრანზე მოცემულ ინსტრუქციებს შეკვეთის დასასრულებლად."
+      },
+      "q3": {
+        "question": "გადახდის რა მეთოდებს იღებთ?",
+        "answer": "ამჟამად ვიღებთ ძირითად საკრედიტო და სადებეტო ბარათებს. შენახული გადახდის მეთოდების მართვა შეგიძლიათ პროფილის განყოფილებაში."
+      },
+      "q4": {
+        "question": "შემიძლია თუ არა მიწოდების წინასწარ დაგეგმვა?",
+        "answer": "დიახ, გადახდის პროცესში, შესაძლოა გქონდეთ მიწოდების სასურველი თარიღისა და დროის შუალედის არჩევის შესაძლებლობა, მომწოდებლის ხელმისაწვდომობიდან გამომდინარე."
+      },
+      "q5": {
+        "question": "როგორ გამოვიყენო პრომო კოდი ან ფასდაკლება?",
+        "answer": "თუ გაქვთ მოქმედი პრომო კოდი, ჩვეულებრივ შეგიძლიათ შეიყვანოთ ის გადახდის პროცესში, გადახდის დასრულებამდე. მოძებნეთ ველი სახელწოდებით \"პრომო კოდი\" ან \"ფასდაკლების კოდი\"."
+      }
+    }
+  },
+  "savedAddresses": {
+    "addButton": "ახალი მისამართის დამატება",
+    "emptyList": "თქვენ ჯერ არ შეგინახავთ მისამართები.",
+    "loading": "მისამართები იტვირთება..."
+  },
+  "cart": {
+    "title": "თქვენი კალათა",
+    "titleWithCount": "თქვენი კალათა ({{count}})",
+    "emptyMessage": "თქვენი კალათა ცარიელია.",
+    "summaryTitle": "ჯამი",
+    "itemSubtotal": "{{count}} x {{name}}",
+    "discount": "ფასდაკლება",
+    "specialDiscount": "სპეციალური ფასდაკლება",
+    "deliveryFee": "მიტანის საფასური",
+    "total": "სულ",
+    "priceWarning": "შეკვეთის შემდეგ ზოგიერთი პროდუქტის ფასი შეიძლება შეიცვალოს.",
+    "requestOrderButton": "შეკვეთის მოთხოვნა",
+    "perUnit": "/ {{unit}}",
+    "checkoutTitle": "გადახდა",
+    "paymentStatusTitle": "გადახდის სტატუსი",
+    "changePaymentMethodTitle": "გადახდის მეთოდის შეცვლა",
+    "addNewCardTitle": "ახალი ბარათის დამატება"
+  },
+  "paymentStatus": {
+    "title": "გადახდის სტატუსი"
+  },
+  "orderRequest": {
+    "title": "შეკვეთის მოთხოვნა",
+    "yourCart": "თქვენი კალათა ({{count}})",
+    "deliveryDetailsTitle": "მიწოდების დეტალები",
+    "deliverToAddress": "ჩემს მისამართზე მოტანა",
+    "pickUpMyself": "მე თვითონ წამოვიღებ",
+    "selectAddressPlaceholder": "აირჩიეთ მიწოდების მისამართი",
+    "deliveryTimeTitle": "აირჩიეთ მიწოდების დრო",
+    "asap": "რაც შეიძლება მალე",
+    "asapTime": "60-90 წუთი",
+    "scheduleDelivery": "მიწოდების დაგეგმვა",
+    "scheduleTimePlaceholder": "აირჩიეთ თარიღი და დრო",
+    "businessStatusTitle": "აირჩიეთ თქვენი ბიზნეს სტატუსი",
+    "registered": "რეგისტრირებული",
+    "notRegistered": "არარეგისტრირებული",
+    "summaryTitle": "ჯამი",
+    "requestOrderButton": "შეკვეთის მოთხოვნა"
+  },
+  "checkout": {
+    "title": "გადახდა",
+    "yourCart": "თქვენი კალათა ({{count}})",
+    "itemUnavailable": "მიუწვდომელია",
+    "unavailableWarning": "{{count}} პროდუქტი ამჟამად მიუწვდომელია, რადგან მომწოდებელმა ის დროებით წაშალა.",
+    "deliveryDetailsTitle": "მიწოდების დეტალები",
+    "deliveryTimeTitle": "მიწოდების დრო",
+    "businessStatusTitle": "აირჩიეთ თქვენი ბიზნეს სტატუსი",
+    "messageToStore": "შეტყობინება მაღაზიას",
+    "messageToAccountant": "შეტყობინება ბუღალტრისთვის",
+    "messagePlaceholder": "დაწერეთ აქ",
+    "choosePaymentMethod": "აირჩიეთ გადახდის მეთოდი",
+    "cardEndingIn": "ბარათი ბოლოვდება {{last4}}-ით",
+    "changePayment": "შეცვლა",
+    "selectPaymentMethod": "აირჩიეთ გადახდის მეთოდი",
+    "payButton": "გადახდა",
+    "cancelButton": "შეკვეთის გაუქმება"
+  },
+  "orders": {
+    "title": "ყველა შეკვეთა",
+    "currentTab": "მიმდინარე",
+    "historyTab": "ისტორია",
+    "requiresResponse": "საჭიროებს თქვენს პასუხს."
+  },
+  "orderStatus": {
+    "Delivered": "მიწოდებული",
+    "Negotiating": "მოლაპარაკება",
+    "Pending": "მომლოდინე",
+    "InProgress": "მიმდინარე",
+    "Accepted": "მიღებული",
+    "Canceled": "გაუქმებული",
+    "Declined": "უარყოფილი"
+  },
+  "orderDetails": {
+    "title": "Order Details",
+    "notFound": "Order details not found.",
+    "orderIdLabel": "Order ID:",
+    "taxInvoiceTitle": "Tax Invoice Number",
+    "yourOrderTitle": "Your Order",
+    "paymentPrefix": "Payment was made with the",
+    "invoiceCopied": "Invoice number copied to clipboard!",
+    "invoiceCopyError": "Failed to copy invoice number.",
+    "status": {
+      "delivered": "Your order has been delivered",
+      "declinedByYou": "Your order has been declined by you",
+      "inProgress": "Your order is currently in progress",
+      "pending": "Your order is pending confirmation",
+      "canceled": "Your order has been canceled",
+      "problemReported": "Your report has been received"
+    },
+    "banner": {
+      "acceptedAndRated": "You accepted and rated the order",
+      "declinedRefund": "You declined the order. Your payment will be refunded to your account soon.",
+      "unsatisfiedSupport": "You were unsatisfied with your order. Our support team is working on a solution and will keep you updated."
+    }
+  },
+  "supplierDetail": {
+    "priceWarningBanner": "Prices for some products may change after ordering.",
+    "searchPlaceholder": "Search products...",
+    "specialPricesCategory": "Special Prices",
+    "addToCartSuccess": "Added to cart",
+    "addToCartError": "Failed to add to cart",
+    "notFound": "Supplier details not found.",
+    "productsFrom": "Products from {{supplier}}",
+    "allProducts": "All Products"
+  },
+  "productDetail": {
+    "bulkRequestPrompt": "შეგიძლიათ მოითხოვოთ საბაჟო ფასების ვარიანტები, თუ შეუკვეთავთ ნაყარად",
+    "requestButton": "მოთხოვნა",
+    "addToCartButton": "კალათაში დამატება"
+  }
+}

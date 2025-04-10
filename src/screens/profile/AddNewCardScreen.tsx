@@ -1,9 +1,7 @@
-// src/screens/profile/AddNewCardScreen.tsx
 import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
@@ -17,82 +15,61 @@ import * as styles from "../../styles";
 import PrimaryButton from "../../components/PrimaryButton";
 import FormInput from "../../components/FormInput";
 import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
-// Navigation prop type
 type AddNewCardNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "AddNewCard"
 >;
 
 const AddNewCardScreen = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation<AddNewCardNavigationProp>();
 
-  // --- State ---
   const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState(""); // Expect MM/YY
+  const [expiryDate, setExpiryDate] = useState("");
   const [ccv, setCcv] = useState("");
   const [cardHolder, setCardHolder] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // --- Input Formatting/Masking (Simple) ---
-  const formatCardNumber = (text: string) => {
-      const cleaned = text.replace(/\D/g, ''); // Remove non-digits
-      const formatted = cleaned.replace(/(.{4})/g, '$1 ').trim(); // Add space every 4 digits
-      setCardNumber(formatted.slice(0, 19)); // Limit to XXXX XXXX XXXX XXXX format (16 digits + 3 spaces)
-  };
+  const formatCardNumber = (text: string) => {};
+  const formatExpiryDate = (text: string) => {};
+  const formatCcv = (text: string) => {};
 
-  const formatExpiryDate = (text: string) => {
-      const cleaned = text.replace(/\D/g, '');
-      let formatted = cleaned;
-      if (cleaned.length > 2) {
-          formatted = `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
-      }
-       setExpiryDate(formatted.slice(0, 5)); // Limit to MM/YY
-  };
-
-  const formatCcv = (text: string) => {
-      const cleaned = text.replace(/\D/g, '');
-      setCcv(cleaned.slice(0, 4)); // Limit to 3 or 4 digits
-  };
-
-
-  // --- Handlers ---
   const handleSaveCard = () => {
     setError(null);
-    // --- Basic Validation ---
+
     if (!cardNumber || !expiryDate || !ccv || !cardHolder) {
-      setError("Please fill in all card details.");
+      setError(t("addCard.errorMessages.fillFields"));
       return;
     }
-    const rawCardNumber = cardNumber.replace(/\s/g, '');
-    if (rawCardNumber.length < 15 || rawCardNumber.length > 16) { // Basic length check
-        setError("Invalid card number length.");
-        return;
+    const rawCardNumber = cardNumber.replace(/\s/g, "");
+    if (rawCardNumber.length < 15 || rawCardNumber.length > 16) {
+      setError(t("addCard.errorMessages.invalidNumber"));
+      return;
     }
-    if (expiryDate.length !== 5 || !expiryDate.includes('/')) {
-        setError("Invalid expiry date format (MM/YY).");
-        return;
+    if (expiryDate.length !== 5 || !expiryDate.includes("/")) {
+      setError(t("addCard.errorMessages.invalidExpiry"));
+      return;
     }
-     if (ccv.length < 3 || ccv.length > 4) {
-        setError("Invalid CCV length.");
-        return;
+    if (ccv.length < 3 || ccv.length > 4) {
+      setError(t("addCard.errorMessages.invalidCcv"));
+      return;
     }
-    // TODO: Add more robust validation (Luhn algorithm, date check)
 
-    console.log("Saving card:", {
-        cardNumber: rawCardNumber, // Send raw number to backend
-        expiryDate,
-        ccv,
-        cardHolder
-    });
+    console.log("Saving card:", {});
     setIsLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      Alert.alert("Success", "Card added successfully.");
-      navigation.goBack(); // Go back to the list screen
+
+      Alert.alert(
+        t("addCard.successAlertTitle"),
+        t("addCard.successAlertMessage")
+      );
+      navigation.goBack();
     }, 1500);
   };
 
@@ -109,50 +86,48 @@ const AddNewCardScreen = () => {
           keyboardShouldPersistTaps="handled"
         >
           <FormInput
-            label="Number"
-            // iconName="card-outline" // Optional icon
+            label={t("addCard.numberLabel")}
             value={cardNumber}
-            onChangeText={formatCardNumber} // Use formatter
-            placeholder="XXXX XXXX XXXX XXXX"
+            onChangeText={formatCardNumber}
+            placeholder={t("addCard.numberPlaceholder")}
             keyboardType="numeric"
-            maxLength={19} // Length with spaces
+            maxLength={19}
           />
           <View style={s.row}>
             <FormInput
-              label="Valid"
+              label={t("addCard.expiryLabel")}
               value={expiryDate}
-              onChangeText={formatExpiryDate} // Use formatter
-              placeholder="MM/YY"
+              onChangeText={formatExpiryDate}
+              placeholder={t("addCard.expiryPlaceholder")}
               keyboardType="numeric"
               maxLength={5}
               containerStyle={s.expiryInput}
             />
             <FormInput
-              label="CCV Code"
+              label={t("addCard.ccvLabel")}
               value={ccv}
-              onChangeText={formatCcv} // Use formatter
-              placeholder="CCV"
+              onChangeText={formatCcv}
+              placeholder={t("addCard.ccvPlaceholder")}
               keyboardType="numeric"
               maxLength={4}
-              secureTextEntry={true} // Hide CCV
+              secureTextEntry={true}
               containerStyle={s.ccvInput}
             />
           </View>
           <FormInput
-            label="Card Holder"
+            label={t("addCard.holderLabel")}
             value={cardHolder}
             onChangeText={setCardHolder}
-            placeholder="Name and Surname"
+            placeholder={t("addCard.holderPlaceholder")}
             autoCapitalize="words"
           />
 
           {error && <Text style={s.errorText}>{error}</Text>}
-
         </ScrollView>
 
         <View style={s.buttonContainer}>
           <PrimaryButton
-            title="Save Card"
+            title={isLoading ? t("common.saving") : t("addCard.saveButton")}
             onPress={handleSaveCard}
             loading={isLoading}
           />
@@ -161,7 +136,6 @@ const AddNewCardScreen = () => {
     </SafeAreaView>
   );
 };
-
 const s = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -178,17 +152,16 @@ const s = StyleSheet.create({
     paddingBottom: styles.SPACING.xl,
   },
   row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      // marginBottom: styles.SPACING.m, // Margin is handled by FormInput's outerContainer
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   expiryInput: {
-      flex: 1, // Take half width
-      marginRight: styles.SPACING.s, // Space between expiry and ccv
+    flex: 1,
+    marginRight: styles.SPACING.s,
   },
   ccvInput: {
-      flex: 1, // Take half width
-      marginLeft: styles.SPACING.s,
+    flex: 1,
+    marginLeft: styles.SPACING.s,
   },
   buttonContainer: {
     paddingHorizontal: styles.SPACING.containerPadding,
@@ -196,13 +169,13 @@ const s = StyleSheet.create({
     paddingTop: styles.SPACING.s,
     backgroundColor: styles.COLORS.primary,
   },
-   errorText: {
-      color: 'red',
-      fontSize: styles.FONT_SIZES.bodyS,
-      fontFamily: styles.FONT_FAMILY.regular,
-      textAlign: 'center',
-      marginTop: styles.SPACING.s,
-      marginBottom: styles.SPACING.xs,
+  errorText: {
+    color: "red",
+    fontSize: styles.FONT_SIZES.bodyS,
+    fontFamily: styles.FONT_FAMILY.regular,
+    textAlign: "center",
+    marginTop: styles.SPACING.s,
+    marginBottom: styles.SPACING.xs,
   },
 });
 

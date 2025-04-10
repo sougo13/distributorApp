@@ -1,78 +1,116 @@
-// src/screens/profile/SavedAddressesScreen.tsx
 import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   FlatList,
-  TouchableOpacity, // For the "Add New" button
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
 import * as styles from "../../styles";
-import AddressListItem from "../../components/AddressListItem"; // Import the new component
-import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator"; // Import Param List
+import AddressListItem from "../../components/AddressListItem";
+import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
+import { CartStackParamList } from "../../navigation/CartStackNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
+import { MOCK_ADDRESSES } from "../../data/mockData";
+import { Address } from "../../types";
 
-// Mock data type
-interface Address {
-  id: string;
-  fullAddress: string;
-  // Add other fields if needed later (city, postalCode, etc.)
-}
+type SavedAddressesRouteProp = RouteProp<
+  ProfileStackParamList & CartStackParamList,
+  "SavedAddresses"
+>;
 
-// Mock Data (replace with actual data fetching)
-const MOCK_ADDRESSES: Address[] = [
-  { id: "1", fullAddress: "38 Kote and Soso Tsereteli Street, Tbilisi" },
-  { id: "2", fullAddress: "12 Rustaveli Avenue, Batumi, Georgia" },
-  { id: "3", fullAddress: "Another Saved Address Example, City Name" },
-];
-
-// Navigation prop type
 type SavedAddressesNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "SavedAddresses"
 >;
 
 const SavedAddressesScreen = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation<SavedAddressesNavigationProp>();
+  const route = useRoute<SavedAddressesRouteProp>();
+  const canSelect = route.params?.canSelect;
+  const originRoute = route.params?.originRoute;
+
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // --- Effects ---
   useEffect(() => {
-    // Simulate fetching addresses
     setTimeout(() => {
       setAddresses(MOCK_ADDRESSES);
       setIsLoading(false);
-    }, 500); // Simulate short delay
+    }, 500);
   }, []);
 
-  // --- Handlers ---
   const handleEditAddress = useCallback(
     (addressId: string) => {
-      navigation.navigate("AddEditAddress", { addressId }); // Pass ID for editing
+      navigation.navigate("AddEditAddress", { addressId });
     },
     [navigation]
   );
 
+  const handleSelectAddress = useCallback(
+    (address: Address) => {
+      if (originRoute === "Cart") {
+        console.log(
+          `Returning selected address to OrderRequest in Cart stack:`,
+          address
+        );
+        navigation.navigate("Cart", {
+          screen: "OrderRequest",
+          params: { selectedAddress: address },
+        });
+      } else if (originRoute) {
+        console.log(`Returning selected address to ${originRoute}:`, address);
+        navigation.navigate(originRoute as any, { selectedAddress: address });
+      } else {
+        console.warn("Origin route is not defined for selection.");
+      }
+    },
+    [navigation, originRoute]
+  );
+
   const handleAddNewAddress = useCallback(() => {
-    navigation.navigate("AddEditAddress", {}); // No ID means adding new
+    navigation.navigate("AddEditAddress", {});
   }, [navigation]);
 
-  // --- Render ---
   const renderAddressItem = ({ item }: { item: Address }) => (
     <AddressListItem
       id={item.id}
       addressText={item.fullAddress}
-      onPress={handleEditAddress}
+      onPress={(id) => {
+        const selectedAddressObject = addresses.find((addr) => addr.id === id);
+        if (!selectedAddressObject) return;
+
+        if (canSelect) {
+          handleSelectAddress(selectedAddressObject);
+        } else {
+          handleEditAddress(id);
+        }
+      }}
     />
   );
 
-  // TODO: Add a loading indicator while fetching
-  // TODO: Add empty state text if addresses.length === 0
+  const renderListEmptyComponent = () => {
+    if (isLoading) {
+      return (
+        <View style={s.emptyContainer}>
+          <ActivityIndicator size="large" color={styles.COLORS.secondary} />
+        </View>
+      );
+    } else {
+      return (
+        <View style={s.emptyContainer}>
+          <Text style={s.emptyText}>{t("savedAddresses.emptyList")}</Text>
+        </View>
+      );
+    }
+  };
 
   return (
     <SafeAreaView style={s.safeArea}>
@@ -81,32 +119,27 @@ const SavedAddressesScreen = () => {
         renderItem={renderAddressItem}
         keyExtractor={(item) => item.id}
         style={s.list}
-        contentContainerStyle={s.listContent}
-        ListEmptyComponent={
-          !isLoading ? ( // Show only after loading is done
-            <View style={s.emptyContainer}>
-              <Text style={s.emptyText}>
-                You haven't saved any addresses yet.
-              </Text>
-            </View>
-          ) : null
+        contentContainerStyle={
+          addresses.length === 0 ? s.listContentEmpty : s.listContent
         }
+        ListEmptyComponent={renderListEmptyComponent}
       />
 
-      {/* "Add New Address" Button */}
-      <TouchableOpacity
-        style={s.addButton}
-        onPress={handleAddNewAddress}
-        activeOpacity={0.8}
-      >
-        <Ionicons
-          name="add-outline"
-          size={28}
-          color={styles.COLORS.accent} // White icon
-          style={s.addIcon}
-        />
-        <Text style={s.addButtonText}>Add New Address</Text>
-      </TouchableOpacity>
+      {!canSelect && (
+        <TouchableOpacity
+          style={s.addButton}
+          onPress={handleAddNewAddress}
+          activeOpacity={0.8}
+        >
+          <Ionicons
+            name="add-outline"
+            size={28}
+            color={styles.COLORS.accent}
+            style={s.addIcon}
+          />
+          <Text style={s.addButtonText}>{t("savedAddresses.addButton")}</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };
@@ -117,20 +150,26 @@ const s = StyleSheet.create({
     backgroundColor: styles.COLORS.primary,
   },
   list: {
-    flex: 1, // Takes up available space before the button
+    flex: 1,
   },
   listContent: {
+    padding: styles.SPACING.containerPadding,
+    flexGrow: 1,
+  },
+  listContentEmpty: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
     padding: styles.SPACING.containerPadding,
   },
   addButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: styles.COLORS.inputBackground, // Same as list items
+    backgroundColor: styles.COLORS.inputBackground,
     borderRadius: styles.COMPONENT_STYLES.borderRadius,
     paddingVertical: styles.SPACING.m,
     paddingHorizontal: styles.SPACING.m,
-    margin: styles.SPACING.containerPadding, // Margin around the button
-    // Position it above the tab bar if needed, adjust SafeAreaView/padding
+    margin: styles.SPACING.containerPadding,
   },
   addIcon: {
     marginRight: styles.SPACING.m,
@@ -141,16 +180,14 @@ const s = StyleSheet.create({
     fontSize: styles.FONT_SIZES.bodyM,
   },
   emptyContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 50, // Adjust as needed
   },
   emptyText: {
     color: styles.COLORS.grey,
     fontSize: styles.FONT_SIZES.bodyM,
     fontFamily: styles.FONT_FAMILY.regular,
+    textAlign: "center",
   },
 });
-
 export default SavedAddressesScreen;

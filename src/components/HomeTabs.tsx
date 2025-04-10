@@ -1,8 +1,11 @@
+
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next"; 
 import { COLORS, FONT_FAMILY, FONT_SIZES, SPACING } from "../styles";
 
-type ActiveTab = "Categories" | "Suppliers"; // Переносим тип сюда
+
+type ActiveTab = "Categories" | "Suppliers";
 
 interface HomeTabsProps {
   activeTab: ActiveTab;
@@ -10,20 +13,24 @@ interface HomeTabsProps {
 }
 
 const HomeTabs: React.FC<HomeTabsProps> = ({ activeTab, onTabPress }) => {
+  const { t } = useTranslation(); 
+
   return (
     <View style={styles.tabsContainer}>
       <TouchableOpacity
         style={styles.tabButton}
+
         onPress={() => onTabPress("Categories")}
         activeOpacity={0.7}
       >
         <Text
           style={[
             styles.tabText,
-            activeTab === "Categories" && styles.activeTabText,
+            activeTab === "Categories" && styles.activeTabText, 
           ]}
         >
-          Categories
+          
+          {t("home.tabs.categories")}
         </Text>
         {activeTab === "Categories" && (
           <View style={styles.activeTabIndicator} />
@@ -31,16 +38,18 @@ const HomeTabs: React.FC<HomeTabsProps> = ({ activeTab, onTabPress }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.tabButton}
+
         onPress={() => onTabPress("Suppliers")}
         activeOpacity={0.7}
       >
         <Text
           style={[
             styles.tabText,
-            activeTab === "Suppliers" && styles.activeTabText,
+            activeTab === "Suppliers" && styles.activeTabText, 
           ]}
         >
-          Suppliers
+          
+          {t("home.tabs.suppliers")}
         </Text>
         {activeTab === "Suppliers" && (
           <View style={styles.activeTabIndicator} />
@@ -49,6 +58,7 @@ const HomeTabs: React.FC<HomeTabsProps> = ({ activeTab, onTabPress }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   tabsContainer: {
@@ -63,7 +73,7 @@ const styles = StyleSheet.create({
   tabText: {
     color: COLORS.grey,
     fontSize: FONT_SIZES.bodyM,
-    fontFamily: FONT_FAMILY.medium, // medium
+    fontFamily: FONT_FAMILY.medium,
   },
   activeTabText: {
     color: COLORS.accent,

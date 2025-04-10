@@ -1,36 +1,30 @@
-// App.tsx
+import "./src/i18n";
 import React, { useState, useEffect, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import { View, ActivityIndicator, StyleSheet } from "react-native"; // Import necessary RN components
+import { View, ActivityIndicator, StyleSheet } from "react-native"; 
 
-// Import Navigators and Screens
 import AppNavigator from "./src/navigation/AppNavigator";
-import LoginScreen from "./src/screens/LoginScreen"; // Keep LoginScreen import
+import LoginScreen from "./src/screens/LoginScreen"; 
 
-// Import Auth Context
 import { AuthProvider, useAuth } from "./src/context/AuthContext";
 
-// Import Styles (needed for loading indicator)
 import * as styles from "./src/styles";
+import AuthStackNavigator from "./src/navigation/AuthStackNavigator";
 
-// Загрузка шрифтов
 const loadFonts = async () => {
   await Font.loadAsync({
     "Satoshi-Regular": require("./src/assets/fonts/Satoshi-Regular.otf"),
     "Satoshi-Medium": require("./src/assets/fonts/Satoshi-Medium.otf"),
-    // Добавь другие начертания, если нужно
   });
 };
 
-// Компонент для управления навигацией на основе AuthState
 const AppContent = () => {
-  const { isLoggedIn, isLoading } = useAuth(); // Используем хук useAuth
+  const { isLoggedIn, isLoading: isAuthLoading } = useAuth(); 
 
-  // Показываем индикатор загрузки, пока проверяется состояние аутентификации
-  if (isLoading) {
+  if (isAuthLoading) {
     return (
       <View style={loadingStyles.container}>
         <ActivityIndicator size="large" color={styles.COLORS.secondary} />
@@ -40,7 +34,7 @@ const AppContent = () => {
 
   return (
     <NavigationContainer>
-      {isLoggedIn ? <AppNavigator /> : <LoginScreen />}
+      {isLoggedIn ? <AppNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 };
@@ -51,10 +45,9 @@ export default function App() {
   useEffect(() => {
     loadFonts()
       .then(() => setFontsLoaded(true))
-      .catch(console.warn); // Log font loading errors
+      .catch(console.warn); 
   }, []);
 
-  // Показываем индикатор загрузки, пока грузятся шрифты
   if (!fontsLoaded) {
     return (
       <View style={loadingStyles.container}>
@@ -63,7 +56,6 @@ export default function App() {
     );
   }
 
-  // Оборачиваем AppContent в AuthProvider и SafeAreaProvider
   return (
     <AuthProvider>
       <SafeAreaProvider>
@@ -74,7 +66,6 @@ export default function App() {
   );
 }
 
-// Стили для индикатора загрузки (можно вынести)
 const loadingStyles = StyleSheet.create({
   container: {
     flex: 1,

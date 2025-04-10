@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   View,
@@ -8,6 +9,8 @@ import {
   Platform,
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next"; 
+
 import {
   COLORS,
   FONT_FAMILY,
@@ -17,7 +20,7 @@ import {
 } from "../styles";
 
 interface HomeHeaderProps {
-  locationText?: string; // Сделаем опциональным
+  locationText?: string; 
   searchQuery: string;
   onSearchChange: (text: string) => void;
   onLocationPress?: () => void;
@@ -25,16 +28,21 @@ interface HomeHeaderProps {
 }
 
 const HomeHeader: React.FC<HomeHeaderProps> = ({
-  locationText = "Default Location...", // Текст по умолчанию
+  locationText, 
   searchQuery,
   onSearchChange,
   onLocationPress,
   onNotificationPress,
 }) => {
+  const { t } = useTranslation(); 
+
   return (
+
     <View style={styles.headerOuterContainer}>
-      {/* Top Bar */}
+      
       <View style={styles.topBar}>
+        
+        
         <TouchableOpacity
           style={styles.locationContainer}
           activeOpacity={0.7}
@@ -46,7 +54,10 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
             {locationText}
           </Text>
         </TouchableOpacity>
+
+        
         <TouchableOpacity
+          style={styles.notificationButton}
           activeOpacity={0.7}
           onPress={onNotificationPress}
           disabled={!onNotificationPress}
@@ -56,11 +67,10 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
             size={24}
             color={COLORS.accent}
           />
-          {/* Индикатор уведомлений можно добавить здесь */}
         </TouchableOpacity>
       </View>
 
-      {/* Search Bar */}
+      
       <View style={styles.searchContainer}>
         <Ionicons
           name="search"
@@ -70,7 +80,8 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
         />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search"
+
+          placeholder={t("home.searchPlaceholder")}
           placeholderTextColor={COLORS.placeholder}
           value={searchQuery}
           onChangeText={onSearchChange}
@@ -80,21 +91,24 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
   );
 };
 
+
 const styles = StyleSheet.create({
   headerOuterContainer: {
-    marginBottom: SPACING.l, // Отступ после всего хедера
+    marginBottom: SPACING.l,
+    paddingHorizontal: SPACING.containerPadding,
   },
   topBar: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: Platform.OS === "android" ? SPACING.m : SPACING.s, // Разный отступ для статус бара
+    paddingTop: Platform.OS === "android" ? SPACING.m : SPACING.s,
     paddingBottom: SPACING.m,
   },
   locationContainer: {
     flexDirection: "row",
     alignItems: "center",
     flexShrink: 1,
+    flex: 1,
     marginRight: SPACING.s,
   },
   locationText: {
@@ -102,7 +116,9 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.bodyS,
     fontFamily: FONT_FAMILY.regular,
     marginLeft: SPACING.xs,
-    flexShrink: 1,
+  },
+  notificationButton: {
+    paddingLeft: SPACING.xs,
   },
   searchContainer: {
     flexDirection: "row",
@@ -111,7 +127,6 @@ const styles = StyleSheet.create({
     borderRadius: COMPONENT_STYLES.borderRadius,
     paddingHorizontal: SPACING.m,
     height: COMPONENT_STYLES.searchBarHeight,
-    // marginBottom убран, т.к. он теперь у headerOuterContainer
   },
   searchIcon: {
     marginRight: SPACING.s,

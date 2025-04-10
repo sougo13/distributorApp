@@ -1,4 +1,4 @@
-// src/context/AuthContext.tsx
+
 import React, {
   createContext,
   useState,
@@ -9,17 +9,17 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Ключ для хранения токена/информации о сессии
-const AUTH_STORAGE_KEY = "userToken"; // Или 'authState', если храним больше инфо
+
+const AUTH_STORAGE_KEY = "userToken"; 
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  isLoading: boolean; // Indicates if checking initial auth state
-  login: (userData?: any) => Promise<void>; // Make login async if needed
-  logout: () => Promise<void>; // Make logout async
+  isLoading: boolean; 
+  login: (userData?: any) => Promise<void>; 
+  logout: () => Promise<void>; 
 }
 
-// Создаем контекст с начальными значениями
+
 const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,
   isLoading: true,
@@ -35,20 +35,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Проверка состояния при запуске
+
   useEffect(() => {
     const checkAuthState = async () => {
       try {
-        // Пытаемся получить токен/флаг из хранилища
+
         const storedToken = await AsyncStorage.getItem(AUTH_STORAGE_KEY);
         console.log("Auth check, stored token:", storedToken);
-        // Если что-то есть, считаем пользователя вошедшим
+
         setIsLoggedIn(!!storedToken);
       } catch (e) {
         console.error("Failed to load auth state:", e);
-        setIsLoggedIn(false); // На всякий случай
+        setIsLoggedIn(false); 
       } finally {
-        setIsLoading(false); // Завершили проверку
+        setIsLoading(false); 
       }
     };
 
@@ -56,17 +56,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (userData?: any) => {
-    setIsLoading(true); // Можно добавить индикатор на время "логина"
+    setIsLoading(true); 
     try {
-      // Здесь может быть логика API запроса для получения токена
-      // Для простоты сейчас просто сохраняем флаг/токен
-      const tokenToStore = userData?.token || "dummy-token"; // Используем заглушку
+
+
+      const tokenToStore = userData?.token || "dummy-token"; 
       await AsyncStorage.setItem(AUTH_STORAGE_KEY, tokenToStore);
       setIsLoggedIn(true);
       console.log("User logged in, token stored.");
     } catch (e) {
       console.error("Failed to login:", e);
-      setIsLoggedIn(false); // Убедимся, что не вошли в систему
+      setIsLoggedIn(false); 
     } finally {
       setIsLoading(false);
     }
@@ -75,20 +75,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     setIsLoading(true);
     try {
-      // Очищаем токен/флаг из хранилища
+
       await AsyncStorage.removeItem(AUTH_STORAGE_KEY);
       setIsLoggedIn(false);
       console.log("User logged out, token removed.");
     } catch (e) {
       console.error("Failed to logout:", e);
-      // Можно оставить пользователя в системе, если очистка не удалась?
-      // setIsLoggedIn(true); // ? Решай сам
+
+
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Используем useMemo для предотвращения ненужных ререндеров потребителей контекста
+
   const authContextValue = useMemo(
     () => ({
       isLoggedIn,
@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       login,
       logout,
     }),
-    [isLoggedIn, isLoading] // Зависимости useMemo
+    [isLoggedIn, isLoading] 
   );
 
   return (
@@ -106,7 +106,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-// Хук для удобного использования контекста
+
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

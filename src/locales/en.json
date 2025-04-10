@@ -1,0 +1,333 @@
+{
+  "common": {
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "error": "Error",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "continue": "Continue",
+    "done": "Done",
+    "discount": "Discount",
+    "specialDiscount": "Special Discount",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "goBack": "Go Back",
+    "noItemsFound": "No items found"
+  },
+  "login": {
+    "welcomeTitle": "Welcome Back",
+    "welcomeSubtitle": "You can sign in now or continue without signing in. You'll have the option to create an account later.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot Password?",
+    "continueWithoutSignIn": "Continue Without Sign In",
+    "noAccount": "Don't Have an account?",
+    "signUpLink": "Sign Up",
+    "loggingIn": "Signing in...",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "subtitle": "Just a few details and you're in!",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Create a password",
+    "repeatPasswordLabel": "Repeat Password",
+    "repeatPasswordPlaceholder": "Repeat your password",
+    "submitting": "Submitting..."
+  },
+  "roleSelection": {
+    "title": "Who Are You?",
+    "subtitle": "Pick the role that fits you best. Each one unlocks different features tailored to your needs.",
+    "supplier": "A Supplier",
+    "buyer": "A Buyer",
+    "loginLink": "Log In",
+    "haveAccount": "Have an account?"
+  },
+  "emailVerification": {
+    "title": "Verify Your Email",
+    "message": "We've sent a verification link to your email. Just click it to finish signing up!",
+    "doneButton": "Done"
+  },
+  "home": {
+    "locationDefault": "Select address...",
+    "searchPlaceholder": "Search products or suppliers",
+    "tabs": {
+      "categories": "Categories",
+      "suppliers": "Suppliers"
+    },
+    "clearFilter": "Clear"
+  },
+  "profile": {
+    "title": "Profile",
+    "getHelp": "Get Help",
+    "registered": "Registered: {{date}}",
+    "options": {
+      "personalInfo": "Personal Information",
+      "changePassword": "Change Password",
+      "savedAddresses": "Saved Addresses",
+      "paymentMethods": "Payment Methods",
+      "changeLanguage": "Change Language",
+      "faq": "FAQ",
+      "deleteAccount": "Delete Account"
+    },
+    "logout": "Log Out",
+    "logoutConfirmTitle": "Confirm Logout",
+    "logoutConfirmMessage": "Are you sure you want to log out?",
+    "logoutError": "Could not log out. Please try again."
+  },
+  "languages": {
+    "en": "English",
+    "ka": "Georgian"
+  },
+  "changeLanguage": {
+    "title": "Change Language",
+    "selectLanguage": "Select Language",
+    "button": "Save Changes",
+    "saving": "Saving...",
+    "successTitle": "Success",
+    "successMessage": "Language preference saved to {{language}}."
+  },
+  "profileStack": {
+    "personalInfo": "Personal Information",
+    "changePassword": "Change Password",
+    "savedAddresses": "Saved Addresses",
+    "editAddress": "Edit Address",
+    "addAddress": "Add New Address",
+    "paymentMethods": "Payment Methods",
+    "addCard": "Add New Card",
+    "changeLanguage": "Change Language",
+    "faq": "FAQ",
+    "deleteAccount": "Account Deletion"
+  },
+  "personalInfo": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Business Name",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "business@name.com",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "+XXX XXX XXX XXX",
+    "successAlertTitle": "Success",
+    "successAlertMessage": "Personal information updated."
+  },
+  "changePassword": {
+    "currentPasswordLabel": "Current Password",
+    "currentPasswordPlaceholder": "Enter your current password",
+    "newPasswordLabel": "New Password",
+    "newPasswordPlaceholder": "Enter new password",
+    "repeatPasswordLabel": "Repeat New Password",
+    "repeatPasswordPlaceholder": "Repeat new password",
+    "errorMessages": {
+      "fillFields": "Please fill in all fields.",
+      "mismatch": "New passwords do not match.",
+      "tooShort": "New password must be at least {{count}} characters long.",
+      "apiError": "Failed to change password. Please check your current password or try again later."
+    },
+    "successAlertTitle": "Success",
+    "successAlertMessage": "Password changed successfully."
+  },
+  "deleteAccount": {
+    "mainText": "We're sorry to see you go. Deleting your account will permanently remove your profile, order history, and saved preferences. This action cannot be undone.",
+    "subHeader": "Before you proceed:",
+    "consequences": [
+      "Any ongoing orders will be canceled.",
+      "Refunds may take a few days to process.",
+      "You'll need to create a new account if you wish to use our service again."
+    ],
+    "backButton": "Back",
+    "deleteButton": "Delete My Account",
+    "confirmTitle": "Confirm Deletion",
+    "confirmMessage": "This action is permanent and cannot be undone. Are you absolutely sure you want to delete your account?",
+    "confirmDeleteButton": "Delete Account",
+    "successAlertTitle": "Account Deleted",
+    "successAlertMessage": "Your account has been permanently deleted."
+  },
+  "addEditAddress": {
+    "label": "Full Address",
+    "placeholder": "Enter street, city, region...",
+    "saveButton": "Save Address",
+    "updateButton": "Update Address",
+    "savingButton": "Saving...",
+    "updatingButton": "Updating...",
+    "errorMessages": {
+      "required": "Please enter the full address."
+    },
+    "successAlertTitle": "Success",
+    "saveSuccessMessage": "Address saved successfully.",
+    "updateSuccessMessage": "Address updated successfully."
+  },
+  "addCard": {
+    "numberLabel": "Number",
+    "numberPlaceholder": "XXXX XXXX XXXX XXXX",
+    "expiryLabel": "Valid",
+    "expiryPlaceholder": "MM/YY",
+    "ccvLabel": "CCV Code",
+    "ccvPlaceholder": "CCV",
+    "holderLabel": "Card Holder",
+    "holderPlaceholder": "Name and Surname",
+    "saveButton": "Save Card",
+    "errorMessages": {
+      "fillFields": "Please fill in all card details.",
+      "invalidNumber": "Invalid card number length.",
+      "invalidExpiry": "Invalid expiry date format (MM/YY).",
+      "invalidCcv": "Invalid CCV length."
+    },
+    "successAlertTitle": "Success",
+    "successAlertMessage": "Card added successfully."
+  },
+  "paymentMethods": {
+    "addButton": "Add New Card",
+    "emptyList": "No payment methods saved yet.",
+    "loading": "Loading payment methods...",
+    "cardEndingIn": "Card Ending In {{last4}}"
+  },
+  "faq": {
+    "title": "FAQ",
+    "items": {
+      "q1": {
+        "question": "How does the app work?",
+        "answer": "Choose your desired products, place an order, and wait for a supplier to accept it. Pay securely and receive your order as soon as possible or schedule it at your convenience."
+      },
+      "q2": {
+        "question": "How do I place an order?",
+        "answer": "Navigate to the Home screen, select a category or supplier, browse products, add them to your cart, and proceed to checkout. Follow the on-screen instructions to complete the order."
+      },
+      "q3": {
+        "question": "What payment methods do you accept?",
+        "answer": "We currently accept major credit and debit cards. You can manage your saved payment methods in the Profile section."
+      },
+      "q4": {
+        "question": "Can I schedule a delivery in advance?",
+        "answer": "Yes, during the checkout process, you may have the option to select a preferred delivery date and time slot, depending on the supplier's availability."
+      },
+      "q5": {
+        "question": "How do I use a promo code or discount?",
+        "answer": "If you have a valid promo code, you can usually enter it during the checkout process before completing your payment. Look for a field labeled \"Promo Code\" or \"Discount Code\"."
+      }
+    }
+  },
+  "savedAddresses": {
+    "addButton": "Add New Address",
+    "emptyList": "You haven't saved any addresses yet.",
+    "loading": "Loading addresses..."
+  },
+  "cart": {
+    "title": "Your Cart",
+    "titleWithCount": "Your Cart ({{count}})",
+    "emptyMessage": "Your cart is empty.",
+    "summaryTitle": "Summary",
+    "itemSubtotal": "{{count}} x {{name}}",
+    "discount": "Discount",
+    "specialDiscount": "Special Discount",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "priceWarning": "Prices for some products may change after ordering.",
+    "requestOrderButton": "Request Order",
+    "perUnit": "/ {{unit}}",
+    "checkoutTitle": "Checkout",
+    "paymentStatusTitle": "Payment Status",
+    "changePaymentMethodTitle": "Change Payment Method",
+    "addNewCardTitle": "Add New Card"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "yourCart": "Your Cart ({{count}})",
+    "unavailableWarning": "{{count}} product is currently unavailable as the supplier has temporarily removed it.",
+    "deliveryDetailsTitle": "Delivery Details",
+    "deliveryTimeTitle": "Delivery Time",
+    "businessStatusTitle": "Select Your Business Status",
+    "messageToStore": "Message To The Store",
+    "messageToAccountant": "Message For An Accountant",
+    "messagePlaceholder": "Type here",
+    "choosePaymentMethod": "Choose Payment Method",
+    "cardEndingIn": "Card Ending In {{last4}}",
+    "changePayment": "Change",
+    "selectPaymentMethod": "Select Payment Method",
+    "payButton": "Pay",
+    "cancelButton": "Cancel Order",
+    "itemUnavailable": "Unavailable"
+  },
+  "paymentStatus": {
+    "title": "Payment Status"
+  },
+  "orderRequest": {
+    "title": "Order Request",
+    "yourCart": "Your Cart ({{count}})",
+    "deliveryDetailsTitle": "Delivery Details",
+    "deliverToAddress": "Deliver it to my address",
+    "pickUpMyself": "I'll pick it up myself",
+    "selectAddressPlaceholder": "Select delivery address",
+    "deliveryTimeTitle": "Select Delivery Time",
+    "asap": "As soon as possible",
+    "asapTime": "60-90 minutes",
+    "scheduleDelivery": "Schedule Delivery",
+    "scheduleTimePlaceholder": "Select date and time",
+    "businessStatusTitle": "Select Your Business Status",
+    "registered": "Registered",
+    "notRegistered": "Not Registered",
+    "summaryTitle": "Summary",
+    "requestOrderButton": "Request Order"
+  },
+  "orders": {
+    "title": "All Orders",
+    "currentTab": "Current",
+    "historyTab": "History",
+    "requiresResponse": "Your response is required."
+  },
+  "orderStatus": {
+    "Delivered": "Delivered",
+    "Negotiating": "Negotiating",
+    "Pending": "Pending",
+    "InProgress": "In Progress",
+    "Accepted": "Accepted",
+    "Canceled": "Canceled",
+    "Declined": "Declined"
+  },
+  "orderDetails": {
+    "title": "Order Details",
+    "notFound": "Order details not found.",
+    "orderIdLabel": "Order ID:",
+    "taxInvoiceTitle": "Tax Invoice Number",
+    "yourOrderTitle": "Your Order",
+    "paymentPrefix": "Payment was made with the",
+    "invoiceCopied": "Invoice number copied to clipboard!",
+    "invoiceCopyError": "Failed to copy invoice number.",
+    "status": {
+      "delivered": "Your order has been delivered",
+      "declinedByYou": "Your order has been declined by you",
+      "inProgress": "Your order is currently in progress",
+      "pending": "Your order is pending confirmation",
+      "canceled": "Your order has been canceled",
+      "problemReported": "Your report has been received"
+    },
+    "banner": {
+      "acceptedAndRated": "You accepted and rated the order",
+      "declinedRefund": "You declined the order. Your payment will be refunded to your account soon.",
+      "unsatisfiedSupport": "You were unsatisfied with your order. Our support team is working on a solution and will keep you updated."
+    }
+  },
+  "supplierDetail": {
+    "priceWarningBanner": "Prices for some products may change after ordering.",
+    "searchPlaceholder": "Search products...",
+    "specialPricesCategory": "Special Prices",
+    "addToCartSuccess": "Added to cart",
+    "addToCartError": "Failed to add to cart",
+    "notFound": "Supplier details not found.",
+    "productsFrom": "Products from {{supplier}}",
+    "allProducts": "All Products"
+  },
+  "productDetail": {
+    "bulkRequestPrompt": "You can request custom pricing options if you order in bulk",
+    "requestButton": "Request",
+    "addToCartButton": "Add to Cart"
+  }
+}

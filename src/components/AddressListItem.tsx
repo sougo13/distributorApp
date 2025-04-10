@@ -1,13 +1,13 @@
-// src/components/AddressListItem.tsx
+
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as styles from "../styles";
 
 interface AddressListItemProps {
-  id: string; // Unique ID for the address
+  id: string; 
   addressText: string;
-  onPress: (id: string) => void; // Callback when the item is pressed (for editing)
+  onPress: (id: string) => void; 
 }
 
 const AddressListItem: React.FC<AddressListItemProps> = ({
@@ -31,7 +31,7 @@ const AddressListItem: React.FC<AddressListItemProps> = ({
         {addressText}
       </Text>
       <Ionicons
-        name="pencil-outline" // Edit icon
+        name="pencil-outline" 
         size={20}
         color={styles.COLORS.iconGrey}
         style={s.editIcon}
@@ -44,25 +44,23 @@ const s = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: styles.COLORS.inputBackground, // Using input background color as per design
+    backgroundColor: styles.COLORS.inputBackground, 
     borderRadius: styles.COMPONENT_STYLES.borderRadius,
     paddingVertical: styles.SPACING.m,
     paddingHorizontal: styles.SPACING.m,
-    marginBottom: styles.SPACING.m, // Space between items
+    marginBottom: styles.SPACING.m, 
   },
   icon: {
     marginRight: styles.SPACING.m,
   },
   addressText: {
-    flex: 1, // Take available space
+    flex: 1, 
     color: styles.COLORS.accent,
     fontFamily: styles.FONT_FAMILY.regular,
     fontSize: styles.FONT_SIZES.bodyM,
-    marginRight: styles.SPACING.s, // Space before edit icon
+    marginRight: styles.SPACING.s, 
   },
-  editIcon: {
-    // No specific styles needed for now
-  },
+  editIcon: {},
 });
 
 export default AddressListItem;

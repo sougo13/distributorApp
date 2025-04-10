@@ -1,4 +1,4 @@
-// src/components/PrimaryButton.tsx
+
 import React from "react";
 import {
   TouchableOpacity,
@@ -8,15 +8,15 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import * as styles from "../styles"; // Import all styles
+import * as styles from "../styles"; 
 
 interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  style?: ViewStyle; // Allow passing custom styles for the button container
-  textStyle?: TextStyle; // Allow passing custom styles for the text
+  style?: ViewStyle; 
+  textStyle?: TextStyle; 
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -34,7 +34,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       style={[
         s.button,
         isDisabled ? s.disabledButton : {},
-        style, // Apply custom container styles
+        style, 
       ]}
       onPress={onPress}
       disabled={isDisabled}
@@ -46,7 +46,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
         <Text
           style={[
             s.text,
-            textStyle, // Apply custom text styles
+            textStyle, 
           ]}
         >
           {title}
@@ -66,10 +66,10 @@ const s = StyleSheet.create({
     paddingHorizontal: styles.SPACING.m,
   },
   disabledButton: {
-    opacity: 0.6, // Standard way to show disabled state
+    opacity: 0.6, 
   },
   text: {
-    color: styles.COLORS.primary, // Dark text on green button
+    color: styles.COLORS.primary, 
     fontSize: styles.FONT_SIZES.button,
     fontFamily: styles.FONT_FAMILY.medium,
   },

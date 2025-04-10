@@ -1,72 +1,69 @@
-// src/screens/profile/ChangePasswordScreen.tsx
 import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
   Alert,
-  Text, // For potential error messages
+  Text,
 } from "react-native";
-import * as styles from "../../styles"; // Import styles
-import PrimaryButton from "../../components/PrimaryButton"; // Import custom button
-import FormInput from "../../components/FormInput"; // Import custom input
+import * as styles from "../../styles";
+import PrimaryButton from "../../components/PrimaryButton";
+import FormInput from "../../components/FormInput";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
+
+const MIN_PASSWORD_LENGTH = 6;
 
 const ChangePasswordScreen = () => {
-  // --- State ---
+  const { t } = useTranslation();
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null); // General error message
+  const [error, setError] = useState<string | null>(null);
 
-  // --- Handlers ---
   const handleSaveChanges = () => {
-    setError(null); // Clear previous errors
+    setError(null);
 
-    // --- Basic Validation ---
     if (!currentPassword || !newPassword || !repeatNewPassword) {
-      setError("Please fill in all fields.");
+      setError(t("changePassword.errorMessages.fillFields"));
       return;
     }
     if (newPassword !== repeatNewPassword) {
-      setError("New passwords do not match.");
+      setError(t("changePassword.errorMessages.mismatch"));
       return;
     }
-    if (newPassword.length < 6) {
-      // Example minimum length validation
-      setError("New password must be at least 6 characters long.");
+    if (newPassword.length < MIN_PASSWORD_LENGTH) {
+      setError(
+        t("changePassword.errorMessages.tooShort", {
+          count: MIN_PASSWORD_LENGTH,
+        })
+      );
       return;
     }
-    // TODO: Add more complex password validation if needed (strength, etc.)
-    // TODO: Add check for current password validity via API
 
     console.log("Changing password...");
     setIsLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // --- Handle API response ---
-      const isSuccess = Math.random() > 0.2; // Simulate success/failure (replace with actual API result)
+      const isSuccess = Math.random() > 0.2;
 
       if (isSuccess) {
-        Alert.alert("Success", "Password changed successfully.");
-        // Clear fields after success
+        Alert.alert(
+          t("changePassword.successAlertTitle"),
+          t("changePassword.successAlertMessage")
+        );
         setCurrentPassword("");
         setNewPassword("");
         setRepeatNewPassword("");
-        // Optionally navigate back
-        // navigation.goBack();
       } else {
-        setError(
-          "Failed to change password. Please check your current password or try again later."
-        );
-        // Don't clear fields on failure
+        setError(t("changePassword.errorMessages.apiError"));
       }
-    }, 1500); // Simulate 1.5 seconds delay
+    }, 1500);
   };
 
   return (
@@ -82,49 +79,43 @@ const ChangePasswordScreen = () => {
           keyboardShouldPersistTaps="handled"
         >
           <FormInput
-            label="Current Password"
+            label={t("changePassword.currentPasswordLabel")}
             iconName="lock-closed-outline"
             value={currentPassword}
             onChangeText={setCurrentPassword}
-            placeholder="Enter your current password"
+            placeholder={t("changePassword.currentPasswordPlaceholder")}
             secureTextEntry={true}
             autoCapitalize="none"
           />
           <FormInput
-            label="New Password"
+            label={t("changePassword.newPasswordLabel")}
             iconName="lock-closed-outline"
             value={newPassword}
             onChangeText={setNewPassword}
-            placeholder="Enter new password"
+            placeholder={t("changePassword.newPasswordPlaceholder")}
             secureTextEntry={true}
             autoCapitalize="none"
-            // Add margin if needed
             containerStyle={{ marginTop: styles.SPACING.s }}
           />
           <FormInput
-            label="Repeat New Password"
+            label={t("changePassword.repeatPasswordLabel")}
             iconName="lock-closed-outline"
             value={repeatNewPassword}
             onChangeText={setRepeatNewPassword}
-            placeholder="Repeat new password"
+            placeholder={t("changePassword.repeatPasswordPlaceholder")}
             secureTextEntry={true}
             autoCapitalize="none"
-            // Add margin if needed
             containerStyle={{ marginTop: styles.SPACING.s }}
           />
 
-          {/* Display general error messages */}
           {error && <Text style={s.errorText}>{error}</Text>}
         </ScrollView>
 
-        {/* Button Container */}
         <View style={s.buttonContainer}>
           <PrimaryButton
-            title="Save Changes"
+            title={isLoading ? t("common.saving") : t("common.save")}
             onPress={handleSaveChanges}
             loading={isLoading}
-            // Disable button if fields are empty?
-            // disabled={!currentPassword || !newPassword || !repeatNewPassword}
           />
         </View>
       </KeyboardAvoidingView>
@@ -154,7 +145,7 @@ const s = StyleSheet.create({
     backgroundColor: styles.COLORS.primary,
   },
   errorText: {
-    color: "red", // Use a specific error color if defined in styles.COLORS
+    color: "red",
     fontSize: styles.FONT_SIZES.bodyS,
     fontFamily: styles.FONT_FAMILY.regular,
     textAlign: "center",

@@ -1,24 +1,22 @@
-// src/navigation/AppNavigator.tsx
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
-// Import Screens (and the new Stack Navigator)
 import HomeScreen from "../screens/HomeScreen";
-// import ProfileScreen from '../screens/ProfileScreen'; // Remove this line
-import ProfileStackNavigator from "./ProfileStackNavigator"; // Import the stack
+import ProfileStackNavigator from "./ProfileStackNavigator";
 import FavouritesScreen from "../screens/FavouritesScreen";
 import OrdersScreen from "../screens/OrdersScreen";
-import CartScreen from "../screens/CartScreen";
 
-// Import Styles
+import CartStackNavigator from "./CartStackNavigator";
+
 import * as styles from "../styles";
 import { Platform } from "react-native";
+import OrdersStackNavigator from "./OrdersStackNavigator";
+import HomeStackNavigator from "./HomeStackNavigator";
 
-// Define Param List for Tab Navigator (useful for potential future deeplinking)
 export type TabParamList = {
   Home: undefined;
-  Profile: undefined; // Points to the Profile Stack now
+  Profile: undefined;
   Favourites: undefined;
   Orders: undefined;
   Cart: undefined;
@@ -30,16 +28,16 @@ const AppNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerShown: false, // Keep headers hidden for Tab navigator
+        headerShown: false,
         tabBarActiveTintColor: styles.COLORS.secondary,
         tabBarInactiveTintColor: styles.COLORS.grey,
         tabBarStyle: {
           backgroundColor: styles.COLORS.primary,
-          borderTopWidth: 0, // Remove top border
+          borderTopWidth: 0,
           paddingBottom:
-            Platform.OS === "ios" ? styles.SPACING.l : styles.SPACING.s, // Adjust padding for safe area / Android
+            Platform.OS === "ios" ? styles.SPACING.l : styles.SPACING.s,
           paddingTop: styles.SPACING.s,
-          height: Platform.OS === "ios" ? 90 : 70, // Adjust height if needed
+          height: Platform.OS === "ios" ? 90 : 70,
         },
         tabBarLabelStyle: {
           fontFamily: styles.FONT_FAMILY.medium,
@@ -47,8 +45,8 @@ const AppNavigator = () => {
           marginTop: styles.SPACING.xs,
         },
         tabBarIcon: ({ color, size, focused }) => {
-          let iconName: any; // Use 'any' or find specific types if preferred
-          const iconSize = focused ? size + 2 : size; // Slightly larger when active
+          let iconName: any;
+          const iconSize = focused ? size + 2 : size;
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
@@ -60,26 +58,26 @@ const AppNavigator = () => {
             iconName = focused ? "heart" : "heart-outline";
             return <Ionicons name={iconName} size={iconSize} color={color} />;
           } else if (route.name === "Orders") {
-            iconName = "file-text1"; // AntDesign name for file/document like icon
             return (
               <FontAwesome5 name={"receipt"} size={size - 2} color={color} />
-            ); // Using receipt icon from FontAwesome5
+            );
           } else if (route.name === "Cart") {
             iconName = focused ? "cart" : "cart-outline";
             return <Ionicons name={iconName} size={iconSize} color={color} />;
           }
 
-          // Fallback icon (optional)
           return <MaterialIcons name="error" size={iconSize} color={color} />;
         },
+
+        tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      {/* Use ProfileStackNavigator here */}
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
       <Tab.Screen name="Favourites" component={FavouritesScreen} />
-      <Tab.Screen name="Orders" component={OrdersScreen} />
-      <Tab.Screen name="Cart" component={CartScreen} />
+      <Tab.Screen name="Orders" component={OrdersStackNavigator} />
+
+      <Tab.Screen name="Cart" component={CartStackNavigator} />
     </Tab.Navigator>
   );
 };

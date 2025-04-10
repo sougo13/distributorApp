@@ -1,163 +1,247 @@
-// src/screens/LoginScreen.tsx
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
-  Alert, // Keep Alert for error messages
+  TouchableOpacity,
+  ScrollView,
+  Alert,
 } from "react-native";
-// Import useAuth hook
+import { useTranslation } from "react-i18next";
+import Checkbox from "expo-checkbox";
+import { useNavigation } from "@react-navigation/native";
+
+import FormInput from "../components/FormInput";
+import PrimaryButton from "../components/PrimaryButton";
+
 import { useAuth } from "../context/AuthContext";
-import * as styles from "../styles";
-import PrimaryButton from "../components/PrimaryButton"; // Assuming you have this button
+import * as stylesConfig from "../styles";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AuthStackParamList } from "../navigation/AuthStackNavigator";
 
-// Remove the onLoginSuccess prop type if it was defined
-// interface LoginScreenProps {
-//   onLoginSuccess: () => void;
-// }
+type LoginScreenNavigationProp = StackNavigationProp<
+  AuthStackParamList,
+  "Login"
+>;
 
-// Remove the prop from the component definition
-const LoginScreen /*: React.FC<LoginScreenProps>*/ =
-  (/*{ onLoginSuccess }*/) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false); // Local loading state for button press
-    const [error, setError] = useState<string | null>(null);
+const LoginScreen: React.FC = () => {
+  const { t } = useTranslation();
 
-    // Get the login function from context
-    const { login } = useAuth();
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+  const { login, isLoading, error: authError } = useAuth();
 
-    const handleLogin = async () => {
-      // Make handleLogin async
-      setError(null);
-      setLoading(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
 
-      // Basic Validation (Keep or enhance)
-      if (!email || !password) {
-        setError("Please enter both email and password.");
-        setLoading(false);
-        return;
-      }
+  const error = authError || localError;
 
-      // Use test credentials
-      if (email.toLowerCase() === "test@test.com" && password === "password") {
-        try {
-          // Call the login function from context
-          await login({ email }); // Pass user data if needed by login logic
-          // No need to call onLoginSuccess anymore, context handles the state change
-        } catch (apiError) {
-          // Handle potential errors from the context login function
-          setError("Login failed. Please try again.");
-          console.error("Login context error:", apiError);
-        } finally {
-          setLoading(false); // Ensure loading stops even if context login throws
-        }
-      } else {
-        setError("Invalid email or password.");
-        setLoading(false);
-      }
-    };
+  const handleSubmit = () => {
+    setLocalError(null);
+    if (!email || !password) {
+      setLocalError("Email and password are required.");
+      return;
+    }
+    console.log("Attempting login with:", { email, rememberMe });
 
-    return (
-      <SafeAreaView style={s.safeArea}>
-        <KeyboardAvoidingView
-          style={s.container}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+    login(email, password);
+  };
+
+  const handleSignUp = () => {
+    navigation.navigate("RoleSelection");
+  };
+
+  const handleForgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+  };
+
+  const handleContinueWithoutSignIn = () => {
+    console.log("Continue without sign in");
+    Alert.alert("Action", "Continue without sign in (Not Implemented)");
+  };
+
+  return (
+    <SafeAreaView style={s.safeArea}>
+      <KeyboardAvoidingView
+        style={s.keyboardAvoidingView}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+      >
+        <ScrollView
+          contentContainerStyle={s.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          <Text style={s.title}>Login</Text>
+          <Text style={s.title}>{t("login.welcomeTitle")}</Text>
+          <Text style={s.subtitle}>{t("login.welcomeSubtitle")}</Text>
+
+          <FormInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder={t("login.emailPlaceholder")}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            iconName="mail-outline"
+            containerStyle={s.inputContainer}
+          />
+          <FormInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder={t("login.passwordPlaceholder")}
+            secureTextEntry
+            iconName="lock-closed-outline"
+            containerStyle={s.inputContainer}
+          />
+
+          <View style={s.optionsRow}>
+            <View style={s.rememberMeContainer}>
+              <Checkbox
+                style={s.checkbox}
+                value={rememberMe}
+                onValueChange={setRememberMe}
+                color={
+                  rememberMe
+                    ? stylesConfig.COLORS.secondary
+                    : stylesConfig.COLORS.grey
+                }
+              />
+              <Text style={s.rememberMeText}>{t("login.rememberMe")}</Text>
+            </View>
+            <TouchableOpacity onPress={handleForgotPassword}>
+              <Text style={s.linkText}>{t("login.forgotPassword")}</Text>
+            </TouchableOpacity>
+          </View>
 
           {error && <Text style={s.errorText}>{error}</Text>}
 
-          <TextInput
-            style={[
-              s.input,
-              error && (email === "" || error.includes("email"))
-                ? s.inputError
-                : {},
-            ]}
-            placeholder="Email"
-            placeholderTextColor={styles.COLORS.placeholder}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            textContentType="emailAddress"
-          />
-          <TextInput
-            style={[
-              s.input,
-              error && (password === "" || error.includes("password"))
-                ? s.inputError
-                : {},
-            ]}
-            placeholder="Password"
-            placeholderTextColor={styles.COLORS.placeholder}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            textContentType="password"
+          <PrimaryButton
+            title={isLoading ? t("login.loggingIn") : t("common.submit")}
+            onPress={handleSubmit}
+            loading={isLoading}
+            disabled={isLoading}
+            style={s.submitButton}
           />
 
-          <View style={s.buttonContainer}>
-            <PrimaryButton
-              title="Войти"
-              onPress={handleLogin}
-              loading={loading} // Use local loading state for button
-              disabled={loading}
-            />
+          <TouchableOpacity
+            style={s.secondaryButton}
+            onPress={handleContinueWithoutSignIn}
+            disabled={isLoading}
+          >
+            <Text style={s.secondaryButtonText}>
+              {t("login.continueWithoutSignIn")}
+            </Text>
+          </TouchableOpacity>
+
+          <View style={s.footer}>
+            <Text style={s.footerText}>{t("login.noAccount")} </Text>
+            <TouchableOpacity onPress={handleSignUp}>
+              <Text style={s.linkText}>{t("login.signUpLink")}</Text>
+            </TouchableOpacity>
           </View>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    );
-  };
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
 
-// --- Styles (Keep existing styles, ensure s.inputError and s.errorText exist) ---
 const s = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: styles.COLORS.primary,
+    backgroundColor: stylesConfig.COLORS.primary,
   },
-  container: {
+  keyboardAvoidingView: {
     flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: "center",
-    paddingHorizontal: styles.SPACING.l,
+    paddingHorizontal: stylesConfig.SPACING.l,
+    paddingVertical: stylesConfig.SPACING.xl,
   },
   title: {
-    fontSize: styles.FONT_SIZES.h1,
-    fontFamily: styles.FONT_FAMILY.medium,
-    color: styles.COLORS.accent,
+    fontSize: stylesConfig.FONT_SIZES.h1,
+    fontFamily: stylesConfig.FONT_FAMILY.medium,
+    color: stylesConfig.COLORS.accent,
     textAlign: "center",
-    marginBottom: styles.SPACING.xl,
+    marginBottom: stylesConfig.SPACING.s,
   },
-  input: {
-    backgroundColor: styles.COLORS.inputBackground,
-    color: styles.COLORS.accent,
-    height: styles.COMPONENT_STYLES.inputHeight,
-    borderRadius: styles.COMPONENT_STYLES.borderRadius,
-    paddingHorizontal: styles.SPACING.m,
-    fontSize: styles.FONT_SIZES.bodyM,
-    fontFamily: styles.FONT_FAMILY.regular,
-    marginBottom: styles.SPACING.m,
-    borderWidth: 1,
-    borderColor: "transparent",
+  subtitle: {
+    fontSize: stylesConfig.FONT_SIZES.bodyM,
+    fontFamily: stylesConfig.FONT_FAMILY.regular,
+    color: stylesConfig.COLORS.grey,
+    textAlign: "center",
+    marginBottom: stylesConfig.SPACING.xl,
+    lineHeight: stylesConfig.FONT_SIZES.bodyM * 1.5,
   },
-  inputError: {
-    borderColor: "red",
+  inputContainer: {
+    marginBottom: stylesConfig.SPACING.m,
   },
-  buttonContainer: {
-    marginTop: styles.SPACING.m,
+  optionsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: stylesConfig.SPACING.l,
+  },
+  rememberMeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  rememberMeText: {
+    marginLeft: stylesConfig.SPACING.s,
+    color: stylesConfig.COLORS.accent,
+    fontSize: stylesConfig.FONT_SIZES.bodyS,
+    fontFamily: stylesConfig.FONT_FAMILY.regular,
+  },
+  linkText: {
+    color: stylesConfig.COLORS.secondary,
+    fontSize: stylesConfig.FONT_SIZES.bodyS,
+    fontFamily: stylesConfig.FONT_FAMILY.medium,
   },
   errorText: {
     color: "red",
     textAlign: "center",
-    marginBottom: styles.SPACING.m,
-    fontSize: styles.FONT_SIZES.bodyS,
+    marginBottom: stylesConfig.SPACING.m,
+    fontSize: stylesConfig.FONT_SIZES.bodyS,
+    fontFamily: stylesConfig.FONT_FAMILY.regular,
+  },
+  submitButton: {
+    marginBottom: stylesConfig.SPACING.m,
+  },
+
+  secondaryButton: {
+    height: stylesConfig.COMPONENT_STYLES.buttonHeight,
+    borderRadius: stylesConfig.COMPONENT_STYLES.borderRadius,
+    borderWidth: 1,
+    borderColor: stylesConfig.COLORS.secondary,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: stylesConfig.SPACING.xl,
+  },
+  secondaryButtonText: {
+    color: stylesConfig.COLORS.secondary,
+    fontSize: stylesConfig.FONT_SIZES.button,
+    fontFamily: stylesConfig.FONT_FAMILY.medium,
+  },
+
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: stylesConfig.SPACING.m,
+    paddingBottom: stylesConfig.SPACING.m,
+  },
+  footerText: {
+    color: stylesConfig.COLORS.grey,
+    fontSize: stylesConfig.FONT_SIZES.bodyS,
+    fontFamily: stylesConfig.FONT_FAMILY.regular,
+  },
+  checkbox: {
+    marginRight: stylesConfig.SPACING.s,
   },
 });
 

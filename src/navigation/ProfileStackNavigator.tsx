@@ -1,4 +1,4 @@
-// src/navigation/ProfileStackNavigator.tsx
+
 import React from "react";
 import {
   createStackNavigator,
@@ -7,8 +7,9 @@ import {
 } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, Platform } from "react-native";
+import { useTranslation } from "react-i18next"; 
 
-// Import Screens
+
 import ProfileScreen from "../screens/ProfileScreen";
 import PersonalInformationScreen from "../screens/profile/PersonalInformationScreen";
 import ChangePasswordScreen from "../screens/profile/ChangePasswordScreen";
@@ -19,17 +20,15 @@ import AddNewCardScreen from "../screens/profile/AddNewCardScreen";
 import ChangeLanguageScreen from "../screens/profile/ChangeLanguageScreen";
 import FaqScreen from "../screens/profile/FaqScreen";
 import AccountDeletionScreen from "../screens/profile/AccountDeletionScreen";
-
-// Import Styles
 import * as styles from "../styles";
 
-// Define Param List for type safety
+
 export type ProfileStackParamList = {
-  ProfileMain: undefined; // No params expected for the main profile screen
+  ProfileMain: undefined; 
   PersonalInformation: undefined;
   ChangePassword: undefined;
   SavedAddresses: undefined;
-  AddEditAddress: { addressId?: string }; // Optional param for editing
+  AddEditAddress: { addressId?: string }; 
   ChangePaymentMethod: undefined;
   AddNewCard: undefined;
   ChangeLanguage: undefined;
@@ -40,88 +39,99 @@ export type ProfileStackParamList = {
 const Stack = createStackNavigator<ProfileStackParamList>();
 
 const ProfileStackNavigator = () => {
+  const { t } = useTranslation(); 
+
+
   const screenOptions: StackNavigationOptions = {
     headerStyle: {
       backgroundColor: styles.COLORS.primary,
-      shadowOpacity: 0, // Remove shadow on iOS
-      elevation: 0, // Remove shadow on Android
-      borderBottomWidth: 0, // Remove bottom border line
+      shadowOpacity: 0, 
+      elevation: 0, 
+      borderBottomWidth: 0, 
     },
-    headerTintColor: styles.COLORS.accent, // Color of the back button and title
+    headerTintColor: styles.COLORS.accent, 
     headerTitleStyle: {
       fontFamily: styles.FONT_FAMILY.medium,
       fontSize: styles.FONT_SIZES.h3,
     },
-    headerBackTitleVisible: false, // Hide "Back" text on iOS
+    headerBackTitleVisible: false, 
     headerLeftContainerStyle: {
       paddingLeft: styles.SPACING.m,
     },
     headerTitleAlign: "center",
-    // Custom back icon
+
     headerBackImage: ({ tintColor }) => (
       <Ionicons
         name={Platform.OS === "ios" ? "chevron-back" : "arrow-back"}
         size={24}
-        color={tintColor} // Use the tintColor provided
+        color={tintColor} 
       />
     ),
-    // Standard slide animation
+
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
   };
 
   return (
-    <Stack.Navigator initialRouteName="ProfileMain" screenOptions={screenOptions}>
+
+    <Stack.Navigator
+      initialRouteName="ProfileMain"
+      screenOptions={screenOptions}
+    >
       <Stack.Screen
         name="ProfileMain"
         component={ProfileScreen}
-        options={{ headerShown: false }} // Hide header only for the main profile screen
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PersonalInformation"
         component={PersonalInformationScreen}
-        options={{ title: "Personal Information" }}
+        options={{ title: t("profileStack.personalInfo") }}
       />
       <Stack.Screen
         name="ChangePassword"
         component={ChangePasswordScreen}
-        options={{ title: "Change Password" }}
+        options={{ title: t("profileStack.changePassword") }}
       />
       <Stack.Screen
         name="SavedAddresses"
         component={SavedAddressesScreen}
-        options={{ title: "Saved Addresses" }}
+        options={{ title: t("profileStack.savedAddresses") }}
       />
       <Stack.Screen
         name="AddEditAddress"
         component={AddEditAddressScreen}
-        options={({ route }) => ({ // Dynamic title based on editing or adding
-           title: route.params?.addressId ? "Edit Address" : "Add New Address",
+        options={({ route }) => ({
+
+          title: route.params?.addressId
+            ? t("profileStack.editAddress")
+            : t("profileStack.addAddress"),
         })}
       />
       <Stack.Screen
         name="ChangePaymentMethod"
         component={ChangePaymentMethodScreen}
-        options={{ title: "Change Payment Method" }}
+
+        options={{ title: t("profileStack.paymentMethods") }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="AddNewCard"
         component={AddNewCardScreen}
-        options={{ title: "Add New Card" }}
+        options={{ title: t("profileStack.addCard") }}
       />
       <Stack.Screen
         name="ChangeLanguage"
         component={ChangeLanguageScreen}
-        options={{ title: "Change Language" }}
+        options={{ title: t("profileStack.changeLanguage") }} 
       />
       <Stack.Screen
         name="FAQ"
         component={FaqScreen}
-        options={{ title: "FAQ" }}
+        options={{ title: t("profileStack.faq") }}
       />
       <Stack.Screen
         name="AccountDeletion"
         component={AccountDeletionScreen}
-        options={{ title: "Account Deletion" }}
+        options={{ title: t("profileStack.deleteAccount") }}
       />
     </Stack.Navigator>
   );

@@ -1,4 +1,4 @@
-// src/components/FormInput.tsx
+
 import React from "react";
 import {
   View,
@@ -13,9 +13,9 @@ import * as styles from "../styles";
 
 interface FormInputProps extends TextInputProps {
   label: string;
-  iconName?: keyof typeof Ionicons.glyphMap; // Optional icon name
-  containerStyle?: ViewStyle; // Optional style for the outer container
-  error?: string | null; // Optional error message
+  iconName?: keyof typeof Ionicons.glyphMap; 
+  containerStyle?: ViewStyle; 
+  error?: string | null; 
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -23,8 +23,8 @@ const FormInput: React.FC<FormInputProps> = ({
   iconName,
   containerStyle,
   error = null,
-  style, // Existing TextInput style prop
-  ...textInputProps // Rest of TextInput props (value, onChangeText, etc.)
+  style, 
+  ...textInputProps 
 }) => {
   return (
     <View style={[s.outerContainer, containerStyle]}>
@@ -39,7 +39,7 @@ const FormInput: React.FC<FormInputProps> = ({
           />
         )}
         <TextInput
-          style={[s.input, style]} // Combine default and passed styles
+          style={[s.input, style]} 
           placeholderTextColor={styles.COLORS.placeholder}
           {...textInputProps}
         />
@@ -51,14 +51,14 @@ const FormInput: React.FC<FormInputProps> = ({
 
 const s = StyleSheet.create({
   outerContainer: {
-    marginBottom: styles.SPACING.m, // Default bottom margin
+    marginBottom: styles.SPACING.m, 
   },
   label: {
     color: styles.COLORS.accent,
     fontSize: styles.FONT_SIZES.bodyS,
     fontFamily: styles.FONT_FAMILY.regular,
     marginBottom: styles.SPACING.s,
-    // textTransform: 'uppercase', // Uncomment if labels should be uppercase like in design
+
   },
   inputContainer: {
     flexDirection: "row",
@@ -68,10 +68,10 @@ const s = StyleSheet.create({
     height: styles.COMPONENT_STYLES.inputHeight,
     paddingHorizontal: styles.SPACING.m,
     borderWidth: 1,
-    borderColor: "transparent", // Default no border
+    borderColor: "transparent", 
   },
   errorBorder: {
-    borderColor: "red", // Or use a specific error color if defined
+    borderColor: "red", 
   },
   icon: {
     marginRight: styles.SPACING.s,
@@ -81,14 +81,14 @@ const s = StyleSheet.create({
     color: styles.COLORS.accent,
     fontSize: styles.FONT_SIZES.bodyM,
     fontFamily: styles.FONT_FAMILY.regular,
-    height: "100%", // Ensure TextInput fills the container height
+    height: "100%", 
   },
   errorText: {
-    color: "red", // Or use a specific error color
+    color: "red", 
     fontSize: styles.FONT_SIZES.bodyXS,
     fontFamily: styles.FONT_FAMILY.regular,
     marginTop: styles.SPACING.xs,
-    marginLeft: styles.SPACING.xs, // Small indent
+    marginLeft: styles.SPACING.xs, 
   },
 });
 
