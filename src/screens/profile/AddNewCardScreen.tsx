@@ -10,13 +10,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-
-import * as styles from "../../styles";
-import PrimaryButton from "../../components/PrimaryButton";
-import FormInput from "../../components/FormInput";
 import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
+import PrimaryButton from "../../components/common/PrimaryButton";
+import FormInput from "../../components/common/FormInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import * as styles from "../../styles";
 
 type AddNewCardNavigationProp = StackNavigationProp<
   ProfileStackParamList,

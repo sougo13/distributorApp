@@ -15,7 +15,8 @@
     "deliveryFee": "Delivery Fee",
     "total": "Total",
     "goBack": "Go Back",
-    "noItemsFound": "No items found"
+    "noItemsFound": "No items found",
+    "action": "Action"
   },
   "login": {
     "welcomeTitle": "Welcome Back",
@@ -30,7 +31,8 @@
     "noAccount": "Don't Have an account?",
     "signUpLink": "Sign Up",
     "loggingIn": "Signing in...",
-    "invalidCredentials": "Invalid email or password"
+    "invalidCredentials": "Invalid email or password",
+    "continueWithoutSignInNotImplemented": "Continue without sign-in (Not Implemented)"
   },
   "signUp": {
     "title": "Sign Up",
@@ -43,6 +45,8 @@
     "passwordPlaceholder": "Create a password",
     "repeatPasswordLabel": "Repeat Password",
     "repeatPasswordPlaceholder": "Repeat your password",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
     "submitting": "Submitting..."
   },
   "roleSelection": {
@@ -134,6 +138,23 @@
     },
     "successAlertTitle": "Success",
     "successAlertMessage": "Password changed successfully."
+  },
+  "forgotPassword": {
+    "title": "Forgot Password?",
+    "subtitle": "We'll send you a link to reset your password. Just enter the email you used to sign up.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your email address",
+    "sendButton": "Send Reset Link",
+    "sending": "Sending...",
+    "successAlertTitle": "Link Sent",
+    "successAlertMessage": "If an account exists for {{email}}, you will receive a password reset link shortly.",
+    "errorAlertTitle": "Error",
+    "errorAlertMessage": "Could not send reset link. Please try again."
+  },
+  "passwordResetSent": {
+    "title": "Check Your Email Address",
+    "message": "We've sent a password reset link to your email. Check your inbox and follow the instructions.",
+    "doneButton": "Done"
   },
   "deleteAccount": {
     "mainText": "We're sorry to see you go. Deleting your account will permanently remove your profile, order history, and saved preferences. This action cannot be undone.",
@@ -329,5 +350,8 @@
     "bulkRequestPrompt": "You can request custom pricing options if you order in bulk",
     "requestButton": "Request",
     "addToCartButton": "Add to Cart"
+  },
+  "validation": {
+    "emailPasswordRequired": "Email and password are required."
   }
 }

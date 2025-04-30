@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as styles from "../styles";
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles";
 
 interface RadioButtonProps {
   label: string;
@@ -78,4 +79,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default RadioButton;
+export default RadioButton; 

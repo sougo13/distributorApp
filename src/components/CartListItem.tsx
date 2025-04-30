@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import * as styles from "../styles";
 import { CartItem } from "../types";
-import QuantityStepper from "./QuantityStepper";
+import QuantityStepper from "./common/QuantityStepper";
 
 interface CartListItemProps {
   item: CartItem;
@@ -70,7 +70,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
           <Text style={textStyle} numberOfLines={2}>
             {product.name}
           </Text>
-          
+
           {!isCheckout && isAvailable && onRemove && (
             <TouchableOpacity
               onPress={handleRemove}
@@ -84,7 +84,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
               />
             </TouchableOpacity>
           )}
-          
+
           {!isAvailable && (
             <Text style={s.unavailableBadge}>
               {t("checkout.itemUnavailable")}
@@ -95,10 +95,9 @@ const CartListItem: React.FC<CartListItemProps> = ({
           <Text style={priceStyle}>
             {product.pricePerUnit.toFixed(2)} ₾
             {t("cart.perUnit", { unit: product.unit })}
-            
             {isAvailable && ` x ${quantity}`}
           </Text>
-          
+
           {!isCheckout && onQuantityChange && (
             <QuantityStepper
               quantity={quantity}

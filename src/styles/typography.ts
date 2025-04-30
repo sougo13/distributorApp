@@ -1,5 +1,3 @@
-
-
 export const FONT_FAMILY = {
   regular: "Satoshi-Regular",
   medium: "Satoshi-Medium",
@@ -9,6 +7,7 @@ export const FONT_SIZES = {
   h1: 24,
   h2: 20,
   h3: 18,
+  h4: 16,
   bodyL: 18,
   bodyM: 16,
   bodyS: 14,

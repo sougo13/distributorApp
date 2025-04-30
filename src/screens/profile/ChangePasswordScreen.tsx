@@ -9,10 +9,15 @@ import {
   Text,
 } from "react-native";
 import * as styles from "../../styles";
-import PrimaryButton from "../../components/PrimaryButton";
-import FormInput from "../../components/FormInput";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
+import PrimaryButton from "../../components/common/PrimaryButton";
+import FormInput from "../../components/common/FormInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+
+// Import SVG icon
+import LockAltIcon from '../../assets/icons/lock-alt.svg';
 
 const MIN_PASSWORD_LENGTH = 6;
 
@@ -80,7 +85,7 @@ const ChangePasswordScreen = () => {
         >
           <FormInput
             label={t("changePassword.currentPasswordLabel")}
-            iconName="lock-closed-outline"
+            IconComponent={LockAltIcon}
             value={currentPassword}
             onChangeText={setCurrentPassword}
             placeholder={t("changePassword.currentPasswordPlaceholder")}
@@ -89,7 +94,7 @@ const ChangePasswordScreen = () => {
           />
           <FormInput
             label={t("changePassword.newPasswordLabel")}
-            iconName="lock-closed-outline"
+            IconComponent={LockAltIcon}
             value={newPassword}
             onChangeText={setNewPassword}
             placeholder={t("changePassword.newPasswordPlaceholder")}
@@ -99,7 +104,7 @@ const ChangePasswordScreen = () => {
           />
           <FormInput
             label={t("changePassword.repeatPasswordLabel")}
-            iconName="lock-closed-outline"
+            IconComponent={LockAltIcon}
             value={repeatNewPassword}
             onChangeText={setRepeatNewPassword}
             placeholder={t("changePassword.repeatPasswordPlaceholder")}

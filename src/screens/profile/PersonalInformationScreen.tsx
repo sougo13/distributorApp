@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -8,14 +7,22 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import * as styles from "../../styles"; 
-import PrimaryButton from "../../components/PrimaryButton"; 
-import FormInput from "../../components/FormInput"; 
+
+import * as styles from "../../styles";
+import PrimaryButton from "../../components/common/PrimaryButton";
+import FormInput from "../../components/common/FormInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
+// Import SVG icons
+import PersonIcon from "../../assets/icons/person.svg";
+import MailIcon from "../../assets/icons/mail.svg";
+import CallIcon from "../../assets/icons/call.svg";
+
 const PersonalInformationScreen = () => {
   const { t } = useTranslation();
+  // Remove navigation initialization
+  // const navigation = useNavigation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -55,7 +62,7 @@ const PersonalInformationScreen = () => {
         >
           <FormInput
             label={t("personalInfo.nameLabel")}
-            iconName="person-outline"
+            IconComponent={PersonIcon}
             value={name}
             onChangeText={setName}
             placeholder={t("personalInfo.namePlaceholder")}
@@ -63,7 +70,7 @@ const PersonalInformationScreen = () => {
           />
           <FormInput
             label={t("personalInfo.emailLabel")}
-            iconName="mail-outline"
+            IconComponent={MailIcon}
             value={email}
             onChangeText={setEmail}
             placeholder={t("personalInfo.emailPlaceholder")}
@@ -72,7 +79,7 @@ const PersonalInformationScreen = () => {
           />
           <FormInput
             label={t("personalInfo.phoneLabel")}
-            iconName="call-outline"
+            IconComponent={CallIcon}
             value={phone}
             onChangeText={setPhone}
             placeholder={t("personalInfo.phonePlaceholder")}
@@ -97,6 +104,26 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: styles.COLORS.primary,
   },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: styles.SPACING.m,
+    paddingVertical: styles.SPACING.s,
+  },
+  backButton: {
+    padding: styles.SPACING.xs,
+  },
+  headerTitle: {
+    fontSize: styles.FONT_SIZES.h4,
+    fontFamily: styles.FONT_FAMILY.medium,
+    fontWeight: styles.FONT_WEIGHTS.medium,
+    color: styles.COLORS.accent,
+    textAlign: "center",
+  },
+  headerPlaceholder: {
+    width: 24 + styles.SPACING.xs * 2,
+  },
   keyboardAvoidingView: {
     flex: 1,
   },
@@ -104,13 +131,14 @@ const s = StyleSheet.create({
     flex: 1,
   },
   scrollContentContainer: {
-    padding: styles.SPACING.containerPadding,
+    paddingHorizontal: styles.SPACING.l,
+    paddingTop: styles.SPACING.l,
     paddingBottom: styles.SPACING.xl,
+    gap: styles.SPACING.l,
   },
   buttonContainer: {
-    paddingHorizontal: styles.SPACING.containerPadding,
-    paddingBottom: Platform.OS === "ios" ? styles.SPACING.l : styles.SPACING.m,
-    paddingTop: styles.SPACING.s,
+    paddingHorizontal: styles.SPACING.l,
+    paddingVertical: styles.SPACING.l,
     backgroundColor: styles.COLORS.primary,
   },
 });

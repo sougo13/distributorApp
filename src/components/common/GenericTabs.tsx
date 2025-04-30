@@ -1,8 +1,8 @@
-
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
-import * as styles from "../styles"; 
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles"; 
 
 
 interface TabInfo<T extends string> {
@@ -41,7 +41,8 @@ const GenericTabs = <T extends string>({
               activeTab === tab.id && componentStyles.activeTabText,
             ]}
           >
-            {t(tab.translationKey)} 
+            {/* Ensure translationKey is a valid i18n key */}
+            {t(tab.translationKey as any)} 
           </Text>
           {activeTab === tab.id && (
             <View style={componentStyles.activeTabIndicator} />
@@ -82,4 +83,4 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default GenericTabs;
+export default GenericTabs; 

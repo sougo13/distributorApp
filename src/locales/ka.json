@@ -15,7 +15,8 @@
     "deliveryFee": "Delivery Fee",
     "total": "Total",
     "goBack": "Go Back",
-    "noItemsFound": "No items found"
+    "noItemsFound": "No items found",
+    "action": "მოქმედება"
   },
   "login": {
     "welcomeTitle": "კეთილი იყოს თქვენი დაბრუნება",
@@ -30,7 +31,8 @@
     "noAccount": "არ გაქვთ ანგარიში?",
     "signUpLink": "რეგისტრაცია",
     "loggingIn": "შესვლა...",
-    "invalidCredentials": "არასწორი ელ. ფოსტა ან პაროლი"
+    "invalidCredentials": "არასწორი ელ. ფოსტა ან პაროლი",
+    "continueWithoutSignInNotImplemented": "ავტორიზაციის გარეშე გაგრძელება (არ არის დანერგილი)"
   },
   "signUp": {
     "title": "რეგისტრაცია",
@@ -43,6 +45,8 @@
     "passwordPlaceholder": "შექმენით პაროლი",
     "repeatPasswordLabel": "გაიმეორეთ პაროლი",
     "repeatPasswordPlaceholder": "გაიმეორეთ თქვენი პაროლი",
+    "fullNameLabel": "სრული სახელი",
+    "fullNamePlaceholder": "შეიყვანეთ სრული სახელი",
     "submitting": "იგზავნება..."
   },
   "roleSelection": {
@@ -134,6 +138,23 @@
     },
     "successAlertTitle": "წარმატება",
     "successAlertMessage": "პაროლი წარმატებით შეიცვალა."
+  },
+  "forgotPassword": {
+    "title": "დაგავიწყდათ პაროლი?",
+    "subtitle": "პაროლის აღსადგენ ბმულს გამოგიგზავნით. შეიყვანეთ ელ.ფოსტა, რომელიც რეგისტრაციისას გამოიყენეთ.",
+    "emailLabel": "ელ. ფოსტა",
+    "emailPlaceholder": "შეიყვანეთ თქვენი ელ. ფოსტა",
+    "sendButton": "ბმულის გაგზავნა",
+    "sending": "იგზავნება...",
+    "successAlertTitle": "ბმული გაიგზავნა",
+    "successAlertMessage": "თუ ანგარიში {{email}}-თვის არსებობს, მალე მიიღებთ პაროლის აღდგენის ბმულს.",
+    "errorAlertTitle": "შეცდომა",
+    "errorAlertMessage": "ბმულის გაგზავნა ვერ მოხერხდა. სცადეთ ხელახლა."
+  },
+  "passwordResetSent": {
+    "title": "შეამოწმეთ თქვენი ელ. ფოსტა",
+    "message": "თქვენს ელ. ფოსტაზე გამოგზავნილია პაროლის აღდგენის ბმული. შეამოწმეთ შემოსულები და მიჰყევით ინსტრუქციას.",
+    "doneButton": "დასრულება"
   },
   "deleteAccount": {
     "mainText": "ვწუხვართ, რომ გვტოვებთ. ანგარიშის წაშლა სამუდამოდ წაშლის თქვენს პროფილს, შეკვეთების ისტორიას და შენახულ პარამეტრებს. ამ ქმედების გაუქმება შეუძლებელია.",
@@ -329,5 +350,8 @@
     "bulkRequestPrompt": "შეგიძლიათ მოითხოვოთ საბაჟო ფასების ვარიანტები, თუ შეუკვეთავთ ნაყარად",
     "requestButton": "მოთხოვნა",
     "addToCartButton": "კალათაში დამატება"
+  },
+  "validation": {
+    "emailPasswordRequired": "ელ. ფოსტა და პაროლი აუცილებელია."
   }
 }

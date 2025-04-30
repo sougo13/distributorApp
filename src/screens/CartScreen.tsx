@@ -8,7 +8,7 @@ import { CartStackParamList } from "../navigation/CartStackNavigator";
 import { summaryStyles, warningStyles } from "../styles/sharedStyles";
 import * as styles from "../styles";
 import { CartItem } from "../types";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/common/PrimaryButton";
 import CartListItem from "../components/CartListItem";
 import {
   MOCK_CART_ITEMS,

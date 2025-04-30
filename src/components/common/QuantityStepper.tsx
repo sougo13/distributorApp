@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import * as styles from "../styles";
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles";
 
 interface QuantityStepperProps {
   quantity: number;
@@ -86,4 +87,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default QuantityStepper;
+export default QuantityStepper; 

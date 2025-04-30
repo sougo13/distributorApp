@@ -1,21 +1,14 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-
-import * as stylesConfig from "../../styles";
-import PrimaryButton from "../../components/PrimaryButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StackNavigationProp } from "@react-navigation/stack";
+
+import * as styles from "../../styles";
+import PrimaryButton from "../../components/common/PrimaryButton";
 import { AuthStackParamList } from "../../navigation/AuthStackNavigator";
+import CheckCircleIcon from '../../assets/icons/check-circle.svg';
 
 type EmailVerificationNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -27,40 +20,26 @@ const EmailVerificationScreen: React.FC = () => {
   const navigation = useNavigation<EmailVerificationNavigationProp>();
 
   const handleDone = () => {
-    console.log("Done button pressed on verification screen.");
-
     navigation.navigate("Login");
-  };
-
-  const handleResendLink = () => {
-    console.log("Resend verification link requested.");
-    Alert.alert("Action", "Resend verification link (Not Implemented)");
   };
 
   return (
     <SafeAreaView style={s.safeArea}>
       <View style={s.container}>
-        <TouchableOpacity onPress={handleResendLink} activeOpacity={0.7}>
-          <Ionicons
-            name="checkmark-circle-outline"
-            size={80}
-            color={stylesConfig.COLORS.secondary}
-            style={s.icon}
+        <View style={s.contentGroup}>
+          <CheckCircleIcon
+            width={styles.SIZES.iconLarge}
+            height={styles.SIZES.iconLarge}
+            fill={styles.COLORS.secondaryTransparent}
           />
-
-          <Text style={s.hiddenAccessibilityLabel}>
-            Resend Verification Link
-          </Text>
-        </TouchableOpacity>
-
-        <Text style={s.title}>{t("emailVerification.title")}</Text>
-        <Text style={s.message}>{t("emailVerification.message")}</Text>
-
-        <View style={{ flex: 1 }} />
+          <Text style={s.title}>{t("emailVerification.title")}</Text>
+          <Text style={s.message}>{t("emailVerification.message")}</Text>
+        </View>
 
         <PrimaryButton
           title={t("emailVerification.doneButton")}
           onPress={handleDone}
+          style={s.doneButton}
         />
       </View>
     </SafeAreaView>
@@ -70,44 +49,39 @@ const EmailVerificationScreen: React.FC = () => {
 const s = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: stylesConfig.COLORS.primary,
+    backgroundColor: styles.COLORS.primary,
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: stylesConfig.SPACING.l,
-    paddingBottom: stylesConfig.SPACING.xl,
-    paddingTop: stylesConfig.SPACING.xl,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: styles.SPACING.l,
+    paddingVertical: styles.SPACING.xl,
   },
-  icon: {
-    marginBottom: stylesConfig.SPACING.xl,
+  contentGroup: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 36,
+    paddingTop: styles.SPACING.xl,
   },
   title: {
-    fontSize: stylesConfig.FONT_SIZES.h1,
-    fontFamily: stylesConfig.FONT_FAMILY.medium,
-    color: stylesConfig.COLORS.accent,
-    textAlign: "center",
-    marginBottom: stylesConfig.SPACING.m,
+    fontFamily: styles.FONT_FAMILY.medium,
+    fontWeight: styles.FONT_WEIGHTS.medium,
+    fontSize: styles.FONT_SIZES.h3,
+    color: styles.COLORS.accent,
+    textAlign: 'center',
   },
   message: {
-    fontSize: stylesConfig.FONT_SIZES.bodyM,
-    fontFamily: stylesConfig.FONT_FAMILY.regular,
-    color: stylesConfig.COLORS.grey,
-    textAlign: "center",
-    lineHeight: stylesConfig.FONT_SIZES.bodyM * 1.5,
-    marginBottom: stylesConfig.SPACING.xl,
+    fontFamily: styles.FONT_FAMILY.regular,
+    fontSize: styles.FONT_SIZES.bodyM,
+    color: styles.COLORS.grey,
+    textAlign: 'center',
+    lineHeight: styles.FONT_SIZES.bodyM * 1.35,
+    maxWidth: 300,
   },
-
-  hiddenAccessibilityLabel: {
-    position: "absolute",
-    width: 1,
-    height: 1,
-    padding: 0,
-    margin: -1,
-    overflow: "hidden",
-    clip: "rect(0, 0, 0, 0)",
-    borderWidth: 0,
+  doneButton: {
+    width: '100%',
   },
 });
 

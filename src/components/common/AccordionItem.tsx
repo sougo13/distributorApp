@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from "react";
 import {
   View,
@@ -10,7 +9,8 @@ import {
   UIManager,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import * as styles from "../styles";
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -47,7 +47,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         <Ionicons
           name={isOpen ? "chevron-up-outline" : "chevron-down-outline"}
           size={20}
-          color={styles.COLORS.iconGrey}
+          color={styles.COLORS.iconGrey} // Use style color
         />
       </TouchableOpacity>
       {isOpen && (
@@ -92,4 +92,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default AccordionItem;
+export default AccordionItem; 

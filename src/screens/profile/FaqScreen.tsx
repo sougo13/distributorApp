@@ -1,4 +1,3 @@
-
 import React, { useMemo } from "react";
 import {
   View,
@@ -7,9 +6,10 @@ import {
   ScrollView,
 } from "react-native";
 import * as styles from "../../styles";
-import AccordionItem from "../../components/AccordionItem";
+import AccordionItem from "../../components/common/AccordionItem";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
 
 const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5"];
 

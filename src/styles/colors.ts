@@ -1,7 +1,7 @@
-
 export const COLORS = {
   primary: "#141414",
   secondary: "#59FFA0",
+  secondaryDisabled: "rgba(89, 255, 160, 0.5)",
   accent: "#FFFAFF",
   error: "red",
   warning: "orange",

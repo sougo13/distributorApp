@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { getFocusedRouteNameFromRoute, RouteProp } from '@react-navigation/native';
 
 import HomeScreen from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
@@ -25,6 +26,13 @@ export type TabParamList = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const AppNavigator = () => {
+
+  const getTabBarVisibility = (route: RouteProp<TabParamList, keyof TabParamList>): boolean => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? 'HomeList';
+    const hideOnScreens = ['SupplierDetail'];
+    return !hideOnScreens.includes(routeName);
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -32,6 +40,7 @@ const AppNavigator = () => {
         tabBarActiveTintColor: styles.COLORS.secondary,
         tabBarInactiveTintColor: styles.COLORS.grey,
         tabBarStyle: {
+          display: getTabBarVisibility(route) ? 'flex' : 'none',
           backgroundColor: styles.COLORS.primary,
           borderTopWidth: 0,
           paddingBottom:
@@ -72,7 +81,21 @@ const AppNavigator = () => {
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackNavigator}
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route) ? 'flex' : 'none',
+            backgroundColor: styles.COLORS.primary,
+            borderTopWidth: 0,
+            paddingBottom:
+              Platform.OS === "ios" ? styles.SPACING.l : styles.SPACING.s,
+            paddingTop: styles.SPACING.s,
+            height: Platform.OS === "ios" ? 90 : 70,
+          },
+        })}
+      />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
       <Tab.Screen name="Favourites" component={FavouritesScreen} />
       <Tab.Screen name="Orders" component={OrdersStackNavigator} />

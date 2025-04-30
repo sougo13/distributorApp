@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   TouchableOpacity,
@@ -8,7 +7,8 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import * as styles from "../styles"; 
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles"; 
 
 interface PrimaryButtonProps {
   title: string;
@@ -75,4 +75,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default PrimaryButton;
+export default PrimaryButton; 

@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   View,
@@ -8,38 +7,39 @@ import {
   TextInputProps,
   ViewStyle,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import * as styles from "../styles";
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles";
+import { SvgProps } from 'react-native-svg';
 
 interface FormInputProps extends TextInputProps {
-  label: string;
-  iconName?: keyof typeof Ionicons.glyphMap; 
-  containerStyle?: ViewStyle; 
-  error?: string | null; 
+  label?: string;
+  IconComponent?: React.FC<SvgProps>;
+  containerStyle?: ViewStyle;
+  error?: string | null;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
   label,
-  iconName,
+  IconComponent,
   containerStyle,
   error = null,
-  style, 
-  ...textInputProps 
+  style,
+  ...textInputProps
 }) => {
   return (
     <View style={[s.outerContainer, containerStyle]}>
-      <Text style={s.label}>{label}</Text>
+      {label && <Text style={s.label}>{label}</Text>}
       <View style={[s.inputContainer, error ? s.errorBorder : {}]}>
-        {iconName && (
-          <Ionicons
-            name={iconName}
-            size={20}
-            color={styles.COLORS.iconGrey}
+        {IconComponent && (
+          <IconComponent
+            width={20}
+            height={20}
             style={s.icon}
+            fill={styles.COLORS.iconGrey} // Use a color from styles
           />
         )}
         <TextInput
-          style={[s.input, style]} 
+          style={[s.input, style]}
           placeholderTextColor={styles.COLORS.placeholder}
           {...textInputProps}
         />
@@ -71,7 +71,7 @@ const s = StyleSheet.create({
     borderColor: "transparent", 
   },
   errorBorder: {
-    borderColor: "red", 
+    borderColor: styles.COLORS.error, // Use error color from styles
   },
   icon: {
     marginRight: styles.SPACING.s,
@@ -84,7 +84,7 @@ const s = StyleSheet.create({
     height: "100%", 
   },
   errorText: {
-    color: "red", 
+    color: styles.COLORS.error, // Use error color from styles
     fontSize: styles.FONT_SIZES.bodyXS,
     fontFamily: styles.FONT_FAMILY.regular,
     marginTop: styles.SPACING.xs,
@@ -92,4 +92,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default FormInput;
+export default FormInput; 

@@ -10,9 +10,10 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { Ionicons } from "@expo/vector-icons";
 
 import * as styles from "../../styles";
-import PrimaryButton from "../../components/PrimaryButton";
+import PrimaryButton from "../../components/common/PrimaryButton";
 import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";

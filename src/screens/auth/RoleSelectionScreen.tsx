@@ -4,111 +4,120 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform,
-  Alert,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
-import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-
-import * as stylesConfig from "../../styles";
-import PrimaryButton from "../../components/PrimaryButton";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { AuthStackParamList } from "../../navigation/AuthStackNavigator";
+import { useNavigation } from "@react-navigation/native";
+// import { SvgUri } from "react-native-svg"; // No longer needed for direct import
 
-type RoleSelectionNavigationProp = StackNavigationProp<
+import { AuthStackParamList } from "../../navigation/AuthStackNavigator";
+import * as styles from "../../styles"; // Import style constants
+
+// Define role type
+type Role = "supplier" | "buyer";
+
+// Define navigation prop type
+type RoleSelectionScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
   "RoleSelection"
 >;
 
-type Role = "supplier" | "buyer";
+// Import local SVGs - Adjust paths if necessary
+// Using SvgUri for simplicity assuming icons are served or accessible via URI
+// If using local files directly with react-native-svg, setup might be needed (e.g., using transformers)
+// For now, let's assume a way to reference them, e.g., placeholder URIs or direct require if setup allows.
+// We'll use placeholder paths for now. You might need to adjust how SVGs are loaded.
+// If direct require doesn't work, you might need react-native-svg-transformer
+// and configure metro.config.js
+import SupplierIcon from "../../assets/icons/supplier_icon.svg"; // Use direct import
+import BuyerIcon from "../../assets/icons/buyer_icon.svg"; // Use direct import
 
-const RoleSelectionScreen: React.FC = () => {
-  const { t } = useTranslation();
-  const navigation = useNavigation<RoleSelectionNavigationProp>();
 
+const RoleSelectionScreen = () => {
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
+  const navigation = useNavigation<RoleSelectionScreenNavigationProp>();
 
   const handleSelectRole = (role: Role) => {
     setSelectedRole(role);
   };
 
   const handleContinue = () => {
-    if (!selectedRole) {
-      return;
+    if (selectedRole) {
+      navigation.navigate("SignUp", { role: selectedRole });
     }
-    console.log("Selected Role:", selectedRole);
-
-    navigation.navigate("SignUp", { role: selectedRole });
   };
 
   const handleLogin = () => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.replace("Login");
-    }
+    navigation.navigate("Login");
   };
 
-  const renderRoleOption = (
-    role: Role,
-    iconName: keyof typeof Ionicons.glyphMap
-  ) => {
-    const isSelected = selectedRole === role;
-    const labelKey =
-      role === "supplier" ? "roleSelection.supplier" : "roleSelection.buyer";
-
-    return (
-      <TouchableOpacity
-        style={[s.roleButton, isSelected && s.roleButtonSelected]}
-        onPress={() => handleSelectRole(role)}
-        activeOpacity={0.7}
-      >
-        <Ionicons
-          name={
-            isSelected ? "radio-button-on-outline" : "radio-button-off-outline"
-          }
-          size={24}
-          color={
-            isSelected
-              ? stylesConfig.COLORS.secondary
-              : stylesConfig.COLORS.iconGrey
-          }
-          style={s.radioIcon}
-        />
-        <Text style={[s.roleText, isSelected && s.roleTextSelected]}>
-          {t(labelKey)}
-        </Text>
-      </TouchableOpacity>
-    );
+  // Helper to determine border color for selection
+  const getSelectionStyle = (role: Role) => {
+    return selectedRole === role
+      ? s.selectedOption
+      : s.unselectedOption;
   };
 
   return (
     <SafeAreaView style={s.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#141414" />
       <View style={s.container}>
+        {/* Header Text */}
         <View style={s.headerContainer}>
-          <Text style={s.title}>{t("roleSelection.title")}</Text>
-          <Text style={s.subtitle}>{t("roleSelection.subtitle")}</Text>
+          <Text style={s.title}>Who Are You?</Text>
+          <Text style={s.subtitle}>
+            Pick the role that fits you best. Each one unlocks different
+            features tailored to your needs.
+          </Text>
         </View>
 
+        {/* Role Selection Options */}
         <View style={s.optionsContainer}>
-          {renderRoleOption("supplier", "business-outline")}
-          {renderRoleOption("buyer", "person-outline")}
+          <TouchableOpacity
+            style={[s.optionBox, getSelectionStyle("supplier")]}
+            onPress={() => handleSelectRole("supplier")}
+            activeOpacity={0.7}
+          >
+            {/* Radio visual (simplified) */}
+            <View style={[s.radioOuter, selectedRole === 'supplier' && s.radioOuterSelected]}>
+              {selectedRole === "supplier" && <View style={s.radioInnerSelected} />}
+            </View>
+             <SupplierIcon width={24} height={24} fill={"rgba(255, 250, 255, 0.4)"} />
+             {/* <Text style={styles.iconPlaceholder}>SUP</Text> */}
+            <Text style={s.optionText}>A Supplier</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[s.optionBox, getSelectionStyle("buyer")]}
+            onPress={() => handleSelectRole("buyer")}
+            activeOpacity={0.7}
+          >
+             {/* Radio visual (simplified) */}
+             <View style={[s.radioOuter, selectedRole === 'buyer' && s.radioOuterSelected]}>
+               {selectedRole === "buyer" && <View style={s.radioInnerSelected} />}
+             </View>
+            <BuyerIcon width={24} height={24} fill={"rgba(255, 250, 255, 0.4)"} />
+            {/* <Text style={styles.iconPlaceholder}>BUY</Text> */}
+            <Text style={s.optionText}>A Buyer</Text>
+          </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 1 }} />
-
-        <PrimaryButton
-          title={t("common.continue")}
+        {/* Continue Button */}
+        <TouchableOpacity
+          style={[s.button, !selectedRole && s.buttonDisabled]}
           onPress={handleContinue}
           disabled={!selectedRole}
-        />
+          activeOpacity={0.8}
+        >
+          <Text style={s.buttonText}>Continue</Text>
+        </TouchableOpacity>
 
-        <View style={s.footer}>
-          <Text style={s.footerText}>{t("roleSelection.haveAccount")} </Text>
-          <TouchableOpacity onPress={handleLogin}>
-            <Text style={s.linkText}>{t("roleSelection.loginLink")}</Text>
+        {/* Login Link */}
+        <View style={s.loginContainer}>
+          <Text style={s.loginText}>Have an account?</Text>
+          <TouchableOpacity onPress={handleLogin} activeOpacity={0.7}>
+            <Text style={s.loginLink}>Log In</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -119,81 +128,136 @@ const RoleSelectionScreen: React.FC = () => {
 const s = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: stylesConfig.COLORS.primary,
+    backgroundColor: styles.COLORS.primary, // Updated
   },
   container: {
     flex: 1,
-    paddingHorizontal: stylesConfig.SPACING.l,
-    paddingTop: stylesConfig.SPACING.xl,
-    paddingBottom: stylesConfig.SPACING.l,
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingHorizontal: styles.SPACING.l, // Updated
+    paddingTop: styles.SPACING.xxl, // Updated
+    paddingBottom: styles.SPACING.m, // Updated
   },
   headerContainer: {
-    marginBottom: stylesConfig.SPACING.xxl,
     alignItems: "center",
+    marginBottom: styles.SPACING.xxl, // Using xxl (40) for 38
+    width: '100%',
   },
   title: {
-    fontSize: stylesConfig.FONT_SIZES.h1,
-    fontFamily: stylesConfig.FONT_FAMILY.medium,
-    color: stylesConfig.COLORS.accent,
+    fontFamily: styles.FONT_FAMILY.medium, // Updated (assuming Satoshi-Bold is medium)
+    fontSize: styles.FONT_SIZES.h3, // Updated
+    fontWeight: styles.FONT_WEIGHTS.medium, // Updated (using 500 from Figma, assuming it's medium)
+    color: styles.COLORS.accent, // Updated
     textAlign: "center",
-    marginBottom: stylesConfig.SPACING.s,
+    lineHeight: styles.FONT_SIZES.h3 * 1.35,
+    marginBottom: styles.SPACING.m, // Updated
   },
   subtitle: {
-    fontSize: stylesConfig.FONT_SIZES.bodyM,
-    fontFamily: stylesConfig.FONT_FAMILY.regular,
-    color: stylesConfig.COLORS.grey,
+    fontFamily: styles.FONT_FAMILY.regular, // Updated
+    fontSize: styles.FONT_SIZES.bodyM, // Updated
+    fontWeight: styles.FONT_WEIGHTS.regular, // Updated
+    color: styles.COLORS.grey, // Updated (using grey for the rgba value)
     textAlign: "center",
-    lineHeight: stylesConfig.FONT_SIZES.bodyM * 1.5,
+    lineHeight: styles.FONT_SIZES.bodyM * 1.35,
+    maxWidth: 345,
   },
   optionsContainer: {
-    marginBottom: stylesConfig.SPACING.xl,
+    width: "100%",
+    marginBottom: styles.SPACING.xxl, // Updated
+    gap: styles.SPACING.l, // Updated
   },
-  roleButton: {
+  optionBox: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: stylesConfig.COLORS.inputBackground,
-    borderRadius: stylesConfig.COMPONENT_STYLES.borderRadius,
-    paddingVertical: stylesConfig.SPACING.l,
-    paddingHorizontal: stylesConfig.SPACING.m,
-    marginBottom: stylesConfig.SPACING.m,
+    backgroundColor: styles.COLORS.inputBackground,
+    borderRadius: styles.COMPONENT_STYLES.cardBorderRadius, // Updated to cardBorderRadius (12px)
+    padding: styles.SPACING.m,
     borderWidth: 1,
-    borderColor: "transparent",
+    gap: styles.SPACING.sm, // Updated to sm (12px) for 10px gap
   },
-  roleButtonSelected: {
-    borderColor: stylesConfig.COLORS.secondary,
-    backgroundColor: Platform.select({
-      ios: stylesConfig.COLORS.inputBackground,
-      android: stylesConfig.COLORS.inputBackground,
-    }),
+  unselectedOption: {
+     borderColor: styles.COLORS.border, // Updated (using border for the rgba value)
   },
-  radioIcon: {
-    marginRight: stylesConfig.SPACING.m,
+  selectedOption: {
+    borderColor: styles.COLORS.secondary, // Updated
+    borderWidth: 1.5,
   },
-
-  roleText: {
-    color: stylesConfig.COLORS.accent,
-    fontSize: stylesConfig.FONT_SIZES.bodyM,
-    fontFamily: stylesConfig.FONT_FAMILY.regular,
+   radioOuter: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: styles.COLORS.border, // Updated
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  roleTextSelected: {
-    fontFamily: stylesConfig.FONT_FAMILY.medium,
-    color: stylesConfig.COLORS.secondary,
+   radioOuterSelected: {
+     borderColor: styles.COLORS.secondary, // Updated
+   },
+  radioInnerSelected: {
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      backgroundColor: styles.COLORS.secondary, // Updated
   },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "center",
+   /* iconPlaceholder: { // Temporary placeholder for SVG - Removed
+    width: 24,
+    height: 24,
+    textAlign: 'center',
+    lineHeight: 24,
+    color: 'rgba(255, 250, 255, 0.4)',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 4,
+    fontSize: 10,
+   }, */
+  optionText: {
+    fontFamily: styles.FONT_FAMILY.medium, // Updated
+    fontSize: styles.FONT_SIZES.bodyM, // Updated
+    fontWeight: styles.FONT_WEIGHTS.medium, // Updated
+    color: styles.COLORS.accent, // Updated
+    lineHeight: styles.FONT_SIZES.bodyM * 1.35,
+    flex: 1,
+  },
+  button: {
+    backgroundColor: styles.COLORS.secondary,
+    paddingVertical: 12,
+    paddingHorizontal: styles.SPACING.m,
+    borderRadius: styles.COMPONENT_STYLES.borderRadius, // Updated to borderRadius (8px)
     alignItems: "center",
-    marginTop: stylesConfig.SPACING.xl,
+    justifyContent: "center",
+    width: '100%',
+    minHeight: 45,
+    marginBottom: styles.SPACING.l, // Updated
   },
-  footerText: {
-    color: stylesConfig.COLORS.grey,
-    fontSize: stylesConfig.FONT_SIZES.bodyS,
-    fontFamily: stylesConfig.FONT_FAMILY.regular,
+  buttonDisabled: {
+    backgroundColor: styles.COLORS.secondaryDisabled, // Updated
   },
-  linkText: {
-    color: stylesConfig.COLORS.secondary,
-    fontSize: stylesConfig.FONT_SIZES.bodyS,
-    fontFamily: stylesConfig.FONT_FAMILY.medium,
+  buttonText: {
+    fontFamily: styles.FONT_FAMILY.regular, // Updated
+    fontSize: styles.FONT_SIZES.bodyL, // Updated
+    fontWeight: styles.FONT_WEIGHTS.regular, // Updated
+    color: styles.COLORS.primary, // Updated
+    lineHeight: styles.FONT_SIZES.bodyL * 1.35,
+  },
+  loginContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: styles.SPACING.sm, // Updated to sm (12px) for 10px gap
+  },
+  loginText: {
+    fontFamily: styles.FONT_FAMILY.regular, // Updated
+    fontSize: styles.FONT_SIZES.bodyL, // Updated
+    fontWeight: styles.FONT_WEIGHTS.regular, // Updated
+    color: styles.COLORS.accent, // Updated
+    lineHeight: styles.FONT_SIZES.bodyL * 1.35,
+  },
+  loginLink: {
+    fontFamily: styles.FONT_FAMILY.medium, // Updated
+    fontSize: styles.FONT_SIZES.bodyL, // Updated
+    fontWeight: styles.FONT_WEIGHTS.medium, // Updated
+    color: styles.COLORS.secondary, // Updated
+    lineHeight: styles.FONT_SIZES.bodyL * 1.35,
   },
 });
 

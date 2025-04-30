@@ -9,18 +9,17 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
-
-import GenericTabs from "../components/GenericTabs";
-import OrderListItem from "../components/OrderListItem";
-import { MOCK_ORDERS } from "../data/mockData";
-import * as styles from "../styles";
-import { useNavigation } from "@react-navigation/native";
+import { CompositeNavigationProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { OrdersStackParamList } from "../navigation/OrdersStackNavigator";
+import { Order, OrderStatus } from "../types";
+import GenericTabs from "../components/common/GenericTabs";
+import OrderListItem from "../components/OrderListItem";
+import * as styles from "../styles";
 
-type OrdersScreenNavigationProp = StackNavigationProp<
-  OrdersStackParamList,
-  "OrdersList"
+type OrdersScreenNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<OrdersStackParamList, "OrdersList">,
+  StackNavigationProp<OrdersStackParamList, "OrderDetail">
 >;
 
 type OrderTabId = "current" | "history";

@@ -21,8 +21,8 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { summaryStyles, warningStyles } from "../styles/sharedStyles";
 import * as styles from "../styles";
 import { CartItem, Address } from "../types";
-import RadioButton from "../components/RadioButton";
-import PrimaryButton from "../components/PrimaryButton";
+import RadioButton from "../components/common/RadioButton";
+import PrimaryButton from "../components/common/PrimaryButton";
 import { CartStackParamList } from "../navigation/CartStackNavigator";
 import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
 import {
@@ -31,6 +31,7 @@ import {
   MOCK_DISCOUNT,
   MOCK_SPECIAL_DISCOUNT,
 } from "../data/mockData";
+import Checkbox from "expo-checkbox";
 
 const MOCK_CART_ITEMS: CartItem[] = [
   {

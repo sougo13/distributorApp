@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -11,7 +10,8 @@ import {
   TouchableWithoutFeedback, 
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import * as styles from "../styles";
+// Adjust the path to styles based on the new location
+import * as styles from "../../styles";
 
 interface LanguageOption {
   label: string;
@@ -78,7 +78,7 @@ const CustomDropdown: React.FC<CustomLanguagePickerProps> = ({
             <Ionicons
               name={iconName}
               size={20}
-              color={styles.COLORS.iconGrey}
+              color={styles.COLORS.iconGrey} // Use style color
               style={s.labelIcon}
             />
           )}
@@ -96,7 +96,7 @@ const CustomDropdown: React.FC<CustomLanguagePickerProps> = ({
         <Ionicons
           name="chevron-down-outline"
           size={20}
-          color={styles.COLORS.iconGrey}
+          color={styles.COLORS.iconGrey} // Use style color
         />
       </TouchableOpacity>
 
@@ -195,4 +195,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default CustomDropdown;
+export default CustomDropdown; 

@@ -23,10 +23,10 @@ import { CartStackParamList } from "../navigation/CartStackNavigator";
 
 import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
 import { Address, CartItem, PaymentMethod } from "../types";
-import PrimaryButton from "../components/PrimaryButton";
-import SecondaryButton from "../components/SecondaryButton";
+import PrimaryButton from "../components/common/PrimaryButton";
+import SecondaryButton from "../components/common/SecondaryButton";
 import CartListItem from "../components/CartListItem";
-import RadioButton from "../components/RadioButton";
+import RadioButton from "../components/common/RadioButton";
 
 import {
   MOCK_CART_ITEMS,

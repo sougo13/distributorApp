@@ -4,7 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { CartStackParamList } from "../navigation/CartStackNavigator";
 import * as styles from "../styles";
-import PrimaryButton from "../components/PrimaryButton";
+import { Ionicons } from "@expo/vector-icons";
+import PrimaryButton from "../components/common/PrimaryButton";
 
 type PaymentStatusRouteProp = RouteProp<CartStackParamList, "PaymentStatus">;
 

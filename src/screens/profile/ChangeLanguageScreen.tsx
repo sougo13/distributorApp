@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 
 import * as styles from "../../styles";
-import PrimaryButton from "../../components/PrimaryButton";
-import CustomDropdown from "../../components/CustomDropdown";
+import PrimaryButton from "../../components/common/PrimaryButton";
+import CustomDropdown from "../../components/common/CustomDropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChangeLanguageScreen = () => {
