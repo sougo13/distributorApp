@@ -12,8 +12,9 @@ import {
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import * as styles from "../styles";
-import { ProductListItemData } from "../types";
+import { useNavigation } from "@react-navigation/native";
+import * as styles from "../../styles";
+import { ProductListItemData } from "../../types";
 import { BlurView } from "expo-blur";
 
 interface ProductDetailModalProps {
@@ -21,19 +22,18 @@ interface ProductDetailModalProps {
   isVisible: boolean;
   onClose: () => void;
   onAddToCart: (productId: string, quantity: number) => void;
-  onRequestNegotiation: (productId: string) => void;
 }
 
-const FALLBACK_IMAGE: ImageSourcePropType = require("../assets/images/rice_basmati.png");
+const FALLBACK_IMAGE: ImageSourcePropType = require("../../assets/images/rice_basmati.png");
 
 const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
   isVisible,
   onClose,
   onAddToCart,
-  onRequestNegotiation,
 }) => {
   const { t } = useTranslation();
+  const navigation = useNavigation<any>();
   const [quantity, setQuantity] = useState(1);
 
   React.useEffect(() => {
@@ -52,7 +52,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   };
 
   const handleRequestPress = () => {
-    onRequestNegotiation(product.id);
+    navigation.navigate('NegotiationRequest', { 
+      productId: product.id,
+    });
     onClose();
   };
 

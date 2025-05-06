@@ -4,11 +4,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
   StatusBar,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from 'react-native-safe-area-context'; // <-- Import from correct library
+
 // import { SvgUri } from "react-native-svg"; // No longer needed for direct import
 
 import { AuthStackParamList } from "../../navigation/AuthStackNavigator";

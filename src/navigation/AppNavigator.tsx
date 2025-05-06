@@ -29,7 +29,7 @@ const AppNavigator = () => {
 
   const getTabBarVisibility = (route: RouteProp<TabParamList, keyof TabParamList>): boolean => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'HomeList';
-    const hideOnScreens = ['SupplierDetail'];
+    const hideOnScreens = ['SupplierDetail', 'NegotiationRequest', 'NegotiationSuccess'];
     return !hideOnScreens.includes(routeName);
   };
 

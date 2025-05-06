@@ -22,14 +22,17 @@ import { useAuth } from "../../context/AuthContext";
 import * as styles from "../../styles";
 import { AuthStackParamList } from "../../navigation/AuthStackNavigator";
 
-// Import SVG icons
-import MailIcon from '../../assets/icons/mail.svg';
-import LockIcon from '../../assets/icons/lock.svg';
+import MailIcon from "../../assets/icons/mail.svg"; // Import actual icon
+import LockIcon from "../../assets/icons/lock.svg"; // Import actual icon
+import SupplierIcon from "../../assets/icons/supplier_icon.svg";
+import BuyerIcon from "../../assets/icons/buyer_icon.svg";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
   "Login"
 >;
+
+type Role = "supplier" | "buyer";
 
 const LoginScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -39,6 +42,7 @@ const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<Role>("buyer");
   const [localError, setLocalError] = useState<string | null>(null);
 
   const error = localError;
@@ -49,7 +53,11 @@ const LoginScreen: React.FC = () => {
       setLocalError(t("validation.emailPasswordRequired"));
       return;
     }
-    console.log("Attempting login with:", { email, rememberMe });
+    console.log("Attempting login with:", {
+      email,
+      rememberMe,
+      role: selectedRole,
+    });
 
     login({ email, password });
   };
@@ -70,9 +78,17 @@ const LoginScreen: React.FC = () => {
     );
   };
 
+  const roleOptions = [
+    { label: t("login.roleSupplier"), value: "supplier", Icon: SupplierIcon },
+    { label: t("login.roleBuyer"), value: "buyer", Icon: BuyerIcon },
+  ];
+
   return (
     <SafeAreaView style={s.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor={styles.COLORS.primary} />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={styles.COLORS.primary}
+      />
       <KeyboardAvoidingView
         style={s.keyboardAvoidingView}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -115,9 +131,7 @@ const LoginScreen: React.FC = () => {
                 value={rememberMe}
                 onValueChange={setRememberMe}
                 color={
-                  rememberMe
-                    ? styles.COLORS.secondary
-                    : styles.COLORS.grey
+                  rememberMe ? styles.COLORS.secondary : styles.COLORS.grey
                 }
               />
               <Text style={s.rememberMeText}>{t("login.rememberMe")}</Text>
@@ -125,6 +139,28 @@ const LoginScreen: React.FC = () => {
             <TouchableOpacity onPress={handleForgotPassword}>
               <Text style={s.linkText}>{t("login.forgotPassword")}</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={s.roleSelectionContainer}>
+            {roleOptions.map((option) => (
+              <TouchableOpacity
+                key={option.value}
+                style={[
+                  s.roleOptionBox,
+                  selectedRole === option.value && s.roleOptionBoxSelected,
+                ]}
+                onPress={() => setSelectedRole(option.value as Role)}
+                activeOpacity={0.7}
+              >
+                <View style={s.radioButton}>
+                  {selectedRole === option.value && (
+                    <View style={s.radioButtonSelected} />
+                  )}
+                </View>
+                <option.Icon />
+                <Text style={s.roleOptionText}>{option.label as string}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
 
           {error && <Text style={s.errorText}>{error}</Text>}
@@ -243,6 +279,7 @@ const s = StyleSheet.create({
     gap: styles.SPACING.l,
   },
   submitButton: {
+    // Potentially add default button styles if defined globally
   },
   secondaryButton: {
     backgroundColor: styles.COLORS.inputBackground,
@@ -281,6 +318,50 @@ const s = StyleSheet.create({
     fontFamily: styles.FONT_FAMILY.medium,
     fontWeight: styles.FONT_WEIGHTS.medium,
     lineHeight: styles.FONT_SIZES.bodyL * 1.35,
+  },
+  roleSelectionContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: styles.SPACING.l,
+    gap: styles.SPACING.m,
+  },
+  roleOptionBox: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: styles.COLORS.searchBackground,
+    paddingVertical: styles.SPACING.s,
+    paddingHorizontal: styles.SPACING.s,
+    borderRadius: styles.COMPONENT_STYLES.cardBorderRadius,
+    height: 48,
+    gap: styles.SPACING.xs,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  roleOptionBoxSelected: {
+    borderColor: styles.COLORS.secondary,
+  },
+  radioButton: {
+    height: 20,
+    width: 20,
+    borderRadius: styles.COMPONENT_STYLES.borderRadiusS,
+    borderWidth: 1,
+    borderColor: styles.COLORS.radioBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: styles.SPACING.xs,
+  },
+  radioButtonSelected: {
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    backgroundColor: styles.COLORS.secondary,
+  },
+  roleOptionText: {
+    color: styles.COLORS.accent,
+    fontSize: styles.FONT_SIZES.bodyM,
+    fontFamily: styles.FONT_FAMILY.medium,
+    fontWeight: styles.FONT_WEIGHTS.medium,
   },
 });
 

@@ -14,9 +14,9 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons"; // Import icons if
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { HomeStackParamList } from "../navigation/HomeStackNavigator";
-import { getMockSupplierDetailById } from "../data/mockData";
-import * as styles from "../styles";
+import { HomeStackParamList } from "../../navigation/HomeStackNavigator";
+import { getMockSupplierDetailById } from "../../data/mockData";
+import * as styles from "../../styles";
 
 // Define Prop and Route types for this screen
 type SupplierAboutScreenRouteProp = RouteProp<
@@ -44,7 +44,11 @@ const SupplierAboutScreen: React.FC = () => {
       <SafeAreaView style={s.safeArea} edges={["top", "left", "right"]}>
         <View style={s.header}>
           <TouchableOpacity onPress={handleGoBack} style={s.backButton}>
-            <Ionicons name="arrow-back" size={28} color={styles.COLORS.accent} />
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color={styles.COLORS.accent}
+            />
           </TouchableOpacity>
           {/* Header title could be generic or empty */}
         </View>
@@ -71,7 +75,8 @@ const SupplierAboutScreen: React.FC = () => {
       { day: "Sunday", hours: "10:00 - 19:00" },
     ],
     // about: supplierDetail.about || "Ballerina Farm offers premium, pasture-raised meats...",
-    about: "Ballerina Farm offers premium, pasture-raised meats, including beef, pork, and lamb, all sourced from animals raised humanely on nutrient-rich land. Their handcrafted sourdough products, like artisanal loaves and sourdough starter kits, highlight traditional baking techniques.",
+    about:
+      "Ballerina Farm offers premium, pasture-raised meats, including beef, pork, and lamb, all sourced from animals raised humanely on nutrient-rich land. Their handcrafted sourdough products, like artisanal loaves and sourdough starter kits, highlight traditional baking techniques.",
     // phone: supplierDetail.phone || "+995 541 11 22 33",
     phone: "+995 541 11 22 33",
     // email: supplierDetail.email || "Ballerina@farm.com",
@@ -94,7 +99,9 @@ const SupplierAboutScreen: React.FC = () => {
       <ScrollView contentContainerStyle={s.scrollContainer}>
         {/* Address Section */}
         <View style={s.section}>
-          <Text style={s.sectionTitle}>{t("supplierAbout.address", "Address:")}</Text>
+          <Text style={s.sectionTitle}>
+            {t("supplierAbout.address", "Address:")}
+          </Text>
           <Text style={s.sectionText}>{aboutData.address}</Text>
         </View>
 
@@ -106,12 +113,14 @@ const SupplierAboutScreen: React.FC = () => {
             {t("supplierAbout.openingHours", "Opening Hours")}
           </Text>
           {/* Add explicit types for item and index */}
-          {aboutData.openingHours.map((item: { day: string; hours: string }, index: number) => (
-            <View key={index} style={s.hoursRow}>
-              <Text style={[s.sectionText, s.dayText]}>{item.day}:</Text>
-              <Text style={s.sectionText}>{item.hours}</Text>
-            </View>
-          ))}
+          {aboutData.openingHours.map(
+            (item: { day: string; hours: string }, index: number) => (
+              <View key={index} style={s.hoursRow}>
+                <Text style={[s.sectionText, s.dayText]}>{item.day}:</Text>
+                <Text style={s.sectionText}>{item.hours}</Text>
+              </View>
+            )
+          )}
         </View>
 
         <View style={s.separator} />
@@ -168,7 +177,10 @@ const s = StyleSheet.create({
     paddingVertical: styles.SPACING.s,
     borderBottomWidth: 1,
     borderBottomColor: styles.COLORS.inputBackground,
-    paddingTop: Platform.OS === 'ios' ? styles.SPACING.s : StatusBar.currentHeight || styles.SPACING.m,
+    paddingTop:
+      Platform.OS === "ios"
+        ? styles.SPACING.s
+        : StatusBar.currentHeight || styles.SPACING.m,
   },
   backButton: {
     padding: styles.SPACING.s, // Add padding for easier touch
@@ -234,4 +246,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default SupplierAboutScreen; 
+export default SupplierAboutScreen;

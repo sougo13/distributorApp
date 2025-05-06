@@ -16,25 +16,22 @@ import Animated, {
   interpolate,
 } from "react-native-reanimated";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { HomeStackParamList } from "../navigation/HomeStackNavigator";
-import { getMockSupplierDetailById } from "../data/mockData";
-import { ProductListItemData, SupplierCategoryTag } from "../types";
-import * as styles from "../styles";
-import ProductListItem from "../components/ProductListItem";
-import ProductDetailModal from "../components/ProductDetailModal";
-import { BlurView } from "expo-blur";
+import { HomeStackParamList } from "../../navigation/HomeStackNavigator";
+import { getMockSupplierDetailById } from "../../data/mockData";
+import { ProductListItemData } from "../../types";
+import * as styles from "../../styles";
+import ProductDetailModal from "../../components/SupplierDetail/ProductDetailModal";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BottomCartButton from "../components/SupplierDetail/BottomCartButton";
-import StickyHeader from "../components/SupplierDetail/StickyHeader";
-import SupplierDetailHeader from "../components/SupplierDetail/SupplierDetailHeader";
-import { SupplierDetail } from "../types";
+import BottomCartButton from "../../components/SupplierDetail/BottomCartButton";
+import StickyHeader from "../../components/SupplierDetail/StickyHeader";
+import SupplierDetailHeader from "../../components/SupplierDetail/SupplierDetailHeader";
 import {
   keyExtractor,
   renderItemSeparator,
   renderListEmptyComponent,
   createRenderProductItem,
-} from "../components/SupplierDetail/ProductListComponents";
-import SupplierNotFound from "../components/SupplierDetail/SupplierNotFound";
+} from "../../components/SupplierDetail/ProductListComponents";
+import SupplierNotFound from "../../components/SupplierDetail/SupplierNotFound";
 
 type SupplierDetailScreenRouteProp = RouteProp<
   HomeStackParamList,

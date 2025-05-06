@@ -11,7 +11,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import Checkbox from "expo-checkbox";
+import { useMutation } from "@tanstack/react-query";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import FormInput from "../../components/common/FormInput";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,6 +25,7 @@ import MailIcon from "../../assets/icons/mail.svg";
 import LockIcon from "../../assets/icons/lock.svg";
 
 import * as styles from "../../styles";
+import { registerBuyer } from "../../api/buyer"; // Import the new API function
 
 type SignUpScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -44,21 +45,59 @@ const SignUpScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSignUp = () => {
-    if (error) return;
-
-    console.log("Signing up with:", { phone, email, role: selectedRole });
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Sign up successful");
-
+  // === React Query Mutation ===
+  const mutation = useMutation({
+    mutationFn: registerBuyer, // Функция, выполняющая запрос
+    onSuccess: () => {
+      // Вызывается при успешном завершении мутации
+      console.log("Sign up successful, navigating...");
+      setError(null); // Очищаем предыдущие ошибки
       navigation.navigate("EmailVerification", { email: email });
-    }, 1500);
+    },
+    onError: (err) => {
+      // Вызывается при ошибке мутации
+      console.error("Sign up mutation failed:", err);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(t("signUp.error.unknown")); // Общая ошибка
+      }
+    },
+  });
+  // ==========================
+
+  const handleSignUp = () => {
+    // 1. Локальная валидация
+    if (!fullName || !phone || !email || !password || !repeatPassword) {
+      setError(t("signUp.error.allFieldsRequired"));
+      return;
+    }
+    if (password !== repeatPassword) {
+      setError(t("signUp.error.passwordsMismatch"));
+      return;
+    }
+    setError(null); // Очистка локальных ошибок перед запросом
+
+    // 2. Подготовка данных
+    const nameParts = fullName.trim().split(" ");
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || ""; // Handle names with multiple parts
+
+    const requestBody = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      password: password,
+      businessName: "", // Mock data as requested
+      address: "", // Mock data as requested
+    };
+
+    // 3. Вызов мутации
+    console.log("Triggering sign up mutation with:", requestBody);
+    mutation.mutate(requestBody);
   };
 
   const handleGoBack = () => {
@@ -146,10 +185,14 @@ const SignUpScreen: React.FC = () => {
 
           <View style={s.bottomContainer}>
             <PrimaryButton
-              title={isLoading ? t("signUp.submitting") : t("common.submit")}
+              title={
+                mutation.isPending // Используем isPending вместо isLoading
+                  ? t("signUp.submitting")
+                  : t("common.submit")
+              }
               onPress={handleSignUp}
-              loading={isLoading}
-              disabled={isLoading}
+              loading={mutation.isPending} // Передаем isPending
+              disabled={mutation.isPending} // Блокируем кнопку во время загрузки
               style={s.submitButton}
             />
 

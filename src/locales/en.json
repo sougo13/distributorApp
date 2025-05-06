@@ -26,28 +26,37 @@
     "passwordLabel": "Password",
     "passwordPlaceholder": "Enter your password",
     "rememberMe": "Remember me",
-    "forgotPassword": "Forgot Password?",
+    "forgotPassword": "Forgotten Password?",
     "continueWithoutSignIn": "Continue Without Sign In",
     "noAccount": "Don't Have an account?",
     "signUpLink": "Sign Up",
-    "loggingIn": "Signing in...",
+    "loggingIn": "Logging In...",
     "invalidCredentials": "Invalid email or password",
-    "continueWithoutSignInNotImplemented": "Continue without sign-in (Not Implemented)"
+    "continueWithoutSignInNotImplemented": "Continue without sign in is not implemented yet.",
+    "roleSupplier": "A Supplier",
+    "roleBuyer": "A Buyer"
   },
   "signUp": {
-    "title": "Sign Up",
-    "subtitle": "Just a few details and you're in!",
+    "title": "Create Account",
+    "subtitle": "Enter your details below to create your account and get started.",
     "phoneLabel": "Phone Number",
-    "phonePlaceholder": "Enter your phone number",
+    "phonePlaceholder": "Phone Number",
     "emailLabel": "Email Address",
-    "emailPlaceholder": "Enter your email",
+    "emailPlaceholder": "Email Address",
     "passwordLabel": "Password",
-    "passwordPlaceholder": "Create a password",
+    "passwordPlaceholder": "Password",
     "repeatPasswordLabel": "Repeat Password",
-    "repeatPasswordPlaceholder": "Repeat your password",
+    "repeatPasswordPlaceholder": "Repeat Password",
     "fullNameLabel": "Full Name",
-    "fullNamePlaceholder": "Enter your full name",
-    "submitting": "Submitting..."
+    "fullNamePlaceholder": "Full Name",
+    "submitting": "Submitting...",
+    "error": {
+      "allFieldsRequired": "Please fill in all required fields.",
+      "passwordsMismatch": "Passwords do not match.",
+      "unknown": "An unexpected error occurred. Please try again.",
+      "apiError": "Registration failed. Please check your details.",
+      "networkError": "Network error. Please check your connection and try again."
+    }
   },
   "roleSelection": {
     "title": "Who Are You?",
