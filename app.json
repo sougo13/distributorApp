@@ -19,10 +19,23 @@
       "adaptiveIcon": {
         "foregroundImage": ".src/assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yourcompany.distributorapp"
     },
     "web": {
       "favicon": ".src/assets/icons/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "manifestApplicationAttributes": {
+              "android:networkSecurityConfig": "@xml/network_security_config"
+            }
+          }
+        }
+      ]
+    ]
   }
 }
