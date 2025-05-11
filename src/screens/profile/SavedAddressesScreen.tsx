@@ -20,7 +20,6 @@ import { Ionicons } from "@expo/vector-icons";
 import * as styles from "../../styles";
 import AddressListItem from "../../components/AddressListItem";
 import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
-import { CartStackParamList } from "../../navigation/CartStackNavigator";
 import { TabParamList } from "../../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
