@@ -124,7 +124,6 @@ export const MOCK_DISCOUNT = 6.0;
 export const MOCK_SPECIAL_DISCOUNT = 1.0;
 export const MOCK_DELIVERY_FEE = 5.0;
 
-// --- >>> НОВЫЕ МОКОВЫЕ ДАННЫЕ ДЛЯ АДРЕСОВ <<< ---
 export const MOCK_ADDRESSES: Address[] = [
   {
     id: "addr_1",
@@ -218,15 +217,12 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   },
 ];
 
-// Обновим цены в Summary, если они изменились (как на скриншоте чекаута)
 export const MOCK_CHECKOUT_SUMMARY = {
   discount: 6.0,
   specialDiscount: 1.0,
   deliveryFee: 5.0,
-  // Итоговая сумма будет пересчитана на основе ДОСТУПНЫХ товаров
 };
 
-// Добавим моковые данные для деталей заказа (которые пришли бы из OrderRequest)
 export const MOCK_ORDER_DETAILS = {
   deliveryOption: "delivery" as const, // 'delivery' | 'pickup'
   address: MOCK_ADDRESSES.find((a) => a.isPrimary) || MOCK_ADDRESSES[0], // Выбранный адрес
@@ -597,3 +593,5 @@ export const getMockSupplierDetailById = (
 ): SupplierDetail | undefined => {
   return MOCK_SUPPLIER_DETAILS_DATA.find((detail) => detail.id === id);
 };
+
+export const MOCK_MAP_IMAGE = require("../assets/images/mock_map.png"); // <<< ДОБАВЛЯЮ ЭКСПОРТ MOCK_MAP_IMAGE

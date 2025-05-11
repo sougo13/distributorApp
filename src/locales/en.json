@@ -305,7 +305,8 @@
     "registered": "Registered",
     "notRegistered": "Not Registered",
     "summaryTitle": "Summary",
-    "requestOrderButton": "Request Order"
+    "requestOrderButton": "Request Order",
+    "addressRequiredError": "Please select a delivery address to proceed."
   },
   "orders": {
     "title": "All Orders",

@@ -14,8 +14,10 @@ import {
   useRoute,
   RouteProp,
   useFocusEffect,
+  CompositeNavigationProp,
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useTranslation } from "react-i18next";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { summaryStyles, warningStyles } from "../styles/sharedStyles";
@@ -24,55 +26,27 @@ import { CartItem, Address } from "../types";
 import RadioButton from "../components/common/RadioButton";
 import PrimaryButton from "../components/common/PrimaryButton";
 import { CartStackParamList } from "../navigation/CartStackNavigator";
-import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
+import { SavedAddressesParams } from "../navigation/ProfileStackNavigator";
+import { TabParamList } from "../navigation/AppNavigator";
 import {
   MOCK_ADDRESSES,
   MOCK_DELIVERY_FEE,
   MOCK_DISCOUNT,
   MOCK_SPECIAL_DISCOUNT,
+  MOCK_CART_ITEMS,
+  MOCK_MAP_IMAGE,
 } from "../data/mockData";
-import Checkbox from "expo-checkbox";
-
-const MOCK_CART_ITEMS: CartItem[] = [
-  {
-    id: "cart_item_1",
-    product: {
-      id: "prod_1",
-      name: "Basmati rice",
-      imageUrl: "",
-      pricePerUnit: 9.0,
-      unit: "Kg",
-    },
-    quantity: 1,
-  },
-  {
-    id: "cart_item_2",
-    product: {
-      id: "prod_2",
-      name: "Brown rice",
-      imageUrl: "",
-      pricePerUnit: 11.0,
-      unit: "Kg",
-    },
-    quantity: 1,
-  },
-];
-
-const MOCK_MAP_IMAGE = require("../assets/images/mock_map.png");
 
 type DeliveryOption = "delivery" | "pickup";
 type TimeOption = "asap" | "scheduled";
 type BusinessStatus = "registered" | "not_registered";
 
-type OrderRequestNavigationProp = StackNavigationProp<
-  CartStackParamList,
-  "OrderRequest"
+type OrderRequestNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<CartStackParamList, "OrderRequest">,
+  BottomTabNavigationProp<TabParamList>
 >;
 
-type OrderRequestRouteProp = RouteProp<
-  ProfileStackParamList & CartStackParamList,
-  "OrderRequest"
->;
+type OrderRequestRouteProp = RouteProp<CartStackParamList, "OrderRequest">;
 
 const OrderRequestScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -128,7 +102,7 @@ const OrderRequestScreen: React.FC = () => {
     console.log("Navigating to Saved Addresses in Profile stack");
     navigation.navigate("Profile", {
       screen: "SavedAddresses",
-      params: { canSelect: true, originRoute: "Cart" },
+      params: { canSelect: true, originRoute: "Cart" } as SavedAddressesParams,
     });
   };
 

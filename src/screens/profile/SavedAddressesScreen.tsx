@@ -7,7 +7,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { useNavigation, useRoute, RouteProp, CompositeNavigationProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  RouteProp,
+  CompositeNavigationProp,
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,10 +24,13 @@ import { CartStackParamList } from "../../navigation/CartStackNavigator";
 import { TabParamList } from "../../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
-import { MOCK_ADDRESSES } from "../../data/mockData";
 import { Address } from "../../types";
+import { MOCK_ADDRESSES } from "../../data/mockData";
 
-type SavedAddressesRouteProp = RouteProp<ProfileStackParamList, "SavedAddresses">;
+type SavedAddressesRouteProp = RouteProp<
+  ProfileStackParamList,
+  "SavedAddresses"
+>;
 
 type SavedAddressesNavigationProp = CompositeNavigationProp<
   StackNavigationProp<ProfileStackParamList, "SavedAddresses">,

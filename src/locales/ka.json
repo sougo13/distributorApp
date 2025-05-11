@@ -278,7 +278,8 @@
     "registered": "რეგისტრირებული",
     "notRegistered": "არარეგისტრირებული",
     "summaryTitle": "ჯამი",
-    "requestOrderButton": "შეკვეთის მოთხოვნა"
+    "requestOrderButton": "შეკვეთის მოთხოვნა",
+    "addressRequiredError": "გთხოვთ, აირჩიოთ მიწოდების მისამართი გასაგრძელებლად."
   },
   "checkout": {
     "title": "გადახდა",
