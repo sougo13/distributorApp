@@ -18,7 +18,7 @@ import { OrdersStackParamList } from "../navigation/OrdersStackNavigator";
 import GenericTabs from "../components/common/GenericTabs";
 import OrderListItem from "../components/OrderListItem";
 import * as styles from "../styles";
-import { MOCK_ORDERS } from "../data/mockData";
+import { MOCK_ORDERS } from "../mockData";
 
 type OrdersScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<OrdersStackParamList, "OrdersList">,

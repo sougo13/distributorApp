@@ -3,24 +3,22 @@ import {
   StyleSheet,
   View,
   FlatList,
-  Platform,
   useWindowDimensions,
+  ViewStyle,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-
 import { COLORS, SPACING } from "../styles";
 import { ActiveTab, Category, Supplier } from "../types";
-
 import HomeHeader from "../components/HomeHeader";
 import HomeTabs from "../components/HomeTabs";
 import FilterChip from "../components/FilterChip";
 import CategoryCard from "../components/CategoryCard";
 import SupplierCard from "../components/SupplierCard";
-import { CATEGORIES_DATA, SUPPLIERS_DATA } from "../data/mockData";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { HomeStackParamList } from "../navigation/HomeStackNavigator";
 import { useNavigation } from "@react-navigation/native";
+import { CATEGORIES_DATA, SUPPLIERS_DATA } from "../mockData";
 
 const CARD_MARGIN = SPACING.s;
 
@@ -103,7 +101,7 @@ const HomeScreen: React.FC = () => {
     [selectedCategory, handleSupplierPress, handleFavoriteToggle]
   );
 
-  const categoryRowStyle = useMemo(
+  const categoryRowStyle = useMemo<ViewStyle>(
     () => ({
       justifyContent: "space-between",
       marginBottom: CARD_MARGIN,

@@ -24,7 +24,7 @@ import { TabParamList } from "../../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { Address } from "../../types";
-import { MOCK_ADDRESSES } from "../../data/mockData";
+import { MOCK_ADDRESSES } from "../../mockData";
 
 type SavedAddressesRouteProp = RouteProp<
   ProfileStackParamList,

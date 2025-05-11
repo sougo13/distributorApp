@@ -22,20 +22,13 @@ import { useTranslation } from "react-i18next";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { summaryStyles, warningStyles } from "../styles/sharedStyles";
 import * as styles from "../styles";
-import { CartItem, Address } from "../types";
+import { Address } from "../types";
 import RadioButton from "../components/common/RadioButton";
 import PrimaryButton from "../components/common/PrimaryButton";
 import { CartStackParamList } from "../navigation/CartStackNavigator";
 import { SavedAddressesParams } from "../navigation/ProfileStackNavigator";
 import { TabParamList } from "../navigation/AppNavigator";
-import {
-  MOCK_ADDRESSES,
-  MOCK_DELIVERY_FEE,
-  MOCK_DISCOUNT,
-  MOCK_SPECIAL_DISCOUNT,
-  MOCK_CART_ITEMS,
-  MOCK_MAP_IMAGE,
-} from "../data/mockData";
+import { MOCK_CART_ITEMS, MOCK_DELIVERY_FEE, MOCK_DISCOUNT, MOCK_MAP_IMAGE, MOCK_SPECIAL_DISCOUNT, MOCK_ADDRESSES } from "../mockData";
 
 type DeliveryOption = "delivery" | "pickup";
 type TimeOption = "asap" | "scheduled";

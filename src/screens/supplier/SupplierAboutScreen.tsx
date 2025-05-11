@@ -15,8 +15,8 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { HomeStackParamList } from "../../navigation/HomeStackNavigator";
-import { getMockSupplierDetailById } from "../../data/mockData";
 import * as styles from "../../styles";
+import { getMockSupplierDetailById } from "../../mockData";
 
 // Define Prop and Route types for this screen
 type SupplierAboutScreenRouteProp = RouteProp<

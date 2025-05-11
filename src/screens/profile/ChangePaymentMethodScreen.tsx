@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
@@ -14,12 +13,11 @@ import { Ionicons } from "@expo/vector-icons";
 
 import * as styles from "../../styles";
 import PaymentCardListItem from "../../components/PaymentCardListItem";
-import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
-import { CartStackParamList } from "../../navigation/CartStackNavigator";
+import { ProfileStackParamList, ChangePaymentMethodParams } from "../../navigation/ProfileStackNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
-import { MOCK_PAYMENT_METHODS } from "../../data/mockData";
 import { PaymentMethod } from "../../types";
+import { MOCK_PAYMENT_METHODS } from "../../mockData";
 
 interface PaymentCard {
   id: string;
@@ -27,15 +25,7 @@ interface PaymentCard {
   cardType?: string;
 }
 
-const MOCK_CARDS: PaymentCard[] = [
-  { id: "card1", maskedNumber: "Card Ending In 1119", cardType: "Visa" },
-  { id: "card2", maskedNumber: "Card Ending In 2124", cardType: "Mastercard" },
-];
-
-type ChangePaymentMethodRouteProp = RouteProp<
-  ProfileStackParamList & CartStackParamList,
-  "ChangePaymentMethod"
->;
+type ChangePaymentMethodRouteProp = RouteProp<{ ChangePaymentMethod: ChangePaymentMethodParams }, "ChangePaymentMethod">;
 
 type ChangePaymentMethodNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -68,8 +58,13 @@ const ChangePaymentMethodScreen = () => {
     (card: PaymentMethod) => {
       setSelectedCardId(card.id);
       if (canSelect && originRoute) {
-        console.log(`Returning selected payment method to ${originRoute}:`, card);
-        navigation.navigate(originRoute as any, { selectedPaymentMethod: card });
+        console.log(
+          `Returning selected payment method to ${originRoute}:`,
+          card
+        );
+        navigation.navigate(originRoute as any, {
+          selectedPaymentMethod: card,
+        });
       } else {
         console.log("Selected card (no return):", card.id);
       }

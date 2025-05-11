@@ -5,14 +5,12 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Image,
   TextInput,
   LayoutAnimation,
   UIManager,
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
@@ -20,9 +18,7 @@ import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import * as styles from "../styles";
 import { summaryStyles, warningStyles } from "../styles/sharedStyles";
 import { CartStackParamList } from "../navigation/CartStackNavigator";
-
-import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
-import { Address, CartItem, PaymentMethod } from "../types";
+import { PaymentMethod } from "../types";
 import PrimaryButton from "../components/common/PrimaryButton";
 import SecondaryButton from "../components/common/SecondaryButton";
 import CartListItem from "../components/CartListItem";
@@ -35,10 +31,7 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-type CheckoutRouteProp = RouteProp<
-  CartStackParamList & ProfileStackParamList,
-  "Checkout"
->;
+type CheckoutRouteProp = RouteProp<CartStackParamList, "Checkout">;
 
 type CheckoutNavigationProp = StackNavigationProp<
   CartStackParamList,
@@ -65,7 +58,6 @@ const CheckoutScreen: React.FC = () => {
   useEffect(() => {
     if (route.params?.selectedPaymentMethod) {
       setSelectedPaymentMethod(route.params.selectedPaymentMethod);
-
       navigation.setParams({ selectedPaymentMethod: undefined });
     }
   }, [route.params?.selectedPaymentMethod, navigation]);

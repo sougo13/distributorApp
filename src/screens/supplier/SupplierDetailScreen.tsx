@@ -1,11 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-import {
-  View,
-  StyleSheet,
-  Platform,
-  StatusBar,
-  FlatList,
-} from "react-native";
+import { View, StyleSheet, Platform, StatusBar, FlatList } from "react-native";
 import { useRoute, useNavigation, RouteProp } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +11,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { HomeStackParamList } from "../../navigation/HomeStackNavigator";
-import { getMockSupplierDetailById } from "../../data/mockData";
 import { ProductListItemData } from "../../types";
 import * as styles from "../../styles";
 import ProductDetailModal from "../../components/SupplierDetail/ProductDetailModal";
@@ -32,6 +25,7 @@ import {
   createRenderProductItem,
 } from "../../components/SupplierDetail/ProductListComponents";
 import SupplierNotFound from "../../components/SupplierDetail/SupplierNotFound";
+import { getMockSupplierDetailById } from "../../mockData";
 
 type SupplierDetailScreenRouteProp = RouteProp<
   HomeStackParamList,
@@ -119,13 +113,13 @@ const SupplierDetailScreen = () => {
       scrollY.value,
       [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       [1, 0.5, 0],
-      'clamp'
+      "clamp"
     );
     const translateY = interpolate(
       scrollY.value,
       [0, HEADER_SCROLL_DISTANCE],
       [0, -HEADER_SCROLL_DISTANCE * 0.5],
-      'clamp'
+      "clamp"
     );
 
     return {
@@ -139,13 +133,13 @@ const SupplierDetailScreen = () => {
       scrollY.value,
       [HEADER_SCROLL_DISTANCE / 1.5, HEADER_SCROLL_DISTANCE],
       [0, 1],
-      'clamp'
+      "clamp"
     );
     const translateY = interpolate(
       scrollY.value,
       [0, HEADER_SCROLL_DISTANCE],
       [-HEADER_MIN_HEIGHT, 0],
-      'clamp'
+      "clamp"
     );
     return {
       opacity: opacity,
@@ -158,13 +152,13 @@ const SupplierDetailScreen = () => {
       scrollY.value,
       [HEADER_SCROLL_DISTANCE / 1.5, HEADER_SCROLL_DISTANCE],
       [0, 1],
-      'clamp'
+      "clamp"
     );
     const translateY = interpolate(
       scrollY.value,
       [0, HEADER_SCROLL_DISTANCE],
       [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-      'clamp'
+      "clamp"
     );
     return {
       opacity: opacity,
@@ -175,7 +169,7 @@ const SupplierDetailScreen = () => {
   const handleGoBack = () => navigation.goBack();
   const handleMoreOptions = () => {
     if (supplierDetail) {
-      navigation.navigate('SupplierAbout', { supplierId: supplierDetail.id });
+      navigation.navigate("SupplierAbout", { supplierId: supplierDetail.id });
     } else {
       console.error("Cannot navigate to SupplierAbout: supplierDetail is null");
     }
@@ -266,7 +260,9 @@ const SupplierDetailScreen = () => {
         data={filteredProducts}
         renderItem={renderProductItem}
         keyExtractor={keyExtractor}
-        ItemSeparatorComponent={() => renderItemSeparator(componentStyles.separator)}
+        ItemSeparatorComponent={() =>
+          renderItemSeparator(componentStyles.separator)
+        }
         contentContainerStyle={{
           paddingBottom:
             cartItemsCount > 0
@@ -289,16 +285,12 @@ const SupplierDetailScreen = () => {
           isVisible={isModalVisible}
           onClose={handleCloseModal}
           onAddToCart={handleAddToCartFromModal}
-          onRequestNegotiation={handleRequestNegotiationFromModal}
         />
       </View>
 
       {/* Conditional Bottom Cart View */}
       {cartItemsCount > 0 && (
-        <BottomCartButton
-          cartTotal={cartTotal}
-          insets={insets}
-        />
+        <BottomCartButton cartTotal={cartTotal} insets={insets} />
       )}
     </SafeAreaView>
   );

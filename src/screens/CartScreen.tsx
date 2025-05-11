@@ -64,9 +64,9 @@ const CartScreen: React.FC = () => {
 
   const handleNavigateToSavedAddresses = () => {
     console.log("Navigating to Saved Addresses in Profile stack");
-    navigation.navigate("Cart", {
-      screen: "OrderRequest",
-      params: { canSelect: true, originRoute: "Cart" },
+    navigation.navigate("Profile" as any, {
+      screen: "SavedAddresses",
+      params: { canSelect: true, originRoute: "CartScreen" },
     });
   };
 

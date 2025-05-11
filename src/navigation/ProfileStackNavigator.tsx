@@ -5,11 +5,8 @@ import {
   CardStyleInterpolators,
 } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity, Platform } from "react-native";
+import { Platform } from "react-native";
 import { useTranslation } from "react-i18next"; 
-import { Address } from "../types";
-
-
 import ProfileScreen from "../screens/ProfileScreen";
 import PersonalInformationScreen from "../screens/profile/PersonalInformationScreen";
 import ChangePasswordScreen from "../screens/profile/ChangePasswordScreen";
@@ -28,13 +25,18 @@ export type SavedAddressesParams = {
   originRoute?: string;
 };
 
+export type ChangePaymentMethodParams = {
+  canSelect?: boolean;
+  originRoute?: string;
+};
+
 export type ProfileStackParamList = {
   ProfileMain: undefined; 
   PersonalInformation: undefined;
   ChangePassword: undefined;
   SavedAddresses: SavedAddressesParams | undefined;
   AddEditAddress: { addressId?: string }; 
-  ChangePaymentMethod: undefined;
+  ChangePaymentMethod: ChangePaymentMethodParams | undefined;
   AddNewCard: undefined;
   ChangeLanguage: undefined;
   FAQ: undefined;

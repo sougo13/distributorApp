@@ -15,12 +15,11 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import Clipboard from "expo-clipboard";
-
 import { OrdersStackParamList } from "../navigation/OrdersStackNavigator";
-import { getMockOrderDetailById } from "../data/mockData";
-import { OrderDetail, OrderDetailStatusType } from "../types";
+import { OrderDetailStatusType } from "../types";
 import * as styles from "../styles";
 import { hexToRgba } from "../utils/colors";
+import { getMockOrderDetailById } from "../mockData";
 
 type OrderDetailScreenRouteProp = RouteProp<
   OrdersStackParamList,
@@ -189,13 +188,13 @@ const OrderDetailScreen = () => {
                 { color: bannerStyle.textColor },
               ]}
             >
-              {t(orderDetail.statusBannerKey!)}
+              {t(orderDetail.statusBannerKey! as any)}
             </Text>
           </View>
         )}
 
         <Text style={componentStyles.statusTextMain}>
-          {t(orderDetail.statusTextKey)}
+          {t(orderDetail.statusTextKey as any)}
         </Text>
         <Text style={componentStyles.dateTimeText}>
           {formatDate(orderDetail.orderDate, t)}

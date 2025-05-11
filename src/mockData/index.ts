@@ -224,13 +224,13 @@ export const MOCK_CHECKOUT_SUMMARY = {
 };
 
 export const MOCK_ORDER_DETAILS = {
-  deliveryOption: "delivery" as const, // 'delivery' | 'pickup'
-  address: MOCK_ADDRESSES.find((a) => a.isPrimary) || MOCK_ADDRESSES[0], // Выбранный адрес
-  timeOption: "asap" as const, // 'asap' | 'scheduled'
-  scheduledTime: null as string | null, // null или "Select date and time"
-  businessStatus: "not_registered" as const, // 'registered' | 'not_registered'
+  deliveryOption: "delivery" as "delivery" | "pickup",
+  address: MOCK_ADDRESSES.find((a) => a.isPrimary) || MOCK_ADDRESSES[0],
+  timeOption: "asap" as "asap" | "scheduled",
+  scheduledTime: null as string | null,
+  businessStatus: "not_registered" as "registered" | "not_registered",
   selectedPaymentMethod:
-    MOCK_PAYMENT_METHODS.find((p) => p.isPrimary) || MOCK_PAYMENT_METHODS[0], // Выбранный метод оплаты
+    MOCK_PAYMENT_METHODS.find((p) => p.isPrimary) || MOCK_PAYMENT_METHODS[0],
 };
 
 export const MOCK_ORDERS: Order[] = [
