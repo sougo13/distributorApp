@@ -10,13 +10,13 @@ import * as styles from "../styles";
 import { CartItem } from "../types";
 import PrimaryButton from "../components/common/PrimaryButton";
 import CartListItem from "../components/CartListItem";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   MOCK_CART_ITEMS,
   MOCK_DELIVERY_FEE,
   MOCK_DISCOUNT,
   MOCK_SPECIAL_DISCOUNT,
-} from "../data/mockData";
-import { SafeAreaView } from "react-native-safe-area-context";
+} from "../mockData";
 
 type CartScreenNavigationProp = StackNavigationProp<
   CartStackParamList,

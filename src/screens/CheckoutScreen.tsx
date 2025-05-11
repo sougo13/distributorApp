@@ -26,14 +26,7 @@ import { Address, CartItem, PaymentMethod } from "../types";
 import PrimaryButton from "../components/common/PrimaryButton";
 import SecondaryButton from "../components/common/SecondaryButton";
 import CartListItem from "../components/CartListItem";
-import RadioButton from "../components/common/RadioButton";
-
-import {
-  MOCK_CART_ITEMS,
-  MOCK_CHECKOUT_SUMMARY,
-  MOCK_ORDER_DETAILS,
-  MOCK_PAYMENT_METHODS,
-} from "../data/mockData";
+import { MOCK_CART_ITEMS, MOCK_CHECKOUT_SUMMARY, MOCK_ORDER_DETAILS, MOCK_PAYMENT_METHODS } from "../mockData";
 
 if (
   Platform.OS === "android" &&

@@ -15,7 +15,6 @@ import {
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { OrdersStackParamList } from "../navigation/OrdersStackNavigator";
-import { Order, OrderStatus } from "../types";
 import GenericTabs from "../components/common/GenericTabs";
 import OrderListItem from "../components/OrderListItem";
 import * as styles from "../styles";
