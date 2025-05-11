@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
+import { Address } from "../types";
 
 import CartScreen from "../screens/CartScreen";
 import OrderRequestScreen from "../screens/OrderRequestScreen";
@@ -11,9 +12,13 @@ import ChangePaymentMethodScreen from "../screens/profile/ChangePaymentMethodScr
 import AddNewCardScreen from "../screens/profile/AddNewCardScreen";
 import * as styles from "../styles";
 
+export type OrderRequestParams = {
+  selectedAddress: Address;
+};
+
 export type CartStackParamList = {
   CartMain: undefined;
-  OrderRequest: undefined;
+  OrderRequest: OrderRequestParams | undefined;
   Checkout: undefined;
   ChangePaymentMethod: undefined;
   AddNewCard: undefined;

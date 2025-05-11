@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   createStackNavigator,
@@ -8,6 +7,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, Platform } from "react-native";
 import { useTranslation } from "react-i18next"; 
+import { Address } from "../types";
 
 
 import ProfileScreen from "../screens/ProfileScreen";
@@ -23,11 +23,16 @@ import AccountDeletionScreen from "../screens/profile/AccountDeletionScreen";
 import * as styles from "../styles";
 
 
+export type SavedAddressesParams = {
+  canSelect?: boolean;
+  originRoute?: string;
+};
+
 export type ProfileStackParamList = {
   ProfileMain: undefined; 
   PersonalInformation: undefined;
   ChangePassword: undefined;
-  SavedAddresses: undefined;
+  SavedAddresses: SavedAddressesParams | undefined;
   AddEditAddress: { addressId?: string }; 
   ChangePaymentMethod: undefined;
   AddNewCard: undefined;
@@ -54,7 +59,6 @@ const ProfileStackNavigator = () => {
       fontFamily: styles.FONT_FAMILY.medium,
       fontSize: styles.FONT_SIZES.h3,
     },
-    headerBackTitleVisible: false, 
     headerLeftContainerStyle: {
       paddingLeft: styles.SPACING.m,
     },
@@ -109,6 +113,7 @@ const ProfileStackNavigator = () => {
       />
       <Stack.Screen
         name="ChangePaymentMethod"
+
         component={ChangePaymentMethodScreen}
 
         options={{ title: t("profileStack.paymentMethods") }}

@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { getFocusedRouteNameFromRoute, RouteProp } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute, RouteProp, NavigatorScreenParams } from '@react-navigation/native';
 
 import HomeScreen from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
@@ -14,13 +14,17 @@ import * as styles from "../styles";
 import { Platform } from "react-native";
 import OrdersStackNavigator from "./OrdersStackNavigator";
 import HomeStackNavigator from "./HomeStackNavigator";
+import { CartStackParamList } from "./CartStackNavigator";
+import { ProfileStackParamList } from "./ProfileStackNavigator";
+import { HomeStackParamList } from "./HomeStackNavigator";
+import { OrdersStackParamList } from "./OrdersStackNavigator";
 
 export type TabParamList = {
-  Home: undefined;
-  Profile: undefined;
+  Home: NavigatorScreenParams<HomeStackParamList>;
+  Profile: NavigatorScreenParams<ProfileStackParamList>;
   Favourites: undefined;
-  Orders: undefined;
-  Cart: undefined;
+  Orders: NavigatorScreenParams<OrdersStackParamList>;
+  Cart: NavigatorScreenParams<CartStackParamList>;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();

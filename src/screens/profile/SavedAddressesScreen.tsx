@@ -7,27 +7,26 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import { useNavigation, useRoute, RouteProp, CompositeNavigationProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import * as styles from "../../styles";
 import AddressListItem from "../../components/AddressListItem";
 import { ProfileStackParamList } from "../../navigation/ProfileStackNavigator";
 import { CartStackParamList } from "../../navigation/CartStackNavigator";
+import { TabParamList } from "../../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { MOCK_ADDRESSES } from "../../data/mockData";
 import { Address } from "../../types";
 
-type SavedAddressesRouteProp = RouteProp<
-  ProfileStackParamList & CartStackParamList,
-  "SavedAddresses"
->;
+type SavedAddressesRouteProp = RouteProp<ProfileStackParamList, "SavedAddresses">;
 
-type SavedAddressesNavigationProp = StackNavigationProp<
-  ProfileStackParamList,
-  "SavedAddresses"
+type SavedAddressesNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<ProfileStackParamList, "SavedAddresses">,
+  BottomTabNavigationProp<TabParamList>
 >;
 
 const SavedAddressesScreen = () => {
@@ -66,7 +65,6 @@ const SavedAddressesScreen = () => {
           params: { selectedAddress: address },
         });
       } else if (originRoute) {
-        console.log(`Returning selected address to ${originRoute}:`, address);
         navigation.navigate(originRoute as any, { selectedAddress: address });
       } else {
         console.warn("Origin route is not defined for selection.");
