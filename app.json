@@ -13,7 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.distributorapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,19 +29,6 @@
     "web": {
       "favicon": "./src/assets/icons/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "manifestApplicationAttributes": {
-              "android:networkSecurityConfig": "@xml/network_security_config"
-            }
-          }
-        }
-      ],
-      "expo-localization"
-    ],
     "extra": {
       "eas": {
         "projectId": "116c643f-8d16-47d1-bc69-88cf1d27d150"
